@@ -1,0 +1,555 @@
+@media only screen and (max-width: 1441px) {
+  .maincontent {
+    width: 82%;
+    margin-left: 18%;
+  }
+  .maincontent .topbar {
+    width: 82%;
+    margin-left: 0%;
+  }
+  .sidebar {
+    width: 18%;
+  }
+  .setting_page .tab_bg_area .profile_upload .img_store {
+    position: relative;
+    width: 18%;
+  }
+  .fourboxarea .fourbox h4 {
+    font-size: 22px;
+  }
+  .fourboxarea .fourbox h3 {
+    font-size: 26px;
+  }
+  .sliderbox .bgbtn {
+    padding: 4px 25px;
+    font-size: 13px;
+  }
+  .sliderbox h4 {
+    font-size: 15px;
+  }
+  .sliderbox span {
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  .tab_bg_area .mini-text .input-group {
+    width: 50%;
+  }
+  .dashbcontent .collect-bg {
+    padding: 80px 40px;
+  }
+  .fourboxarea .fourbox.redbox {
+    margin-bottom: 50px;
+  }
+  .fourboxarea .fourbox.green {
+    margin-bottom: 50px;
+  }
+  .loginbg .form_area {
+    width: 40%;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .tab_bg_area .mini-text .input-group {
+    width: 50%;
+  }
+  .dashbcontent .collect-bg {
+    padding: 80px 40px;
+  }
+  .fourboxarea .fourbox.redbox {
+    margin-bottom: 50px;
+  }
+  .fourboxarea .fourbox.green {
+    margin-bottom: 50px;
+  }
+  .loginbg .form_area {
+    width: 40%;
+  }
+  .maincontent {
+    width: 100%;
+    margin-left: 0%;
+  }
+  .sidebar {
+    width: 25%;
+    z-index: 999;
+    position: fixed;
+    left: -100%;
+    top: 0;
+  }
+  .togglesidebar .sidebar {
+    left: 0;
+  }
+  .maincontent .topbar {
+    width: 100%;
+    margin-left: 0%;
+  }
+  .sidebar .logo a {
+    padding-bottom: 15px;
+    margin-top: 35px;
+  }
+  .sidebar .toggle_button {
+    position: absolute;
+    right: 0;
+    top: 12px;
+  }
+  .user_modal .user_form .view-details p {
+    padding: 0 65px 15px 0;
+  }
+  .user_modal .user_form .details_box {
+    margin-top: 15px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .tab_bg_area .mini-text .input-group {
+    width: 70%;
+  }
+  .dashbcontent .collect-bg {
+    padding: 25px;
+  }
+  .fourboxarea .fourbox.redbox {
+    margin-bottom: 50px;
+  }
+  .fourboxarea .fourbox.green {
+    margin-bottom: 50px;
+  }
+  .loginbg .form_area {
+    width: 70%;
+  }
+  .maincontent {
+    width: 100%;
+    margin-left: 0%;
+  }
+  .sidebar {
+    width: 25%;
+    z-index: 999;
+    position: fixed;
+    left: -100%;
+    top: 0;
+  }
+  .togglesidebar .sidebar {
+    left: 0;
+    width: 35%;
+  }
+  .maincontent .topbar {
+    width: 100%;
+    margin-left: 0%;
+  }
+  .sidebar .logo a {
+    padding-bottom: 15px;
+    margin-top: 35px;
+  }
+  .sidebar .toggle_button {
+    position: absolute;
+    right: 0;
+    top: 12px;
+  }
+  .maincontent .topbar .searchbar .form-control {
+    width: 270px;
+  }
+  .dashbcontent .collect-bg h3 {
+    font-size: 28px;
+    padding: 100px 0 30px 0;
+    line-height: 34px;
+  }
+  .dashbcontent .collect-bg .bgbtn {
+    padding: 6px 28px;
+    font-size: 18px;
+    margin: 0px 15px 0px 0px;
+  }
+  .dashbcontent .collect-bg .borderbtn {
+    padding: 6px 28px;
+    font-size: 18px;
+  }
+  .dashbcontent .top-creators {
+    padding: 20px;
+  }
+  .dashbcontent .top-creators .creators-list ul li img {
+    width: 45px;
+    height: 45px;
+  }
+  .dashbcontent .top-creators .creators-list ul li .bgbtn {
+    padding: 4px 16px;
+    font-size: 12px;
+  }
+  .dashbcontent .top-creators .creators-list ul li h5 {
+    font-size: 17px;
+  }
+  .report_page .date_filter input {
+    width: 160px;
+  }
+  .nftstable .tablearea .table thead tr th {
+    padding: 25px 0px;
+    text-align: left;
+  }
+  .nftstable .tablearea .table tbody tr td {
+    white-space: nowrap;
+    padding: 25px 60px 25px 0;
+  }
+  .nftstable .tablearea .table tbody tr td:last-child {
+    padding: 0;
+  }
+  .setting_page .tab_bg_area .profile_upload .img_store {
+    position: relative;
+    width: 30%;
+  }
+  .user_modal .user_form img {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .tab_bg_area .checkboxlist h4 {
+    font-size: 18px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .tab_bg_area .mini-text .input-group {
+    width: 100%;
+  }
+  .dashbcontent {
+    padding: 85px 15px 30px;
+  }
+  .dashbcontent .collect-bg {
+    padding: 25px;
+    height: auto;
+    margin-bottom: 30px;
+  }
+  .dashbcontent .collect-bg h3 {
+    font-size: 28px;
+    padding: 0px 0 30px 0;
+  }
+  .fourboxarea .fourbox.redbox {
+    margin-bottom: 50px;
+  }
+  .fourboxarea .fourbox.green {
+    margin-bottom: 50px;
+  }
+  .loginbg .form_area {
+    width: 98%;
+  }
+  .maincontent {
+    width: 100%;
+    margin-left: 0%;
+  }
+  .sidebar {
+    width: 25%;
+    z-index: 999;
+    position: fixed;
+    left: -100%;
+    top: 0;
+  }
+  .togglesidebar .sidebar {
+    left: 0;
+    width: 70%;
+  }
+  .maincontent .topbar {
+    width: 100%;
+    padding: 10px 15px;
+    margin-left: 0%;
+  }
+  .sidebar .logo a {
+    padding-bottom: 15px;
+    margin-top: 35px;
+  }
+  .sidebar .toggle_button {
+    position: absolute;
+    right: 0;
+    top: 12px;
+  }
+  .maincontent .topbar .searchbar .form-control {
+    width: 143px;
+  }
+  .dashbcontent .collect-bg .bgbtn {
+    padding: 6px 28px;
+    font-size: 18px;
+    margin: 0px 15px 0px 0px;
+  }
+  .dashbcontent .collect-bg .borderbtn {
+    padding: 6px 28px;
+    font-size: 18px;
+  }
+  .dashbcontent .top-creators {
+    padding: 20px;
+  }
+  .dashbcontent .top-creators .creators-list ul li img {
+    width: 40px;
+    height: 40px;
+  }
+  .dashbcontent .top-creators .creators-list ul li .bgbtn {
+    padding: 4px 16px;
+    font-size: 12px;
+  }
+  .dashbcontent .top-creators .creators-list ul li h5 {
+    font-size: 15px;
+  }
+  .report_page .date_filter input {
+    width: 48%;
+    float: left;
+    margin: 0 7px 0 0;
+  }
+  .nftstable .tablearea .table thead tr th {
+    padding: 25px 0px;
+    text-align: left;
+  }
+  .nftstable .tablearea .table thead tr th:last-child {
+    text-align: center;
+  }
+  .nftstable .tablearea .table tbody tr td {
+    white-space: nowrap;
+    padding: 25px 60px 25px 0;
+  }
+  .nftstable .tablearea .table tbody tr td:last-child {
+    padding: 0;
+  }
+  .setting_page .tab_bg_area .profile_upload .img_store {
+    position: relative;
+    width: 100%;
+  }
+  .maincontent .topbar .userprofile .dropdown-toggle {
+    font-size: 14px;
+    color: #6C757D;
+  }
+  .maincontent .topbar .userprofile .dropdown-toggle img {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+  }
+  .fourboxarea .orangebox {
+    margin-bottom: 50px;
+  }
+  .sliderbox {
+    margin-bottom: 30px;
+  }
+  .user_management_list {
+    padding: 90px 15px 30px;
+  }
+  .user_heading {
+    margin-bottom: 20px;
+  }
+  .user_modal .user_form .btn {
+    padding: 4px 40px;
+    font-size: 14px;
+  }
+  .user_modal .user_form .form-control {
+    height: 40px;
+  }
+  .user_modal .user_form .view-details ul li {
+    list-style-type: none;
+    padding: 0 15px 0 0;
+  }
+  .user_modal .user_form .view-details ul li img {
+    margin: 0;
+  }
+  .user_modal .user_form .details_box .modaltable .table tbody tr td {
+    border: none;
+    font-size: 14px;
+    padding: 25px 15px 0;
+    white-space: nowrap;
+  }
+  .user_modal .user_form .details_box .modaltable .table tbody tr td img {
+    width: 18%;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+  .nftstable .tablearea {
+    padding: 0 20px;
+  }
+  .report_page .revenue_box {
+    margin: 20px 0 40px;
+  }
+  .report_page .date_filter p {
+    padding-top: 15px;
+  }
+  .setting_page .seting_profile_form .btn {
+    margin: 25px 0 0;
+  }
+  .tab_bg_area .mini-text {
+    margin: 40px 0 0;
+  }
+  .tab_bg_area .mini-text p {
+    width: 100%;
+  }
+  .add_filter_btn {
+    margin-top: 15px;
+  }
+  .maincontent .topbar .userprofile .dropdown-toggle::after {
+    margin-left: 4px;
+    width: 17px;
+    height: 10px;
+    transform: translate(0px, 4px);
+  }
+  .maincontent .footer p {
+    font-size: 12px;
+  }
+  .tab_bg_area .checkboxlist h4 {
+    font-size: 16px;
+  }
+  .tab_bg_area .checkboxlist span {
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .tab_bg_area .mini-text .input-group {
+    width: 100%;
+  }
+  .dashbcontent {
+    padding: 85px 15px 30px;
+  }
+  .dashbcontent .collect-bg {
+    padding: 25px;
+    height: auto;
+    margin-bottom: 30px;
+  }
+  .dashbcontent .collect-bg h3 {
+    font-size: 28px;
+    padding: 0px 0 30px 0;
+  }
+  .fourboxarea .fourbox.redbox {
+    margin-bottom: 50px;
+  }
+  .fourboxarea .fourbox.green {
+    margin-bottom: 50px;
+  }
+  .loginbg .form_area {
+    width: 98%;
+  }
+  .maincontent {
+    width: 100%;
+    margin-left: 0%;
+  }
+  .sidebar {
+    width: 25%;
+    z-index: 999;
+    position: fixed;
+    left: -100%;
+    top: 0;
+  }
+  .togglesidebar .sidebar {
+    left: 0;
+    width: 70%;
+  }
+  .maincontent .topbar {
+    width: 100%;
+    margin-left: 0%;
+    padding: 10px 15px;
+  }
+  .sidebar .logo a {
+    padding-bottom: 15px;
+    margin-top: 35px;
+  }
+  .sidebar .toggle_button {
+    position: absolute;
+    right: 0;
+    top: 12px;
+  }
+  .maincontent .topbar .searchbar .form-control {
+    width: 102px;
+  }
+  .dashbcontent .collect-bg .bgbtn {
+    padding: 6px 28px;
+    font-size: 18px;
+    margin: 0px 15px 0px 0px;
+  }
+  .dashbcontent .collect-bg .borderbtn {
+    padding: 6px 28px;
+    font-size: 18px;
+  }
+  .dashbcontent .top-creators {
+    padding: 20px;
+  }
+  .dashbcontent .top-creators .creators-list ul li img {
+    width: 40px;
+    height: 40px;
+  }
+  .dashbcontent .top-creators .creators-list ul li .bgbtn {
+    padding: 4px 16px;
+    font-size: 12px;
+  }
+  .dashbcontent .top-creators .creators-list ul li h5 {
+    font-size: 15px;
+  }
+  .report_page .date_filter input {
+    width: 48%;
+    float: left;
+    margin: 0 7px 0 0;
+  }
+  .nftstable .tablearea .table thead tr th {
+    padding: 25px 0px;
+    text-align: left;
+    font-size: 14px;
+  }
+  .nftstable .tablearea .table tbody tr td {
+    white-space: nowrap;
+    padding: 25px 60px 25px 0;
+    font-size: 13px;
+  }
+  .nftstable .tablearea .table tbody tr td:last-child {
+    padding: 0;
+  }
+  .setting_page .tab_bg_area .profile_upload .img_store {
+    position: relative;
+    width: 100%;
+  }
+  .maincontent .topbar .userprofile .dropdown-toggle {
+    font-size: 14px;
+    color: #6C757D;
+  }
+  .maincontent .topbar .userprofile .dropdown-toggle img {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+  }
+  .fourboxarea .orangebox {
+    margin-bottom: 50px;
+  }
+  .sliderbox {
+    margin-bottom: 30px;
+  }
+  .user_management_list {
+    padding: 90px 15px 30px;
+  }
+  .user_heading {
+    margin-bottom: 20px;
+  }
+  .user_modal .user_form .btn {
+    padding: 4px 40px;
+    font-size: 14px;
+  }
+  .user_modal .user_form .form-control {
+    height: 40px;
+  }
+  .user_modal .user_form .view-details ul li {
+    list-style-type: none;
+    padding: 0 15px 0 0;
+  }
+  .user_modal .user_form .view-details ul li img {
+    margin: 0;
+  }
+  .user_modal .user_form .details_box .modaltable .table tbody tr td {
+    border: none;
+    font-size: 14px;
+    padding: 25px 15px 0;
+    white-space: nowrap;
+  }
+  .nftstable .tablearea {
+    padding: 0 20px;
+  }
+  .report_page .revenue_box {
+    margin: 20px 0 40px;
+  }
+  .report_page .date_filter p {
+    padding-top: 15px;
+  }
+  .setting_page .seting_profile_form .btn {
+    margin: 25px 0 0;
+  }
+  .tab_bg_area .mini-text {
+    margin: 40px 0 0;
+  }
+  .tab_bg_area .mini-text p {
+    width: 100%;
+  }
+  .add_filter_btn {
+    margin-top: 15px;
+  }
+  .user_modal .user_form .view-details ul li p {
+    font-size: 14px;
+  }
+}/*# sourceMappingURL=Responsive.css.map */
