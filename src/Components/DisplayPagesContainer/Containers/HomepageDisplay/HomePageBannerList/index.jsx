@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "../../../../Wrapper";
 import { Row, Col, Form, Table, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getHomepageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
+import { getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
 import DynamicModal from "./Modals/DynamicModal";
 
 const HomePageBannerList = () => {
@@ -10,7 +10,7 @@ const HomePageBannerList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getHomepageBanner());
+    dispatch(getHomePageBanner());
   }, [dispatch]);
 
   const banners = useSelector(
