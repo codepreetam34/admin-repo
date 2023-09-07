@@ -27,16 +27,6 @@ div {
   font-family: $LatoFamily;
 }
 
-.link-text {
-  text-decoration: none;
-  .fourbox h4 {
-    color: #6c757d !important;
-  }
-  &:hover .fourbox h4 {
-    color: $secondary-clr !important;
-  }
-}
-
 .text-red {
   color: $primary-clr;
 }

@@ -1,0 +1,15 @@
+ul {
+  list-style: none !important ;
+}
+
+.link-text {
+  text-decoration: none;
+}
+
+.link-text .fourbox h4 {
+  color: #6c757d !important;
+}
+
+.link-text:hover .fourbox h4 {
+  color: #000 !important;
+}

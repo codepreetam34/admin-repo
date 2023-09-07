@@ -18,7 +18,6 @@ const DisplayPagesContainer = () => {
             </Col>
 
             <Col md={12}>
-              {" "}
               <PagesContainer />
             </Col>
           </Row>
