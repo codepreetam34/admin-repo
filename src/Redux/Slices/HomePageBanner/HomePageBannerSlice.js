@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../Services/AxiosInstance";
 import { GET_HOMEPAGE_BANNER } from "./type";
 
-export const getHomepageBanner = createAsyncThunk(
+export const getHomePageBanner = createAsyncThunk(
   GET_HOMEPAGE_BANNER,
   async (payload, thunkAPI) => {
     try {
@@ -18,22 +18,22 @@ export const getHomepageBanner = createAsyncThunk(
 export const HomePageBannerSlice = createSlice({
   name: "HomePageBannerSlice",
   initialState: {
-    homepagebanners: [],
+    homePagebanners: [],
     loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getHomepageBanner.pending, (state) => {
+      .addCase(getHomePageBanner.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getHomepageBanner.fulfilled, (state, action) => {
+      .addCase(getHomePageBanner.fulfilled, (state, action) => {
         state.loading = false;
-        state.homepagebanners = action.payload;
+        state.homePagebanners = action.payload;
       })
-      .addCase(getHomepageBanner.rejected, (state, action) => {
+      .addCase(getHomePageBanner.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
       });

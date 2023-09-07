@@ -14,7 +14,7 @@ const HomePageBannerList = () => {
   }, [dispatch]);
 
   const banners = useSelector(
-    (state) => state?.HomePageBanner?.homepagebanners?.homepageBanners
+    (state) => state?.HomePageBanner?.homePagebanners?.homePageBanners
   );
   const tableHeaders = [
     { title: "S.No.", class: "" },
