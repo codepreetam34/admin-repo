@@ -13,7 +13,7 @@ export const login = createAsyncThunk(FETCH_ACTION, async (data, thunkAPI) => {
 
 export const logout = createAsyncThunk(LOGOUT, async (data, thunkAPI) => {
   try {
-    const response = await axiosInstance.post("api/admin/signout");
+    const response = await axiosInstance.post("admin/signout");
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue({ error: error });

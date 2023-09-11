@@ -100,7 +100,7 @@ const CategoryChildren = () => {
           childCategoryList?.map((category, index) => (
             <tr key={category?._id}>
               <td>{index + 1}</td>
-              <td>{category?.name}</td>
+              <td style={{ textTransform: "capitalize" }}>{category?.name}</td>
               <td>
                 <img
                   src={category?.categoryImage}

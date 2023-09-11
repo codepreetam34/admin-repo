@@ -1,15 +1,31 @@
 import React from "react";
 import { useState } from "react";
-import { Nav } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { Button, Nav } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../../../src/images/vibezterLogo.png";
-
+import { logout } from "Redux/Slices/Login/auth.slice";
+import { useDispatch } from "react-redux";
+import { notify } from "Constants/utils";
 const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const [sideBarLink, setSideBarLink] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   function onhidesidebar() {
     setSideBarLink(!sideBarLink);
     document.body.classList.remove("togglesidebar");
   }
+
+  const handleLogOut = () => {
+    dispatch(logout())
+      .then((response) => {
+        localStorage.clear();
+        navigate("/login");
+        notify({ type: "success", content: "Logged out successfully" });
+      })
+      .catch((rejectedWithValue) => {
+        notify({ type: "danger", content: "Logged out failed" });
+      });
+  };
 
   return (
     <div>
@@ -70,7 +86,8 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               exact=""
               to="/login"
             >
-              <i className="fa-solid fa-arrow-right-from-bracket"></i> Log Out
+              <i className="fa-solid fa-arrow-right-from-bracket"></i>{" "}
+              <span onClick={handleLogOut}>Log Out</span>
             </Nav.Link>
           </Nav>
         </div>
