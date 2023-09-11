@@ -24,12 +24,12 @@ const LogInPage = () => {
                         </Form.Group>
                         <div className='check_with_text d-flex align-items-center justify-content-between'>
                             <Form.Group className="" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Remember" />
+                                {/* <Form.Check type="checkbox" label="Remember" /> */}
                             </Form.Group>
                             <a href="#" className='text-red'>Forgot password?</a>
                         </div>
                         <Button variant="" type="submit">Log In</Button>
-                        <p className='dont_account'>Don't have an account ? <a href="#" className='text-red'> Create One</a></p>
+                        {/* <p className='dont_account'>Don't have an account ? <a href="#" className='text-red'> Create One</a></p> */}
                     </Form>
                 </div>
             </div>

@@ -11,15 +11,14 @@ import UseEffect from "./Pages/UseEffect";
 import DisplayPages from "./Pages/DisplayPages";
 import HomepageDisplay from "./Components/DisplayPagesContainer/Containers/HomepageDisplay";
 import HomepageBannerList from "./Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList";
+import Category from "./Pages/Category";
+import CategoryChildren from "Pages/CategoryChildren";
+import Products from "Pages/Products";
 const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="user-management" element={<UserManagement />} />
-        <Route path="manage-nft" element={<NftPage />} />
-        <Route path="report" element={<Report />} />
-        <Route path="settings" element={<Settings />} />
 
         <Route path="display-pages" element={<DisplayPages />} />
         <Route
@@ -31,9 +30,18 @@ const Routing = () => {
           element={<HomepageBannerList />}
         />
 
+        <Route path="category" element={<Category />} />
+
+        <Route
+          path="category/category-child/:id"
+          element={<CategoryChildren />}
+        />
+        <Route
+          path="category/category-child/:id/products"
+          element={<Products />}
+        />
+
         <Route path="login" element={<LogIn />} />
-        <Route path="apipractice" element={<ApiPractice />} />
-        <Route path="useeffect-practice" element={<UseEffect />} />
       </Routes>
     </BrowserRouter>
   );
