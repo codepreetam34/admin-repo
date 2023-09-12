@@ -7,7 +7,7 @@ export const Notify = ({ setShowToast, showToast }) => {
       <Toast
         onClose={() => setShowToast(false)}
         show={showToast}
-        className="bottom-end"
+        className="top-end"
         delay={3000}
       >
         <Toast.Header>

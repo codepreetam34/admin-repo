@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,9 +7,16 @@ import { useDispatch } from "react-redux";
 import { resetPasswordLink } from "Redux/Slices/Login/resetPasswordLink";
 import { Button, Form } from "react-bootstrap";
 import Logo from "images/vibezterLogo.png";
+import { LOGIN } from "Routes/Routes";
+import { Toast, ToastContainer } from "react-bootstrap";
 const ForgotPassword = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showToast, setShowToast] = useState(false);
+  //  const [showToastMessage, setShowToastMessage] = useState();
+  const [showErrorToast, setShowErrorToast] = useState(false);
+  const [showErrorToastMessage, setShowErrorToastMessage] = useState();
+
   const {
     register,
     handleSubmit,
@@ -21,17 +28,24 @@ const ForgotPassword = () => {
   const onSubmit = (data) => {
     dispatch(resetPasswordLink(data))
       .then((res) => {
-        if (res) {
-          navigate("/login");
+        console.log(res);
+        if (res?.payload?.link) {
+          //   setShowToastMessage(res?.payload?.message);
+          setShowToast(true);
+        } else if (res?.payload?.error) {
+          setShowErrorToastMessage(
+            res?.payload?.error?.response?.data?.message
+          );
+          setShowErrorToast(true);
         }
       })
       .catch((err) => {
-        navigate("/login");
+        setShowToast(true);
       });
   };
   return (
     <>
-      <div className="loginbg">
+      <div className="loginbg transitionStyle">
         <div className="form_area">
           <Link href="/">
             <img src={Logo} className="img-fluid" alt="" loading="lazy" />
@@ -54,13 +68,66 @@ const ForgotPassword = () => {
                   <p className="text-danger">{errors.email.message}</p>
                 )}
               </Form.Group>
-
+              <div className="check_with_text d-flex align-items-center justify-content-between">
+                <Link className="text-red" to={LOGIN}>
+                  Back to Login
+                </Link>
+              </div>
               <Button variant="" type="submit">
-                Send reset link
+                Send reset mail
               </Button>
               {/* <p className='dont_account'>Don't have an account ? <a href="#" className='text-red'> Create One</a></p> */}
             </Form>
           </div>
+        </div>
+        <div className="custom_toaster">
+          <ToastContainer position="top-end" className="p-3">
+            <Toast
+              onClose={() => setShowToast(false)}
+              show={showToast}
+              className="bottom-end"
+              delay={3000}
+            >
+              <Toast.Header>
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                  loading="lazy"
+                />
+                <strong className="me-auto">
+                  <i class="fa-solid fa-circle-check"></i>Your password reset
+                  email has been sent. Please check your email inbox.
+                </strong>
+              </Toast.Header>
+            </Toast>
+          </ToastContainer>
+        </div>
+
+        <div className="custom_toaster">
+          <ToastContainer position="top-end" className="p-3">
+            <Toast
+              onClose={() => setShowErrorToast(false)}
+              show={showErrorToast}
+              className="bottom-end"
+              delay={3000}
+            >
+              <Toast.Header>
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                  loading="lazy"
+                />
+                <strong className="me-auto">
+                  <i class="fa-solid fa-circle-check"></i>
+                  {showErrorToastMessage
+                    ? showErrorToastMessage
+                    : "Email does not exist"}
+                </strong>
+              </Toast.Header>
+            </Toast>
+          </ToastContainer>
         </div>
       </div>
     </>

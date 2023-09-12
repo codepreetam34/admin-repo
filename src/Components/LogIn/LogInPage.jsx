@@ -10,7 +10,6 @@ import Logo from "images/vibezterLogo.png";
 import { Button, Form } from "react-bootstrap";
 import { FORGOT_PASSWORD } from "Routes/Routes";
 const LogInPage = () => {
-  const [passwordType, setPasswordType] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,11 +47,11 @@ const LogInPage = () => {
     return <Navigate to="/" />;
   } else {
     return (
-      <div className="loginbg">
+      <div className="loginbg transitionStyle">
         <div className="form_area">
-          <a href="/">
+          <Link to="/">
             <img src={Logo} className="img-fluid" alt="" loading="lazy" />
-          </a>
+          </Link>
           <div className="user_management_list p-0">
             <div className="user_heading">
               <h3>Welcome Back</h3>
@@ -74,9 +73,9 @@ const LogInPage = () => {
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  type={passwordType ? "password" : "text"}
+                  type="password"
                   placeholder="**********"
-                  {...register("password")} // Assuming "password" is the form field name
+                  {...register("password")}
                 />{" "}
                 {errors.password && (
                   <p className="text-danger">{errors.password.message}</p>

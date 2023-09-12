@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -8,15 +8,17 @@ import { setupPasswordSchema } from "ValidationSchema/setUpNewPassword";
 import { setupPassword } from "Redux/Slices/Login/setupPassword";
 import { Button, Form } from "react-bootstrap";
 import Logo from "images/vibezterLogo.png";
-import { forgotOtpSchema } from "ValidationSchema/forgotOtpSchema";
+import { Toast, ToastContainer } from "react-bootstrap";
 const SetupNewPassword = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const id = searchParams.get("id");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [passwordType, setPasswordType] = useState(true);
-
+  const [showToast, setShowToast] = useState(false);
+  // const [showToastMessage, setShowToastMessage] = useState();
+  const [showErrorToast, setShowErrorToast] = useState(false);
+  const [showErrorToastMessage, setShowErrorToastMessage] = useState();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -27,26 +29,31 @@ const SetupNewPassword = () => {
   });
 
   const onSubmit = (data) => {
-    console.log("data ", data)
     const postData = {
       password: data.password,
       token: token,
       userId: id,
     };
 
-    dispatch(setupPassword(postData)).then((res) => {
-       navigate(LOGIN);
-    });
+    dispatch(setupPassword(postData))
+      .then((res) => {
+        if (res?.payload?.message) {
+          //   setShowToastMessage(res?.payload?.message);
+          setShowToast(true);
+         // navigate("/login");
+        } else if (res?.payload?.error) {
+          setShowErrorToastMessage(res?.payload?.error?.message);
+          setShowErrorToast(true);
+        }
+      })
+      .catch((err) => {
+        setShowErrorToast(true);
+      });
   };
 
-  // useEffect(() => {
-  //   if (password && confirmPassword) {
-  //     setPasswordMatch(password === confirmPassword);
-  //   }
-  // }, [password, confirmPassword]);
   return (
     <>
-      <div className="loginbg">
+      <div className="loginbg transitionStyle">
         <div className="form_area">
           <Link href="/">
             <img src={Logo} className="img-fluid" alt="" loading="lazy" />
@@ -61,7 +68,7 @@ const SetupNewPassword = () => {
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>New Password *</Form.Label>
                 <Form.Control
-                  type={passwordType ? "password" : "text"}
+                  type="password"
                   placeholder="**********"
                   {...register("password")}
                   autoComplete="new-password"
@@ -73,26 +80,75 @@ const SetupNewPassword = () => {
               <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
                 <Form.Label>Confirm Password *</Form.Label>
                 <Form.Control
-                  type={passwordType ? "password" : "text"}
+                  type="password"
                   placeholder="**********"
                   {...register("confirmPassword")}
                   autoComplete="new-password"
                 />
                 {errors.confirmPassword && (
-                  <p className="text-danger">{errors.confirmPassword.message}</p>
+                  <p className="text-danger">
+                    {errors.confirmPassword.message}
+                  </p>
                 )}
               </Form.Group>
-              {/* {confirmPassword && !passwordMatch ? (
-                <p className="text-danger">Passwords do not match.</p>
-              ) : (
-                <></>
-              )} */}
+              <div className="check_with_text d-flex align-items-center justify-content-between">
+                <Link className="text-red" to={LOGIN}>
+                  Back to Login
+                </Link>
+              </div>
               <Button variant="" type="submit">
                 Update Password
               </Button>
-
             </Form>
           </div>
+        </div>{" "}
+        <div className="custom_toaster">
+          <ToastContainer position="top-end" className="p-3">
+            <Toast
+              onClose={() => setShowToast(false)}
+              show={showToast}
+              className="top-end"
+              delay={3000}
+            >
+              <Toast.Header>
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                  loading="lazy"
+                />
+                <strong className="me-auto">
+                  <i class="fa-solid fa-circle-check"></i> Your password has
+                  been successfully updated.
+                </strong>
+              </Toast.Header>
+            </Toast>
+          </ToastContainer>
+        </div>
+        <div className="custom_toaster">
+          <ToastContainer position="top-end" className="p-3">
+            <Toast
+              onClose={() => setShowErrorToast(false)}
+              show={showErrorToast}
+              className="top-end"
+              delay={3000}
+            >
+              <Toast.Header>
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                  loading="lazy"
+                />
+                <strong className="me-auto">
+                  <i class="fa-solid fa-circle-check"></i>{" "}
+                  {showErrorToastMessage
+                    ? showErrorToastMessage
+                    : "Invalid or expired password reset token"}
+                </strong>
+              </Toast.Header>
+            </Toast>
+          </ToastContainer>
         </div>
       </div>
     </>

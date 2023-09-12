@@ -13,3 +13,8 @@ ul {
 .link-text:hover .fourbox h4 {
   color: #000 !important;
 }
+
+
+.transitionStyle {
+  transition: "transform 0.2s ease-in-out",
+}
