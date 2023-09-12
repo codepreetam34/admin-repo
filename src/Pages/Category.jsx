@@ -5,16 +5,25 @@ import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList/Modals/DynamicModal";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+
 const Category = () => {
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
-    dispatch(getCategory())
-      .then(() => setIsLoading(false))
-      .catch(() => setIsLoading(false));
-  }, [dispatch]);
+    if (!categoryList || categoryList.length === 0) {
+      dispatch(getCategory())
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch, categoryList]);
 
   const categoryList = useSelector(
     (state) => state?.CategoryList?.categoryList?.categoryList
@@ -210,12 +219,16 @@ const Category = () => {
         <Row>
           {isLoading && isLoading ? (
             <div
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              minHeight="300px"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "300px",
+              }}
             >
-              Loading...
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
             </div>
           ) : (
             <>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "Components/Wrapper";
-import { Row, Col, Form, Table, InputGroup } from "react-bootstrap";
+import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList/Modals/DynamicModal";
 import { useParams } from "react-router-dom";
@@ -13,10 +13,16 @@ const Products = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProductsByCategoryId(id))
-      .then(() => setIsLoading(false))
-      .catch(() => setIsLoading(false));
-  }, [dispatch]);
+    if (!productsList || productsList.length === 0) {
+      dispatch(getProductsByCategoryId(id))
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch, productsList, id]);
 
   const productsList = useSelector(
     (state) => state?.ProductsByCatId?.ProductsByCatId?.products
@@ -175,12 +181,16 @@ const Products = () => {
         <Row>
           {isLoading && isLoading ? (
             <div
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              minHeight="300px"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "300px",
+              }}
             >
-              Loading...
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
             </div>
           ) : (
             <>
