@@ -93,7 +93,6 @@ const CategoryChildrenPage = () => {
     const linkStyles = {
       fontSize: "12px",
       marginRight: "1rem",
-      fontFamily: "Inter",
       cursor: "pointer",
       textDecoration: "none",
       textTransform: "capitalize",
@@ -134,7 +133,6 @@ const CategoryChildrenPage = () => {
                   style={{
                     fontSize: "12px",
                     marginRight: "1rem",
-                    fontFamily: "Inter",
                     cursor: "pointer",
                     textDecoration: "none",
                     fontWeight: "bold",

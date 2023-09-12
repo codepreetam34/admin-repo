@@ -1,16 +1,30 @@
-import { toast } from "react-toastify";
+import { Toast } from "bootstrap";
+import { ToastContainer } from "react-bootstrap";
 
-export const notify = ({ messgae, type }) => {
-  return toast(messgae, {
-    position: toast.POSITION.TOP_RIGHT,
-    autoClose: 2500,
-    type: type,
-    closeOnClick: true,
-    theme: "colored",
-  });
+export const Notify = ({ setShowToast, showToast }) => {
+  <div className="custom_toaster">
+    <ToastContainer position="bottom-end" className="p-3">
+      <Toast
+        onClose={() => setShowToast(false)}
+        show={showToast}
+        className="bottom-end"
+        delay={3000}
+      >
+        <Toast.Header>
+          <img
+            src="holder.js/20x20?text=%20"
+            className="rounded me-2"
+            alt=""
+            loading="lazy"
+          />
+          <strong className="me-auto">
+            <i class="fa-solid fa-circle-check"></i> Success
+          </strong>
+        </Toast.Header>
+      </Toast>
+    </ToastContainer>
+  </div>;
 };
-
-
 // export const getImagePreview = ({ selectedImage, setPreviewImage }) => {
 //   const imageReader = new FileReader();
 

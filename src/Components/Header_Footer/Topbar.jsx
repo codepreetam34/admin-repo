@@ -9,9 +9,28 @@ import {
   ToastContainer,
 } from "react-bootstrap";
 import User from "../../../src/images/user.png";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "Redux/Slices/Login/auth.slice";
+//import { notify } from "Constants/utils";
 const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
+  const authData = JSON.parse(localStorage.getItem("Sidebar_Module_Assigned"));
+
+  const handleLogOut = () => {
+    dispatch(logout())
+      .then((response) => {
+        localStorage.clear();
+        setShowToast(true);
+     //   notify(setShowToast, showToast);
+        navigate("/login");
+      })
+      .catch((rejectedWithValue) => {
+     //   notify({ type: "danger", content: "Logged out failed" });
+      });
+  };
 
   return (
     <>
@@ -51,14 +70,16 @@ const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               <Dropdown>
                 <Dropdown.Toggle variant="" className="p-0" id="dropdown-basic">
                   <img src={User} className="img-fluid" alt="" loading="lazy" />{" "}
-                  Alexa Evans
+                  {authData && authData?.fullName}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#" onClick={() => setShowToast(true)}>
+                  {/* <Dropdown.Item href="#" onClick={() => setShowToast(true)}>
                     Profile
+                  </Dropdown.Item> */}
+                  <Dropdown.Item href="#" onClick={handleLogOut}>
+                    Logout
                   </Dropdown.Item>
-                  <Dropdown.Item href="#">Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>

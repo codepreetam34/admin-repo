@@ -5,7 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../../../src/images/vibezterLogo.png";
 import { logout } from "Redux/Slices/Login/auth.slice";
 import { useDispatch } from "react-redux";
-import { notify } from "Constants/utils";
+import { Notify } from "Constants/utils";
 const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const [sideBarLink, setSideBarLink] = useState(false);
   const navigate = useNavigate();
@@ -19,11 +19,11 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
     dispatch(logout())
       .then((response) => {
         localStorage.clear();
-        notify({ type: "success", content: "Logged out successfully" });
+
         navigate("/login");
       })
       .catch((rejectedWithValue) => {
-        notify({ type: "danger", content: "Logged out failed" });
+        navigate("/");
       });
   };
 

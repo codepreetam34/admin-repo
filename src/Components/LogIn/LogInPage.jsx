@@ -8,13 +8,13 @@ import { login } from "Redux/Slices/Login/auth.slice";
 import { Navigate, useNavigate } from "react-router-dom";
 import Logo from "images/vibezterLogo.png";
 import { Button, Form, Box } from "react-bootstrap";
-import { notify } from "Constants/utils";
+import { Notify } from "Constants/utils";
 const LogInPage = () => {
   const [passwordType, setPasswordType] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [showToast, setShowToast] = useState(false);
   const {
     register,
     handleSubmit,
@@ -33,20 +33,12 @@ const LogInPage = () => {
       .unwrap()
       .then((res) => {
         if (res) {
-          notify({ type: "success", message: "Logged in successfully" });
           setItem("userData", res?.data);
           navigate("/");
         }
       })
       .catch((err) => {
-        notify({
-          type: "error",
-          messgae: err?.error?.response?.data?.message
-            ? err?.error?.response?.data?.message
-            : err?.error?.response?.data?.error
-            ? err?.error?.response?.data?.error
-            : err?.error?.message,
-        });
+        navigate("/login");
       });
   };
 
