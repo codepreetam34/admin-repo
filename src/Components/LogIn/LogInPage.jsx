@@ -64,7 +64,7 @@ const LogInPage = () => {
       <div className="loginbg">
         <div className="form_area">
           <a href="/">
-            <img src={Logo} className="img-fluid" alt="" />
+            <img src={Logo} className="img-fluid" alt="" loading="lazy" />
           </a>
           <div className="user_management_list p-0">
             <div className="user_heading">

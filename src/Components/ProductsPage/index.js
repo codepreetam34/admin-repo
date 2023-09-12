@@ -96,6 +96,7 @@ const ProductsPage = () => {
                   alt=""
                   width={70}
                   height={70}
+                  loading="lazy"
                 />
               </td>
               <td>

@@ -51,16 +51,22 @@ const HomepageDisplay = () => {
           <Col md={12}>
             <div className="fourboxarea">
               <Row>
-                {pageInfo && pageInfo?.map((info, index) => (
-                  <Col md={6} xl={6} xxl={3} key={index}>
-                    <Link to={info?.boxHref} className="link-text">
-                      <div className={`fourbox ${info?.imgClass}`}>
-                        <img src={info?.imgSrc} className="img-fluid" alt="" />
-                        <h4>{info?.title}</h4>
-                      </div>
-                    </Link>
-                  </Col>
-                ))}
+                {pageInfo &&
+                  pageInfo?.map((info, index) => (
+                    <Col md={6} xl={6} xxl={3} key={index}>
+                      <Link to={info?.boxHref} className="link-text">
+                        <div className={`fourbox ${info?.imgClass}`}>
+                          <img
+                            src={info?.imgSrc}
+                            className="img-fluid"
+                            alt=""
+                            loading="lazy"
+                          />
+                          <h4>{info?.title}</h4>
+                        </div>
+                      </Link>
+                    </Col>
+                  ))}
               </Row>
             </div>
           </Col>

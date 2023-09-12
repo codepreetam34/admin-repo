@@ -10,7 +10,7 @@ const ViewDataModal = ({ show, onClose }) => {
       <Row>
         <Col md={12} lg={3}>
           <div className="">
-            <img src={ModalImg} className="img-fluid" alt="" />
+            <img src={ModalImg} className="img-fluid" alt="" loading="lazy" />
           </div>
         </Col>
         <Col md={12} lg={9}>
@@ -32,6 +32,7 @@ const ViewDataModal = ({ show, onClose }) => {
                       src="./images/solana.png"
                       className="img-fluid"
                       alt=""
+                      loading="lazy"
                     />
                     <p>95.533 BNB</p>
                   </div>
@@ -44,6 +45,7 @@ const ViewDataModal = ({ show, onClose }) => {
                       src="./images/tooltip-check.png"
                       className="img-fluid"
                       alt=""
+                      loading="lazy"
                     />
                   </div>
                 </li>
@@ -55,6 +57,7 @@ const ViewDataModal = ({ show, onClose }) => {
                       src="./images/tooltip-check.png"
                       className="img-fluid"
                       alt=""
+                      loading="lazy"
                     />
                   </div>
                 </li>
@@ -109,6 +112,7 @@ const ViewDataModal = ({ show, onClose }) => {
                             src={MoHisTabData.priceimg}
                             className="img-fluid"
                             alt=""
+                            loading="lazy"
                           />{" "}
                           {MoHisTabData.price}
                         </td>

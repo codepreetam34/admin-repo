@@ -42,7 +42,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
         </div>
         <div className="logo">
           <Link to="/">
-            <img src={Logo} className="img-fluid" alt="" />
+            <img src={Logo} className="img-fluid" alt="" loading="lazy" />
           </Link>
         </div>
         <div className="menulist">

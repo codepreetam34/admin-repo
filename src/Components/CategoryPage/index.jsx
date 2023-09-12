@@ -16,7 +16,7 @@ const CategoryPage = () => {
   const categoryList = useSelector(
     (state) => state?.CategoryList?.categoryList?.categoryList
   );
-  
+
   useEffect(() => {
     if (!categoryList || categoryList.length === 0) {
       dispatch(getCategory())
@@ -105,6 +105,7 @@ const CategoryPage = () => {
                   alt=""
                   width={70}
                   height={70}
+                  loading="lazy"
                 />
               </td>
               {category?.children?.length > 0 ? (

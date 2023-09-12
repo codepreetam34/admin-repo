@@ -13,7 +13,7 @@ const CategoryChildrenPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const childCategoryList = useSelector(
     (state) => state?.CategoryList?.ChidCategoryList?.subCategoryList
   );
@@ -114,6 +114,7 @@ const CategoryChildrenPage = () => {
                   alt={category?.imageAltText}
                   width={70}
                   height={70}
+                  loading="lazy"
                 />
               </td>
               {category?.productCount > 0 ? (
