@@ -1,33 +1,42 @@
 import React, { useState, useEffect } from "react";
-import Wrapper from "../../../../Wrapper";
+import Wrapper from "Components/Wrapper";
 import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
-import DynamicModal from "./Modals/DynamicModal";
+import DynamicModal from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList/Modals/DynamicModal";
+import { getCategoryChildrens } from "Redux/Slices/Category/CategorySlice";
+import { useNavigate, useParams } from "react-router-dom";
 
-const HomePageBannerList = () => {
-  const [isLoading, setIsLoading] = useState(false);
+const CategoryChildrenPage = () => {
+  const params = useParams();
+  const { id } = params;
   const [modalData, setModalData] = useState({ type: null, data: null });
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-
-  const banners = useSelector(
-    (state) => state?.HomePageBanner?.homePagebanners?.homePageBanners
+  const navigate = useNavigate();
+  
+  const childCategoryList = useSelector(
+    (state) => state?.CategoryList?.ChidCategoryList?.subCategoryList
   );
   useEffect(() => {
-    if (!banners || banners.length === 0) {
-      setIsLoading(true);
-      dispatch(getHomePageBanner()).then(() => {
-        setIsLoading(false);
-      });
+    if (!childCategoryList || childCategoryList.length === 0) {
+      dispatch(getCategoryChildrens(id))
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => setIsLoading(false));
     } else {
       setIsLoading(false);
     }
-  }, [dispatch, banners]);
+  }, [dispatch, childCategoryList, id]);
 
+  const pageTitle = useSelector(
+    (state) => state?.CategoryList?.ChidCategoryList?.pageTitle
+  );
   const tableHeaders = [
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
     { title: "Image", class: "" },
+    { title: `${pageTitle} Products`, class: "" },
     { title: "Action", class: "text-center" },
   ];
 
@@ -36,24 +45,24 @@ const HomePageBannerList = () => {
       name: "View",
       class: "eye",
       icon: "fa-solid fa-eye",
-      onClick: (nft) => {
-        setModalData({ type: "View", data: nft });
+      onClick: (data) => {
+        setModalData({ type: "View", data: data });
       },
     },
     {
       name: "Edit",
       class: "edit",
       icon: "far fa-edit",
-      onClick: (nft) => {
-        setModalData({ type: "Edit", data: nft });
+      onClick: (data) => {
+        setModalData({ type: "Edit", data: data });
       },
     },
     {
       name: "Delete",
       class: "delete",
       icon: "far fa-trash-alt",
-      onClick: (nft) => {
-        setModalData({ type: "Delete", data: nft });
+      onClick: (data) => {
+        setModalData({ type: "Delete", data: data });
       },
     },
   ];
@@ -67,7 +76,11 @@ const HomePageBannerList = () => {
         <tr>
           {tableHeaders &&
             tableHeaders?.map((header, index) => (
-              <th className={header?.class} key={index}>
+              <th
+                style={{ textTransform: "capitalize" }}
+                className={header?.class}
+                key={index}
+              >
                 {header?.title}
               </th>
             ))}
@@ -77,21 +90,60 @@ const HomePageBannerList = () => {
   };
 
   const DataTableBody = () => {
+    const linkStyles = {
+      fontSize: "12px",
+      marginRight: "1rem",
+      fontFamily: "Inter",
+      cursor: "pointer",
+      textDecoration: "none",
+      textTransform: "capitalize",
+      fontWeight: "bold",
+      transition: "text-decoration 0.2s ease-in-out",
+    };
+
     return (
       <tbody>
-        {banners &&
-          banners?.map((banner, index) => (
-            <tr key={banner?._id}>
+        {childCategoryList &&
+          childCategoryList?.map((category, index) => (
+            <tr key={category?._id}>
               <td>{index + 1}</td>
-              <td>{banner?.title}</td>
+              <td style={{ textTransform: "capitalize" }}>{category?.name}</td>
               <td>
                 <img
-                  src={banner?.banners[0]?.img}
-                  alt=""
+                  src={category?.categoryImage}
+                  alt={category?.imageAltText}
                   width={70}
                   height={70}
                 />
               </td>
+              {category?.productCount > 0 ? (
+                <td
+                  style={{
+                    ...linkStyles,
+                    ":hover": {
+                      textDecoration: "underline", // Apply underline on hover
+                    },
+                  }}
+                  onClick={() => ViewParticularUserHandler(category?._id)}
+                >
+                  {`View Products (${category?.productCount})`}
+                </td>
+              ) : (
+                <td
+                  style={{
+                    fontSize: "12px",
+                    marginRight: "1rem",
+                    fontFamily: "Inter",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    fontWeight: "bold",
+                    transition: "text-decoration 0.2s ease-in-out",
+                    cursor: "default",
+                  }}
+                >
+                  {`No Products`}
+                </td>
+              )}
               <td>
                 <div
                   className="table_icons d-flex align-items-center justify-content-center"
@@ -100,7 +152,7 @@ const HomePageBannerList = () => {
                   {tableActions?.map((action, index) => (
                     <div
                       className={action.class.toLowerCase()}
-                      onClick={() => action.onClick(banner)}
+                      onClick={() => action.onClick(category)}
                     >
                       <a href="#">
                         <i className={action.icon}></i>
@@ -120,8 +172,10 @@ const HomePageBannerList = () => {
       <>
         <Col md={4}>
           <div className="user_heading">
-            <h3>HomePage Carousel Banners</h3>
-            <p>Welcome to HomePage Banner page</p>
+            <h3 style={{ textTransform: "capitalize" }}>
+              {pageTitle} Category
+            </h3>
+            <p>Welcome to Child Category page</p>
           </div>
         </Col>
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
@@ -142,7 +196,7 @@ const HomePageBannerList = () => {
         <Col md={4}>
           <div className="add_filter_btn d-flex justify-content-end">
             <a href="#" className="bgbtnred" onClick={handleAdd}>
-              Add New Banner
+              Add New Child
             </a>
           </div>
         </Col>
@@ -165,6 +219,10 @@ const HomePageBannerList = () => {
         </div>
       </Col>
     );
+  };
+
+  const ViewParticularUserHandler = (id) => {
+    navigate(`category/category-child/${id}/products`);
   };
   return (
     <Wrapper>
@@ -208,4 +266,4 @@ const HomePageBannerList = () => {
   );
 };
 
-export default HomePageBannerList;
+export default CategoryChildrenPage;

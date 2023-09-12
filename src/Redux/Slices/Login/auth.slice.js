@@ -42,6 +42,10 @@ const slice = createSlice({
         "Sidebar_Module_Assigned",
         JSON.stringify(action.payload.user)
       );
+      localStorage.setItem(
+        "AUTH_ACCESS_TOKEN",
+        JSON.stringify(action.payload.token)
+      );
     });
     builder.addCase(login.rejected, (state, action) => {
       state.data = {};

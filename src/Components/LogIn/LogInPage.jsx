@@ -33,8 +33,8 @@ const LogInPage = () => {
       .unwrap()
       .then((res) => {
         if (res) {
-          setItem("userData", res?.data);
           notify({ type: "success", message: "Logged in successfully" });
+          setItem("userData", res?.data);
           navigate("/");
         }
       })
