@@ -4,7 +4,7 @@ import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList/Modals/DynamicModal";
 import { getCategoryChildrens } from "Redux/Slices/Category/CategorySlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const CategoryChildrenPage = () => {
   const params = useParams();
@@ -133,7 +133,6 @@ const CategoryChildrenPage = () => {
                   style={{
                     fontSize: "12px",
                     marginRight: "1rem",
-                    cursor: "pointer",
                     textDecoration: "none",
                     fontWeight: "bold",
                     transition: "text-decoration 0.2s ease-in-out",
@@ -153,9 +152,9 @@ const CategoryChildrenPage = () => {
                       className={action.class.toLowerCase()}
                       onClick={() => action.onClick(category)}
                     >
-                      <a href="#">
+                      <Link to="#">
                         <i className={action.icon}></i>
-                      </a>
+                      </Link>
                     </div>
                   ))}
                 </div>

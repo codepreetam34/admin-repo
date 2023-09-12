@@ -3,7 +3,7 @@ import Wrapper from "Components/Wrapper";
 import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList/Modals/DynamicModal";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getProductsByCategoryId } from "Redux/Slices/Products/ProductsSlice";
 const ProductsPage = () => {
   const params = useParams();
@@ -109,9 +109,9 @@ const ProductsPage = () => {
                       className={action.class.toLowerCase()}
                       onClick={() => action.onClick(category)}
                     >
-                      <a href="#">
+                      <Link to="#">
                         <i className={action.icon}></i>
-                      </a>
+                      </Link>
                     </div>
                   ))}
                 </div>

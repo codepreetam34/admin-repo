@@ -5,16 +5,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { setItem } from "Services/CommonService";
 import { loginSchema } from "ValidationSchema/loginSchema";
 import { login } from "Redux/Slices/Login/auth.slice";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Logo from "images/vibezterLogo.png";
-import { Button, Form, Box } from "react-bootstrap";
-import { Notify } from "Constants/utils";
+import { Button, Form } from "react-bootstrap";
+import { FORGOT_PASSWORD } from "Routes/Routes";
 const LogInPage = () => {
   const [passwordType, setPasswordType] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showToast, setShowToast] = useState(false);
   const {
     register,
     handleSubmit,
@@ -23,10 +22,6 @@ const LogInPage = () => {
     resolver: yupResolver(loginSchema),
     mode: "onChange",
   });
-
-  const forgotPasswordNavigate = () => {
-    // Handle forgot password navigation
-  };
 
   const onSubmit = (data) => {
     dispatch(login(data))
@@ -60,8 +55,8 @@ const LogInPage = () => {
           </a>
           <div className="user_management_list p-0">
             <div className="user_heading">
-              <h3>Log in</h3>
-              <p>Login to your account</p>
+              <h3>Welcome Back</h3>
+              <p>Login to access your account.</p>
             </div>
             <Form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
               <Form.Group className="mb-3" controlId="emailid">
@@ -71,6 +66,9 @@ const LogInPage = () => {
                   placeholder="meta@email.com"
                   {...register("email")} // Assuming "email" is the form field name
                 />
+                {errors.email && (
+                  <p className="text-danger">{errors.email.message}</p>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -79,19 +77,18 @@ const LogInPage = () => {
                   type={passwordType ? "password" : "text"}
                   placeholder="**********"
                   {...register("password")} // Assuming "password" is the form field name
-                />
+                />{" "}
+                {errors.password && (
+                  <p className="text-danger">{errors.password.message}</p>
+                )}
               </Form.Group>
               <div className="check_with_text d-flex align-items-center justify-content-between">
-                <Form.Group className="" controlId="formBasicCheckbox">
-                  {/* <Form.Check type="checkbox" label="Remember" /> */}
-                </Form.Group>
-                <a
-                  href="#"
-                  className="text-red"
-                  onClick={forgotPasswordNavigate}
-                >
+                {/* <Form.Group className="" controlId="formBasicCheckbox">
+                   <Form.Check type="checkbox" label="Remember" /> 
+                </Form.Group> */}
+                <Link className="text-red" to={FORGOT_PASSWORD}>
                   Forgot password?
-                </a>
+                </Link>
               </div>
               <Button variant="" type="submit">
                 Log In

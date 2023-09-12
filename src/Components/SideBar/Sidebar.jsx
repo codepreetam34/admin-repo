@@ -5,7 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../../../src/images/vibezterLogo.png";
 import { logout } from "Redux/Slices/Login/auth.slice";
 import { useDispatch } from "react-redux";
-import { Notify } from "Constants/utils";
+
 const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const [sideBarLink, setSideBarLink] = useState(false);
   const navigate = useNavigate();

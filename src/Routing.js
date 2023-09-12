@@ -17,14 +17,19 @@ import {
   CATEGORY_CHILDREN,
   CATEGORY_CHILD_PRODUCTS,
   LOGIN,
+  SETUP_NEW_PASSWORD,
+  FORGOT_PASSWORD,
 } from "Routes/Routes";
 import PrivateRoutes from "Routes/PrivateRoutes";
+import SetupNewPassword from "Components/LogIn/SetupNewPassword";
+import ForgotPassword from "Components/LogIn/ForgotPassword";
 const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={LOGIN} element={<LogIn />} />
-        
+        <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
+        <Route path={SETUP_NEW_PASSWORD} element={<SetupNewPassword />} />
         <Route path={HOME} element={<PrivateRoutes Component={Home} />} />
 
         <Route
