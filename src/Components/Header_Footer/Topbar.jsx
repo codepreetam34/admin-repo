@@ -1,34 +1,38 @@
 import React, { useState } from "react";
-import {
-  Dropdown,
-  Form,
-  InputGroup,
-  Row,
-  Col,
-  Toast,
-  ToastContainer,
-} from "react-bootstrap";
+import { Dropdown, Form, InputGroup, Row, Col } from "react-bootstrap";
 import User from "../../../src/images/user.png";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "Redux/Slices/Login/auth.slice";
-//import { notify } from "Constants/utils";
+import { ErrorToaster } from "Constants/utils";
+
 const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showToast, setShowToast] = useState(false);
   const authData = JSON.parse(localStorage.getItem("Sidebar_Module_Assigned"));
+  const [showErrorToast, setShowErrorToast] = useState(false);
+  const [showErrorToastMessage, setShowErrorToastMessage] = useState();
 
   const handleLogOut = () => {
     dispatch(logout())
       .then((response) => {
-        localStorage.clear();
-        setShowToast(true);
-     //   notify(setShowToast, showToast);
-        navigate("/login");
+        if (
+          (response && response?.meta?.requestStatus === "fulfilled") ||
+          !response
+        ) {
+          localStorage.clear();
+          navigate("/login", {
+            state: {
+              showToastMessage: response?.payload?.message
+                ? response?.payload?.message
+                : "Logout successful. Have a great day!",
+            },
+          });
+        }
       })
-      .catch((rejectedWithValue) => {
-     //   notify({ type: "danger", content: "Logged out failed" });
+      .catch((err) => {
+        setShowErrorToast(true);
+        setShowErrorToastMessage(err?.error?.response?.data?.message);
       });
   };
 
@@ -85,28 +89,12 @@ const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
             </div>
           </Col>
         </Row>
-      </div>
-      <div className="custom_toaster">
-        <ToastContainer position="bottom-end" className="p-3">
-          <Toast
-            onClose={() => setShowToast(false)}
-            show={showToast}
-            className="bottom-end"
-            delay={3000}
-          >
-            <Toast.Header>
-              <img
-                src="holder.js/20x20?text=%20"
-                className="rounded me-2"
-                alt=""
-                loading="lazy"
-              />
-              <strong className="me-auto">
-                <i class="fa-solid fa-circle-check"></i> Success
-              </strong>
-            </Toast.Header>
-          </Toast>
-        </ToastContainer>
+        <ErrorToaster
+          showErrorToast={showErrorToast}
+          setShowErrorToast={setShowErrorToast}
+          showErrorToastMessage={showErrorToastMessage}
+          customErrorMessage={"Logout failed. Please try again later."}
+        />
       </div>
     </>
   );

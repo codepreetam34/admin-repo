@@ -8,12 +8,12 @@ import { resetPasswordLink } from "Redux/Slices/Login/resetPasswordLink";
 import { Button, Form } from "react-bootstrap";
 import Logo from "images/vibezterLogo.png";
 import { LOGIN } from "Routes/Routes";
-import { Toast, ToastContainer } from "react-bootstrap";
+import { ErrorToaster, SuccessToaster } from "Constants/utils";
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showToast, setShowToast] = useState(false);
-  //  const [showToastMessage, setShowToastMessage] = useState();
+  const [showToastMessage, setShowToastMessage] = useState();
   const [showErrorToast, setShowErrorToast] = useState(false);
   const [showErrorToastMessage, setShowErrorToastMessage] = useState();
 
@@ -30,8 +30,13 @@ const ForgotPassword = () => {
       .then((res) => {
         console.log(res);
         if (res?.payload?.link) {
-          //   setShowToastMessage(res?.payload?.message);
+          setShowToastMessage(res?.payload?.message);
           setShowToast(true);
+          setTimeout(() => {
+            navigate("/login", {
+              state: { showToastFromPage: "Redirecting to login page" },
+            });
+          }, 3000);
         } else if (res?.payload?.error) {
           setShowErrorToastMessage(
             res?.payload?.error?.response?.data?.message
@@ -40,7 +45,8 @@ const ForgotPassword = () => {
         }
       })
       .catch((err) => {
-        setShowToast(true);
+        setShowErrorToastMessage(err?.error?.response?.data?.message);
+        setShowErrorToast(true);
       });
   };
   return (
@@ -80,55 +86,21 @@ const ForgotPassword = () => {
             </Form>
           </div>
         </div>
-        <div className="custom_toaster">
-          <ToastContainer position="top-end" className="p-3">
-            <Toast
-              onClose={() => setShowToast(false)}
-              show={showToast}
-              className="bottom-end"
-              delay={3000}
-            >
-              <Toast.Header>
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                  loading="lazy"
-                />
-                <strong className="me-auto">
-                  <i class="fa-solid fa-circle-check"></i>Your password reset
-                  email has been sent. Please check your email inbox.
-                </strong>
-              </Toast.Header>
-            </Toast>
-          </ToastContainer>
-        </div>
 
-        <div className="custom_toaster">
-          <ToastContainer position="top-end" className="p-3">
-            <Toast
-              onClose={() => setShowErrorToast(false)}
-              show={showErrorToast}
-              className="bottom-end"
-              delay={3000}
-            >
-              <Toast.Header>
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                  loading="lazy"
-                />
-                <strong className="me-auto">
-                  <i class="fa-solid fa-circle-check"></i>
-                  {showErrorToastMessage
-                    ? showErrorToastMessage
-                    : "Email does not exist"}
-                </strong>
-              </Toast.Header>
-            </Toast>
-          </ToastContainer>
-        </div>
+        <SuccessToaster
+          showToast={showToast}
+          setShowToast={setShowToast}
+          showToastMessage={showToastMessage}
+          customMessage={
+            "Your password reset email has been sent. Please check your email inbox."
+          }
+        />
+        <ErrorToaster
+          showErrorToast={showErrorToast}
+          setShowErrorToast={setShowErrorToast}
+          showErrorToastMessage={showErrorToastMessage}
+          customErrorMessage={"Email does not exist"}
+        />
       </div>
     </>
   );

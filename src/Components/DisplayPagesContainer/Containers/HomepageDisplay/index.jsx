@@ -63,6 +63,10 @@ const HomepageDisplay = () => {
                             loading="lazy"
                           />
                           <h4>{info?.title}</h4>
+                          <p>Modify {info?.title} UI</p>
+                          <h3>
+                            <span className="greentext">Click</span> Here
+                          </h3>
                         </div>
                       </Link>
                     </Col>

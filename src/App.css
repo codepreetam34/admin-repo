@@ -18,3 +18,24 @@ ul {
 .transitionStyle {
   transition: "transform 0.2s ease-in-out",
 }
+
+
+.custom_toaster_error .toast-container {
+  z-index: 999;
+}
+
+.custom_toaster_error .toast-container i {
+  color: red; /* Change the icon color to red for error */
+  padding: 0 8px 0 0;
+  font-size: 16px;
+}
+
+.custom_toaster_error .toast-container .toast-header {
+  padding: 15px 10px;
+  background-color: #f8d7da; /* Use a red background color for error */
+  color: #721c24; /* Text color for error */
+}
+
+.custom_toaster_error .toast-container .toast-header strong {
+  font-size: 16px;
+}

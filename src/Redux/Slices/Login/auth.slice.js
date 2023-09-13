@@ -1,10 +1,11 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "Services/AxiosInstance";
 import { FETCH_ACTION, LOGOUT } from "./type";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const login = createAsyncThunk(FETCH_ACTION, async (data, thunkAPI) => {
   try {
     const response = await axiosInstance.post("/admin/signin", data);
+    console.log("response",response)
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue({ error: error });

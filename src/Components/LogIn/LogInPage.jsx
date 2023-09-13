@@ -5,14 +5,53 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { setItem } from "Services/CommonService";
 import { loginSchema } from "ValidationSchema/loginSchema";
 import { login } from "Redux/Slices/Login/auth.slice";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Logo from "images/vibezterLogo.png";
 import { Button, Form } from "react-bootstrap";
 import { FORGOT_PASSWORD } from "Routes/Routes";
+import { ErrorToaster, SuccessToaster } from "Constants/utils";
 const LogInPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
+  const [showErrorToastMessage, setShowErrorToastMessage] = useState();
+  const showToastMessageFromPage = location?.state?.showToastMessageFromPage;
+  const [showToastFromPage, setShowToastFromPage] = useState(false);
+  const showToastMessage = location?.state?.showToastMessage;
+  const [showToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    if (showToastMessage) {
+      setShowToast(true);
+
+      const timeoutId = setTimeout(() => {
+        setShowToast(false);
+      }, 4000);
+
+      // Clean up the timeout when the component unmounts
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [showToastMessage]);
+
+  useEffect(() => {
+    if (showToastMessageFromPage) {
+      setShowToastFromPage(true);
+
+      const timeoutId = setTimeout(() => {
+        setShowToastFromPage(false);
+      }, 4000);
+
+      // Clean up the timeout when the component unmounts
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [showToastMessageFromPage]);
+
   const {
     register,
     handleSubmit,
@@ -28,11 +67,12 @@ const LogInPage = () => {
       .then((res) => {
         if (res) {
           setItem("userData", res?.data);
-          navigate("/");
+          navigate("/", { state: { showToastMessage: res?.user?.fullName } });
         }
       })
       .catch((err) => {
-        navigate("/login");
+        setShowErrorToast(true);
+        setShowErrorToastMessage(err?.error?.response?.data?.message);
       });
   };
 
@@ -96,6 +136,30 @@ const LogInPage = () => {
             </Form>
           </div>
         </div>
+        {showToastFromPage && (
+          <SuccessToaster
+            showToast={showToastFromPage}
+            setShowToast={setShowToastFromPage}
+            showToastMessage={showToastMessageFromPage}
+            customMessage={"Welcome to Vibezter Admin "}
+          />
+        )}
+        <ErrorToaster
+          showErrorToast={showErrorToast}
+          setShowErrorToast={setShowErrorToast}
+          showErrorToastMessage={showErrorToastMessage}
+          customErrorMessage={
+            "Incorrect login credentials. Please verify and retry."
+          }
+        />{" "}
+        {showToast && (
+          <SuccessToaster
+            showToast={showToast}
+            setShowToast={setShowToast}
+            showToastMessage={showToastMessage}
+            customMessage={`Logout successful. Have a great day! `}
+          />
+        )}
       </div>
     );
   }

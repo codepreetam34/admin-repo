@@ -8,14 +8,14 @@ import { setupPasswordSchema } from "ValidationSchema/setUpNewPassword";
 import { setupPassword } from "Redux/Slices/Login/setupPassword";
 import { Button, Form } from "react-bootstrap";
 import Logo from "images/vibezterLogo.png";
-import { Toast, ToastContainer } from "react-bootstrap";
+import { ErrorToaster, SuccessToaster } from "Constants/utils";
 const SetupNewPassword = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const id = searchParams.get("id");
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
-  // const [showToastMessage, setShowToastMessage] = useState();
+  const [showToastMessage, setShowToastMessage] = useState();
   const [showErrorToast, setShowErrorToast] = useState(false);
   const [showErrorToastMessage, setShowErrorToastMessage] = useState();
   const navigate = useNavigate();
@@ -38,15 +38,20 @@ const SetupNewPassword = () => {
     dispatch(setupPassword(postData))
       .then((res) => {
         if (res?.payload?.message) {
-          //   setShowToastMessage(res?.payload?.message);
+          setShowToastMessage(res?.payload?.message);
           setShowToast(true);
-         // navigate("/login");
+          setTimeout(() => {
+            navigate("/login");
+          }, 3000);
         } else if (res?.payload?.error) {
-          setShowErrorToastMessage(res?.payload?.error?.message);
+          setShowErrorToastMessage(
+            res?.payload?.error?.response?.data?.message
+          );
           setShowErrorToast(true);
         }
       })
       .catch((err) => {
+        setShowErrorToastMessage(err?.error?.response?.data?.message);
         setShowErrorToast(true);
       });
   };
@@ -101,55 +106,20 @@ const SetupNewPassword = () => {
               </Button>
             </Form>
           </div>
-        </div>{" "}
-        <div className="custom_toaster">
-          <ToastContainer position="top-end" className="p-3">
-            <Toast
-              onClose={() => setShowToast(false)}
-              show={showToast}
-              className="top-end"
-              delay={3000}
-            >
-              <Toast.Header>
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                  loading="lazy"
-                />
-                <strong className="me-auto">
-                  <i class="fa-solid fa-circle-check"></i> Your password has
-                  been successfully updated.
-                </strong>
-              </Toast.Header>
-            </Toast>
-          </ToastContainer>
         </div>
-        <div className="custom_toaster">
-          <ToastContainer position="top-end" className="p-3">
-            <Toast
-              onClose={() => setShowErrorToast(false)}
-              show={showErrorToast}
-              className="top-end"
-              delay={3000}
-            >
-              <Toast.Header>
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                  loading="lazy"
-                />
-                <strong className="me-auto">
-                  <i class="fa-solid fa-circle-check"></i>{" "}
-                  {showErrorToastMessage
-                    ? showErrorToastMessage
-                    : "Invalid or expired password reset token"}
-                </strong>
-              </Toast.Header>
-            </Toast>
-          </ToastContainer>
-        </div>
+
+        <SuccessToaster
+          showToast={showToast}
+          setShowToast={setShowToast}
+          showToastMessage={showToastMessage}
+          customMessage={"Your password has been successfully updated."}
+        />
+        <ErrorToaster
+          showErrorToast={showErrorToast}
+          setShowErrorToast={setShowErrorToast}
+          showErrorToastMessage={showErrorToastMessage}
+          customErrorMessage={"Invalid or expired password reset token"}
+        />
       </div>
     </>
   );
