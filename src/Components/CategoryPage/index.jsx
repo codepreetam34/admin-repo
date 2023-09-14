@@ -2,17 +2,27 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "Components/Wrapper";
 import { Row, Col, Form, Table, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import DynamicModal from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList/Modals/DynamicModal";
+import DynamicModal from "Constants/DynamicModal";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
+import ViewDataModal from "./Modals/ViewDataModal";
+import EditDataModal from "./Modals/EditDataModal";
+import DeleteDataModal from "./Modals/DeleteDataModal";
+import AddDataModal from "./Modals/AddDataModal";
 
 const CategoryPage = () => {
-  const [modalData, setModalData] = useState({ type: null, data: null });
+  const [modalData, setModalData] = useState({
+    type: null,
+    data: null,
+    modalContent: <></>,
+    modalTitle: null,
+  });
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [submittedData, setSubmittedData] = useState(null);
   const categoryList = useSelector(
     (state) => state?.CategoryList?.categoryList?.categoryList
   );
@@ -43,7 +53,12 @@ const CategoryPage = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setModalData({ type: "View", data: data });
+        setModalData({
+          type: "View",
+          data: data,
+          modalContent: <ViewDataModal />,
+          modalTitle: "View Category",
+        });
       },
     },
     {
@@ -51,7 +66,12 @@ const CategoryPage = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
-        setModalData({ type: "Edit", data: data });
+        setModalData({
+          type: "Edit",
+          data: data,
+          modalContent: <EditDataModal />,
+          modalTitle: "Edit Category",
+        });
       },
     },
     {
@@ -59,14 +79,41 @@ const CategoryPage = () => {
       class: "delete",
       icon: "far fa-trash-alt",
       onClick: (data) => {
-        setModalData({ type: "Delete", data: data });
+        setModalData({
+          type: "Delete",
+          data: data,
+          modalContent: <DeleteDataModal />,
+          modalTitle: "Delete Category",
+        });
       },
     },
   ];
 
   const handleAdd = () => {
-    setModalData({ type: "Add", data: null });
+    setModalData({
+      type: "Add",
+      data: null,
+      modalContent: (
+        <AddDataModal
+          show={true}
+          onClose={() => {
+            // Handle modal close logic here
+          }}
+          onSubmitCallback={(data) => {
+            // Handle form submission logic here
+            setSubmittedData(data); // Store the submitted data in state
+          }}
+          onDataCallback={(data) => {
+            // Handle data sent from AddDataModal
+            // You can now pass this data to the DynamicModal
+            console.log("Data received from AddDataModal:", data);
+          }}
+        />
+      ),
+      modalTitle: "Add Category",
+    });
   };
+
   const DataTableHeader = () => {
     return (
       <thead>
@@ -242,11 +289,15 @@ const CategoryPage = () => {
       {modalData.type && (
         <DynamicModal
           show={true}
-          onClose={() => setModalData({ type: null, data: null })}
-          type={modalData.type}
           data={modalData.data}
-          onSubmit={() => {
-            // Handle form submission or deletion logic here based on modal type
+          modalTitle={modalData.modalTitle}
+          modalContent={modalData.modalContent}
+          onDataCallback={(data) => {
+            // Handle data received from DynamicModal
+            console.log("Data received from DynamicModal:", data);
+          }}
+          onSubmit={(data) => {
+            console.log("data sub ", data);
           }}
         />
       )}
