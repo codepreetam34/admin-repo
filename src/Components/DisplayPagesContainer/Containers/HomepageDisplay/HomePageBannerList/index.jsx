@@ -3,11 +3,20 @@ import Wrapper from "../../../../Wrapper";
 import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
-import DynamicModal from "./Modals/DynamicModal";
+import DynamicModal from "Constants/DynamicModal";
+import ViewDataModal from "./Modals/ViewDataModal";
+import EditDataModal from "./Modals/EditDataModal";
+import DeleteDataModal from "./Modals/DeleteDataModal";
+import AddDataModal from "./Modals/AddDataModal";
 
 const HomePageBannerList = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [modalData, setModalData] = useState({ type: null, data: null });
+  const [modalData, setModalData] = useState({
+    type: null,
+    data: null,
+    modalContent: <></>,
+    modalTitle: null,
+  });
   const dispatch = useDispatch();
 
   const banners = useSelector(
@@ -36,30 +45,50 @@ const HomePageBannerList = () => {
       name: "View",
       class: "eye",
       icon: "fa-solid fa-eye",
-      onClick: (nft) => {
-        setModalData({ type: "View", data: nft });
+      onClick: (data) => {
+        setModalData({
+          type: "View",
+          data: data,
+          modalContent: <ViewDataModal />,
+          modalTitle: "View Category",
+        });
       },
     },
     {
       name: "Edit",
       class: "edit",
       icon: "far fa-edit",
-      onClick: (nft) => {
-        setModalData({ type: "Edit", data: nft });
+      onClick: (data) => {
+        setModalData({
+          type: "Edit",
+          data: data,
+          modalContent: <EditDataModal />,
+          modalTitle: "Edit Category",
+        });
       },
     },
     {
       name: "Delete",
       class: "delete",
       icon: "far fa-trash-alt",
-      onClick: (nft) => {
-        setModalData({ type: "Delete", data: nft });
+      onClick: (data) => {
+        setModalData({
+          type: "Delete",
+          data: data,
+          modalContent: <DeleteDataModal />,
+          modalTitle: "Delete Category",
+        });
       },
     },
   ];
 
   const handleAdd = () => {
-    setModalData({ type: "Add", data: null });
+    setModalData({
+      type: "Add",
+      data: null,
+      modalContent: <AddDataModal />,
+      modalTitle: "Add Category",
+    });
   };
   const DataTableHeader = () => {
     return (
@@ -197,9 +226,18 @@ const HomePageBannerList = () => {
       {modalData.type && (
         <DynamicModal
           show={true}
-          onClose={() => setModalData({ type: null, data: null })}
+          onClose={() =>
+            setModalData({
+              type: null,
+              data: null,
+              modalContent: <></>,
+              modalTitle: null,
+            })
+          }
           type={modalData.type}
           data={modalData.data}
+          modalTitle={modalData.modalTitle}
+          modalContent={modalData.modalContent}
           onSubmit={() => {
             // Handle form submission or deletion logic here based on modal type
           }}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "Components/Wrapper";
 import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import DynamicModal from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList/Modals/DynamicModal";
+import DynamicModal from "Constants/DynamicModal";
 import { Link, useParams } from "react-router-dom";
 import { getProductsByCategoryId } from "Redux/Slices/Products/ProductsSlice";
 const ProductsPage = () => {
