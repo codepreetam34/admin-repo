@@ -21,7 +21,7 @@ ul {
 
 
 .custom_toaster_error .toast-container {
-  z-index: 999;
+  z-index: 9999;
 }
 
 .custom_toaster_error .toast-container i {

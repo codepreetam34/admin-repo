@@ -10,6 +10,7 @@ import ViewDataModal from "./Modals/ViewDataModal";
 import EditDataModal from "./Modals/EditDataModal";
 import DeleteDataModal from "./Modals/DeleteDataModal";
 import AddDataModal from "./Modals/AddDataModal";
+import { ErrorToaster, SuccessToaster } from "Constants/utils";
 
 const CategoryPage = () => {
   const [modalData, setModalData] = useState({
@@ -18,11 +19,16 @@ const CategoryPage = () => {
     modalContent: <></>,
     modalTitle: null,
   });
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(true);
+
+  const [addShowErrorToast, setAddShowErrorToast] = useState(false);
+  const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
+  const [addShowToastMessage, setAddShowToastMessage] = useState("");
+  const [addShowToast, setAddShowToast] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [submittedData, setSubmittedData] = useState(null);
   const categoryList = useSelector(
     (state) => state?.CategoryList?.categoryList?.categoryList
   );
@@ -53,6 +59,7 @@ const CategoryPage = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
+        setShowModal(true);
         setModalData({
           type: "View",
           data: data,
@@ -66,6 +73,7 @@ const CategoryPage = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
+        setShowModal(true);
         setModalData({
           type: "Edit",
           data: data,
@@ -79,6 +87,7 @@ const CategoryPage = () => {
       class: "delete",
       icon: "far fa-trash-alt",
       onClick: (data) => {
+        setShowModal(true);
         setModalData({
           type: "Delete",
           data: data,
@@ -90,23 +99,24 @@ const CategoryPage = () => {
   ];
 
   const handleAdd = () => {
+    setShowModal(true);
     setModalData({
       type: "Add",
       data: null,
       modalContent: (
         <AddDataModal
-          show={true}
-          onClose={() => {
-            // Handle modal close logic here
+          setShowModal={setShowModal} // Make sure you pass setShowModal
+          setAddShowErrorToast={(err) => {
+            setAddShowErrorToast(err);
+          }} // Pass setShowErrorToast
+          setAddShowErrorToastMessage={(msg) => {
+            setAddShowErrorToastMessage(msg);
           }}
-          onSubmitCallback={(data) => {
-            // Handle form submission logic here
-            setSubmittedData(data); // Store the submitted data in state
+          setAddShowToast={(show) => {
+            setAddShowToast(show);
           }}
-          onDataCallback={(data) => {
-            // Handle data sent from AddDataModal
-            // You can now pass this data to the DynamicModal
-            console.log("Data received from AddDataModal:", data);
+          setAddShowToastMessage={(showMessage) => {
+            setAddShowToastMessage(showMessage);
           }}
         />
       ),
@@ -285,20 +295,30 @@ const CategoryPage = () => {
           )}
         </Row>
       </div>
-
       {modalData.type && (
         <DynamicModal
-          show={true}
-          data={modalData.data}
+          show={showModal}
+          onClose={() => {
+            setShowModal(false);
+          }}
           modalTitle={modalData.modalTitle}
           modalContent={modalData.modalContent}
-          onDataCallback={(data) => {
-            // Handle data received from DynamicModal
-            console.log("Data received from DynamicModal:", data);
-          }}
-          onSubmit={(data) => {
-            console.log("data sub ", data);
-          }}
+        />
+      )}
+      {addShowErrorToast && (
+        <ErrorToaster
+          showErrorToast={addShowErrorToast}
+          setShowErrorToast={setAddShowErrorToast}
+          showErrorToastMessage={addShowErrorToastMessage}
+          customErrorMessage={"Something wend wrong! Please Try Again"}
+        />
+      )}
+      {addShowToast && (
+        <SuccessToaster
+          showToast={addShowToast}
+          setShowToast={setAddShowToast}
+          showToastMessage={addShowToastMessage}
+          customMessage={`Please recheck your entry once`}
         />
       )}
     </Wrapper>

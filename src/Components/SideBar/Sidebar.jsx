@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import Logo from "../../../src/images/vibezterLogo.png";
+import Logo from "images/vibezterLogo.png";
 import { logout } from "Redux/Slices/Login/auth.slice";
 import { useDispatch } from "react-redux";
 
@@ -68,8 +68,14 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               as={NavLink}
               exact=""
               to="/category"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <i className="fa-solid fa-gear"></i>Category & Products
+              <i className="fa-solid fa-gear"></i>
+              <div>Category & Products</div>
             </Nav.Link>
             <Nav.Link as={NavLink} exact="" to="/login" onClick={handleLogOut}>
               <i className="fa-solid fa-arrow-right-from-bracket"></i> Log Out
