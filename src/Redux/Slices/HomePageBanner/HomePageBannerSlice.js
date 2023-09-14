@@ -7,7 +7,6 @@ export const getHomePageBanner = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axiosInstance.post(`/banner/getBanners`);
-      console.log("response", response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });

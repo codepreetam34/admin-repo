@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from "react";
-import Wrapper from "../../../../Wrapper";
+import Wrapper from "Components/Wrapper";
 import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
-import DynamicModal from "./Modals/DynamicModal";
-
-const HomePageBannerList = () => {
-  const [isLoading, setIsLoading] = useState(false);
+import DynamicModal from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList/Modals/DynamicModal";
+import { Link, useParams } from "react-router-dom";
+import { getProductsByCategoryId } from "Redux/Slices/Products/ProductsSlice";
+const ProductsPage = () => {
+  const params = useParams();
+  const { id } = params;
   const [modalData, setModalData] = useState({ type: null, data: null });
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
   const dispatch = useDispatch();
 
-  const banners = useSelector(
-    (state) => state?.HomePageBanner?.homePagebanners?.homePageBanners
+  const productsList = useSelector(
+    (state) => state?.ProductsByCatId?.ProductsByCatId?.products
   );
   useEffect(() => {
-    if (!banners || banners.length === 0) {
-      setIsLoading(true);
-      dispatch(getHomePageBanner()).then(() => {
-        setIsLoading(false);
-      });
+    if (!productsList || productsList.length === 0) {
+      dispatch(getProductsByCategoryId(id))
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => setIsLoading(false));
     } else {
       setIsLoading(false);
     }
-  }, [dispatch, banners]);
+  }, [dispatch, productsList, id]);
 
+  const pageTitle = useSelector(
+    (state) => state?.ProductsByCatId?.ProductsByCatId?.pageTitle
+  );
   const tableHeaders = [
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
@@ -36,24 +42,24 @@ const HomePageBannerList = () => {
       name: "View",
       class: "eye",
       icon: "fa-solid fa-eye",
-      onClick: (nft) => {
-        setModalData({ type: "View", data: nft });
+      onClick: (data) => {
+        setModalData({ type: "View", data: data });
       },
     },
     {
       name: "Edit",
       class: "edit",
       icon: "far fa-edit",
-      onClick: (nft) => {
-        setModalData({ type: "Edit", data: nft });
+      onClick: (data) => {
+        setModalData({ type: "Edit", data: data });
       },
     },
     {
       name: "Delete",
       class: "delete",
       icon: "far fa-trash-alt",
-      onClick: (nft) => {
-        setModalData({ type: "Delete", data: nft });
+      onClick: (data) => {
+        setModalData({ type: "Delete", data: data });
       },
     },
   ];
@@ -79,14 +85,14 @@ const HomePageBannerList = () => {
   const DataTableBody = () => {
     return (
       <tbody>
-        {banners &&
-          banners?.map((banner, index) => (
-            <tr key={banner?._id}>
+        {productsList &&
+          productsList?.map((category, index) => (
+            <tr key={category?._id}>
               <td>{index + 1}</td>
-              <td>{banner?.title}</td>
+              <td>{category?.name}</td>
               <td>
                 <img
-                  src={banner?.banners[0]?.img}
+                  src={category?.productPictures[0].img}
                   alt=""
                   width={70}
                   height={70}
@@ -101,11 +107,11 @@ const HomePageBannerList = () => {
                   {tableActions?.map((action, index) => (
                     <div
                       className={action.class.toLowerCase()}
-                      onClick={() => action.onClick(banner)}
+                      onClick={() => action.onClick(category)}
                     >
-                      <a href="#">
+                      <Link to="#">
                         <i className={action.icon}></i>
-                      </a>
+                      </Link>
                     </div>
                   ))}
                 </div>
@@ -121,8 +127,10 @@ const HomePageBannerList = () => {
       <>
         <Col md={4}>
           <div className="user_heading">
-            <h3>HomePage Carousel Banners</h3>
-            <p>Welcome to HomePage Banner page</p>
+            <h3 style={{ textTransform: "capitalize" }}>
+              {pageTitle ? `${pageTitle} Products` : "Products"}
+            </h3>
+            <p>Welcome to Category Products page</p>
           </div>
         </Col>
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
@@ -143,7 +151,7 @@ const HomePageBannerList = () => {
         <Col md={4}>
           <div className="add_filter_btn d-flex justify-content-end">
             <a href="#" className="bgbtnred" onClick={handleAdd}>
-              Add New Banner
+              Add New Product
             </a>
           </div>
         </Col>
@@ -167,6 +175,7 @@ const HomePageBannerList = () => {
       </Col>
     );
   };
+
   return (
     <Wrapper>
       <div className="user_management_list">
@@ -209,4 +218,4 @@ const HomePageBannerList = () => {
   );
 };
 
-export default HomePageBannerList;
+export default ProductsPage;

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "services/AxiosInstance";
+import axiosInstance from "Services/AxiosInstance";
 import { RESET_PASSWORD_LINK } from "./type";
 
 export const resetPasswordLink = createAsyncThunk(
@@ -7,7 +7,7 @@ export const resetPasswordLink = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await axiosInstance.post(
-        "api/requestpasswordreset",
+        "/requestpasswordreset",
         data
       );
       return response.data;

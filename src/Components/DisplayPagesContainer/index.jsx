@@ -12,12 +12,15 @@ const DisplayPagesContainer = () => {
           <Row>
             <Col md={6}>
               <div className="user_heading">
-                <h3>Display Pages</h3>
-                <p>Welcome to all display screen page</p>
+                <h3>Discover our pages</h3>
+                <p>
+                  Welcome to the hub where admins wield their magic on frontend
+                  pages.
+                </p>
               </div>
             </Col>
 
-            <Col md={12}>
+            <Col md={12} className="mt-4">
               <PagesContainer />
             </Col>
           </Row>

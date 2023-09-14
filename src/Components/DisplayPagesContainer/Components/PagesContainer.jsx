@@ -47,8 +47,17 @@ const PagesContainer = () => {
                 <Col md={6} xl={6} xxl={3} key={index}>
                   <Link to={info?.boxHref} className="link-text">
                     <div className={`fourbox ${info?.imgClass}`}>
-                      <img src={info?.imgSrc} className="img-fluid" alt="" />
+                      <img
+                        src={info?.imgSrc}
+                        className="img-fluid"
+                        alt=""
+                        loading="lazy"
+                      />
                       <h4>{info?.title}</h4>
+                      <p>Modify {info?.title} Frontend UI</p>
+                      <h3>
+                        <span className="greentext">Click</span> Here
+                      </h3>
                     </div>
                   </Link>
                 </Col>
