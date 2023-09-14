@@ -14,12 +14,13 @@ ul {
   color: #000 !important;
 }
 
-
 .transitionStyle {
-  transition: "transform 0.2s ease-in-out",
+  transition: "transform 0.2s ease-in-out";
 }
 
-
+.custom_toaster_error_zindex {
+  z-index: 9999;
+}
 .custom_toaster_error .toast-container {
   z-index: 9999;
 }

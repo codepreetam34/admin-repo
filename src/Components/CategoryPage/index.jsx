@@ -63,7 +63,12 @@ const CategoryPage = () => {
         setModalData({
           type: "View",
           data: data,
-          modalContent: <ViewDataModal />,
+          modalContent: (
+            <ViewDataModal
+              categoryData={data}
+              setShowModal={setShowModal} // Make sure you pass setShowModal
+            />
+          ),
           modalTitle: "View Category",
         });
       },
@@ -73,11 +78,29 @@ const CategoryPage = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
+        console.log("_categoryId ", data);
         setShowModal(true);
         setModalData({
           type: "Edit",
           data: data,
-          modalContent: <EditDataModal />,
+          modalContent: (
+            <EditDataModal
+              categoryById={data}
+              setShowModal={setShowModal} // Make sure you pass setShowModal
+              setAddShowErrorToast={(err) => {
+                setAddShowErrorToast(err);
+              }} // Pass setShowErrorToast
+              setAddShowErrorToastMessage={(msg) => {
+                setAddShowErrorToastMessage(msg);
+              }}
+              setAddShowToast={(show) => {
+                setAddShowToast(show);
+              }}
+              setAddShowToastMessage={(showMessage) => {
+                setAddShowToastMessage(showMessage);
+              }}
+            />
+          ),
           modalTitle: "Edit Category",
         });
       },
@@ -91,7 +114,25 @@ const CategoryPage = () => {
         setModalData({
           type: "Delete",
           data: data,
-          modalContent: <DeleteDataModal />,
+          modalContent: (
+            <DeleteDataModal
+              categoryId={data._id}
+              setShowModal={setShowModal} // Make sure you pass setShowModal
+              setAddShowErrorToast={(err) => {
+                setAddShowErrorToast(err);
+              }} // Pass setShowErrorToast
+              setAddShowErrorToastMessage={(msg) => {
+                setAddShowErrorToastMessage(msg);
+              }}
+              setAddShowToast={(show) => {
+                setAddShowToast(show);
+              }}
+              setAddShowToastMessage={(showMessage) => {
+                setAddShowToastMessage(showMessage);
+              }}
+    
+            />
+          ),
           modalTitle: "Delete Category",
         });
       },
@@ -198,6 +239,7 @@ const CategoryPage = () => {
                 >
                   {tableActions?.map((action, index) => (
                     <div
+                      key={index}
                       className={action.class.toLowerCase()}
                       onClick={() => action.onClick(category)}
                     >
@@ -284,7 +326,7 @@ const CategoryPage = () => {
               }}
             >
               <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
+                <span className="sr-only"></span>
               </Spinner>
             </div>
           ) : (
