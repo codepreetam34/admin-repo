@@ -71,7 +71,6 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
               }}
             >
               <i className="fa-solid fa-gear"></i>

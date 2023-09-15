@@ -12,6 +12,10 @@ axiosInstance.interceptors.request.use(
     const auth = localStorage.getItem("AUTH_ACCESS_TOKEN");
     const result = auth?.substring(1, auth.length - 1);
     config.headers["authorization"] = `Bearer ${result}`;
+    // Conditionally set Content-Type header for FormData requests
+    if (config.data instanceof FormData) {
+      config.headers["Content-Type"] = "multipart/form-data";
+    }
     return config;
   },
   function (error) {

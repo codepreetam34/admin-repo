@@ -6,7 +6,7 @@ export const getCategory = createAsyncThunk(
   GET_CATEGORY,
   async (payload, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(`/category/getCategory`);
+      const response = await axiosInstance.get(`/category/getcategories`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -31,7 +31,7 @@ export const addMainCategory = createAsyncThunk(
   ADD_MAIN_CATEGORY,
   async (payload, thunkAPI) => {
     try {
-      console.log("payload ", payload);
+      console.log("payload ", payload.values());
       const response = await axiosInstance.post(`category/create`, payload);
       return response.data;
     } catch (error) {

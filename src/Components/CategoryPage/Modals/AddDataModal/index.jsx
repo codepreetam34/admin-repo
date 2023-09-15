@@ -34,6 +34,7 @@ const AddDataModal = ({
     const file = e.target.files[0];
     setCategoryImage(file);
     setImagePreview(URL.createObjectURL(file));
+    console.log("Selected Image File:", file);
   };
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -46,7 +47,11 @@ const AddDataModal = ({
     // }
     console.log("category ", data?.categoryImage);
     console.log("category 1", categoryImage);
-    console.log("formData", formData.values());
+    // Log FormData values
+    for (const pair of formData.entries()) {
+      console.log(`category ${pair[0]}: ${pair[1]}`);
+    }
+
     dispatch(addMainCategory(formData))
       .then((res) => {
         console.log("res", res);
@@ -56,9 +61,9 @@ const AddDataModal = ({
             res?.payload?.error?.response?.data?.message
           );
         } else {
-      //    dispatch(getCategory());
-     //     setAddShowToastMessage(res?.payload?.message);
-      //    setAddShowToast(true);
+          //    dispatch(getCategory());
+          //     setAddShowToastMessage(res?.payload?.message);
+          //    setAddShowToast(true);
           //   setShowModal(false);
           // setValue("name", "");
           // setValue("categoryImage", "");
@@ -109,13 +114,13 @@ const AddDataModal = ({
             {imagePreview && (
               <div className="">
                 <div className="mb-2">{`Image Preview`} </div>
-                <img
-                  src={imagePreview}
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                  }}
-                />
+                <div style={{ width: "100%", height: "300px" }}>
+                  <img
+                    src={imagePreview}
+                    alt="categoryImage"
+                    style={{ maxWidth: "100%", height: "300px" }}
+                  />{" "}
+                </div>
               </div>
             )}
           </Col>
@@ -131,7 +136,7 @@ const AddDataModal = ({
             Close
           </Button>
           <Button variant="primary" type="submit">
-            Save Changes
+            Submit
           </Button>
         </Modal.Footer>
       </Form>

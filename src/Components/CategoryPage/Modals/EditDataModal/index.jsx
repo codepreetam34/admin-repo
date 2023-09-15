@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  editMainCategory,
-  getCategory,
-  getCategoryById,
-} from "Redux/Slices/Category/CategorySlice";
+import { useDispatch } from "react-redux";
+import { editMainCategory } from "Redux/Slices/Category/CategorySlice";
 import { categorySchema } from "ValidationSchema/categorySchema";
 
 const EditDataModal = ({
@@ -20,6 +16,7 @@ const EditDataModal = ({
 }) => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
+  const [viewCategoryImage, setViewCategoryImage] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const {
@@ -33,46 +30,20 @@ const EditDataModal = ({
     mode: "onChange",
   });
 
-  // const categoryById = useSelector(
-  //   (state) => state?.CategoryList?.categoryByIdData?.categoryById
-  // );
-  console.log("V categoryId", categoryById);
-
-  // useEffect(() => {
-  //   if (!categoryById || categoryById.length === 0) {
-  //     dispatch(getCategoryById(categoryId))
-  //       .then(() => {
-  //         setIsLoading(false);
-  //       })
-  //       .catch(() => setIsLoading(false));
-  //   } else {
-  //     setIsLoading(false);
-  //   }
-  // }, [dispatch,categoryId]);
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   dispatch(getCategoryById(categoryId))
-  //     .then(() => {
-  //       setIsLoading(false);
-  //     })
-  //     .catch(() => setIsLoading(false));
-  // }, [dispatch, categoryId, categoryById]);
-
   useEffect(() => {
     reset({
       name: categoryById?.name,
       imageAltText: categoryById?.imageAltText,
       parentId: categoryById?.parentId,
     });
-    setCategoryImage(categoryById?.categoryImage);
+    setViewCategoryImage(categoryById?.categoryImage);
   }, [categoryById, reset]);
 
-  // Handle image file change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setCategoryImage(file);
     setImagePreview(URL.createObjectURL(file));
+    setViewCategoryImage("");
   };
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -86,11 +57,9 @@ const EditDataModal = ({
       formData.append("categoryImage", categoryImage);
     }
     console.log("categoryImage 1", categoryImage);
-    // if (data?.parentId) {
-    //   formData.append("parentId", data?.parentId?.toString());
-    // }
+
     formData.append("_id", categoryById._id);
-    console.log("formData", formData.values());
+
     dispatch(editMainCategory(formData))
       .then((res) => {
         if (res?.payload?.error?.response?.status === 400) {
@@ -99,14 +68,13 @@ const EditDataModal = ({
             res?.payload?.error?.response?.data?.message
           );
         } else {
-          //    dispatch(getCategory());
-          //     setAddShowToastMessage(res?.payload?.message);
-          //    setAddShowToast(true);
-          //   setShowModal(false);
+          //   dispatch(getCategory());
+          setAddShowToastMessage(res?.payload?.message);
+          setAddShowToast(true);
+          // setShowModal(false);
           // setValue("name", "");
           // setValue("categoryImage", "");
           // setValue("imageAltText", "");
-          // setValue("parentId", "");
           // setImagePreview("");
         }
       })
@@ -152,24 +120,34 @@ const EditDataModal = ({
             {imagePreview && imagePreview ? (
               <div className="">
                 <div className="mb-2">{`Image Preview`} </div>
-                <img
-                  src={imagePreview}
+                <div
                   style={{
                     width: "100%",
-                    height: "200px",
+                    height: "300px",
                   }}
-                />
+                >
+                  <img
+                    src={imagePreview}
+                    alt="categoryImage"
+                    style={{ maxWidth: "100%", height: "300px" }}
+                  />
+                </div>
               </div>
-            ) : categoryImage && categoryImage ? (
+            ) : viewCategoryImage && viewCategoryImage ? (
               <div className="">
                 <div className="mb-2">{`Image Preview`} </div>
-                <img
-                  src={categoryImage}
+                <div
                   style={{
                     width: "100%",
-                    height: "200px",
+                    height: "300px",
                   }}
-                />
+                >
+                  <img
+                    src={viewCategoryImage}
+                    alt="categoryImage"
+                    style={{ maxWidth: "100%", height: "300px" }}
+                  />{" "}
+                </div>
               </div>
             ) : (
               <></>

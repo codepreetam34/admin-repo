@@ -1,7 +1,7 @@
 import CategoryPage from "Components/CategoryPage";
 
-const Category = () => {
+const ParentCategory = () => {
   return <CategoryPage />;
 };
 
-export default Category;
+export default ParentCategory;

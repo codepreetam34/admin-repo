@@ -5,8 +5,8 @@ import LogIn from "Pages/LogIn";
 import DisplayPages from "Pages/DisplayPages";
 import HomepageDisplay from "Components/DisplayPagesContainer/Containers/HomepageDisplay";
 import HomepageBannerList from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList";
-import Category from "Pages/Category";
-import CategoryChildren from "Pages/CategoryChildren";
+import ParentCategory from "Pages/ParentCategory";
+import CategoryChildren from "Pages/ChildCategory";
 import Products from "Pages/Products";
 import {
   HOME,
@@ -46,7 +46,10 @@ const Routing = () => {
           path={HOMEPAGE_BANNER_LIST}
           element={<PrivateRoutes Component={HomepageBannerList} />}
         />
-        <Route path={CATEGORY} element={<Category />} />
+        <Route
+          path={CATEGORY}
+          element={<PrivateRoutes Component={ParentCategory} />}
+        />
         <Route
           path={CATEGORY_CHILDREN}
           element={<PrivateRoutes Component={CategoryChildren} />}
