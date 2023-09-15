@@ -9,7 +9,7 @@ import {
 } from "Redux/Slices/Category/CategorySlice";
 import { categorySchema } from "ValidationSchema/categorySchema";
 
-const AddDataModal = ({
+const AddChildDataModal = ({
   setShowModal,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
@@ -181,4 +181,4 @@ const AddDataModal = ({
   );
 };
 
-export default AddDataModal;
+export default AddChildDataModal;

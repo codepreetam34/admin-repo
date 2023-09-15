@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ViewDataModal from "./Modals/ViewDataModal";
 import EditDataModal from "./Modals/EditDataModal";
 import DeleteDataModal from "./Modals/DeleteDataModal";
-import AddDataModal from "./Modals/AddDataModal";
+import AddDataModal from "./Modals/AddChildDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
 
 const CategoryChildrenPage = () => {

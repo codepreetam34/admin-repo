@@ -10,6 +10,7 @@ import EditDataModal from "./Modals/EditDataModal";
 import DeleteDataModal from "./Modals/DeleteDataModal";
 import AddDataModal from "./Modals/AddDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
+import AddChildDataModal from "Components/CategoryChildrenPage/Modals/AddChildDataModal";
 
 const CategoryPage = () => {
   const [modalData, setModalData] = useState({
@@ -187,6 +188,32 @@ const CategoryPage = () => {
       fontWeight: "bold",
       transition: "text-decoration 0.2s ease-in-out",
     };
+    const handleChildAdd = (id) => {
+      setShowModal(true);
+      setModalData({
+        type: "Add",
+        data: null,
+        modalContent: (
+          <AddChildDataModal
+            setShowModal={setShowModal}
+            categoryId={id}
+            setAddShowErrorToast={(err) => {
+              setAddShowErrorToast(err);
+            }} // Pass setShowErrorToast
+            setAddShowErrorToastMessage={(msg) => {
+              setAddShowErrorToastMessage(msg);
+            }}
+            setAddShowToast={(show) => {
+              setAddShowToast(show);
+            }}
+            setAddShowToastMessage={(showMessage) => {
+              setAddShowToastMessage(showMessage);
+            }}
+          />
+        ),
+        modalTitle: "Add Child Category",
+      });
+    };
     return (
       <tbody>
         {categoryList &&
@@ -226,8 +253,9 @@ const CategoryPage = () => {
                     transition: "text-decoration 0.2s ease-in-out",
                     cursor: "default",
                   }}
+                  //     onClick={() => handleChildAdd(category?._id)}
                 >
-                  {`No SubCategories`}
+                  {`No Sub Category`}
                 </td>
               )}
               <td>
