@@ -4,13 +4,28 @@ import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Constants/DynamicModal";
 import { getCategoryChildrens } from "Redux/Slices/Category/CategorySlice";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import ViewDataModal from "./Modals/ViewDataModal";
+import EditDataModal from "./Modals/EditDataModal";
+import DeleteDataModal from "./Modals/DeleteDataModal";
+import AddDataModal from "./Modals/AddDataModal";
+import { ErrorToaster, SuccessToaster } from "Constants/utils";
 
 const CategoryChildrenPage = () => {
   const params = useParams();
   const { id } = params;
-  const [modalData, setModalData] = useState({ type: null, data: null });
+  const [modalData, setModalData] = useState({
+    type: null,
+    data: null,
+    modalContent: <></>,
+    modalTitle: null,
+  });
   const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(true);
+  const [addShowErrorToast, setAddShowErrorToast] = useState(false);
+  const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
+  const [addShowToastMessage, setAddShowToastMessage] = useState("");
+  const [addShowToast, setAddShowToast] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,16 +33,12 @@ const CategoryChildrenPage = () => {
     (state) => state?.CategoryList?.ChidCategoryList?.subCategoryList
   );
   useEffect(() => {
-    if (!childCategoryList || childCategoryList.length === 0) {
-      dispatch(getCategoryChildrens(id))
-        .then(() => {
-          setIsLoading(false);
-        })
-        .catch(() => setIsLoading(false));
-    } else {
-      setIsLoading(false);
-    }
-  }, [dispatch, childCategoryList, id]);
+    dispatch(getCategoryChildrens(id))
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch(() => setIsLoading(false));
+  }, [id, dispatch]);
 
   const pageTitle = useSelector(
     (state) => state?.CategoryList?.ChidCategoryList?.pageTitle
@@ -46,7 +57,18 @@ const CategoryChildrenPage = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setModalData({ type: "View", data: data });
+        setShowModal(true);
+        setModalData({
+          type: "View",
+          data: data,
+          modalContent: (
+            <ViewDataModal
+              categoryData={data}
+              setShowModal={setShowModal} // Make sure you pass setShowModal
+            />
+          ),
+          modalTitle: "View Child Category",
+        });
       },
     },
     {
@@ -54,7 +76,30 @@ const CategoryChildrenPage = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
-        setModalData({ type: "Edit", data: data });
+        setShowModal(true);
+        setModalData({
+          type: "Edit",
+          data: data,
+          modalContent: (
+            <EditDataModal
+              categoryById={data}
+              setShowModal={setShowModal} // Make sure you pass setShowModal
+              setAddShowErrorToast={(err) => {
+                setAddShowErrorToast(err);
+              }} // Pass setShowErrorToast
+              setAddShowErrorToastMessage={(msg) => {
+                setAddShowErrorToastMessage(msg);
+              }}
+              setAddShowToast={(show) => {
+                setAddShowToast(show);
+              }}
+              setAddShowToastMessage={(showMessage) => {
+                setAddShowToastMessage(showMessage);
+              }}
+            />
+          ),
+          modalTitle: "Edit Child Category",
+        });
       },
     },
     {
@@ -62,14 +107,61 @@ const CategoryChildrenPage = () => {
       class: "delete",
       icon: "far fa-trash-alt",
       onClick: (data) => {
-        setModalData({ type: "Delete", data: data });
+        setShowModal(true);
+        setModalData({
+          type: "Delete",
+          data: data,
+          modalContent: (
+            <DeleteDataModal
+              categoryId={data._id}
+              setShowModal={setShowModal} // Make sure you pass setShowModal
+              setAddShowErrorToast={(err) => {
+                setAddShowErrorToast(err);
+              }} // Pass setShowErrorToast
+              setAddShowErrorToastMessage={(msg) => {
+                setAddShowErrorToastMessage(msg);
+              }}
+              setAddShowToast={(show) => {
+                setAddShowToast(show);
+              }}
+              setAddShowToastMessage={(showMessage) => {
+                setAddShowToastMessage(showMessage);
+              }}
+            />
+          ),
+          modalTitle: "Delete Child Category",
+        });
       },
     },
   ];
 
   const handleAdd = () => {
-    setModalData({ type: "Add", data: null });
+    setShowModal(true);
+    setModalData({
+      type: "Add",
+      data: null,
+      modalContent: (
+        <AddDataModal
+          setShowModal={setShowModal}
+          categoryId={id}
+          setAddShowErrorToast={(err) => {
+            setAddShowErrorToast(err);
+          }} // Pass setShowErrorToast
+          setAddShowErrorToastMessage={(msg) => {
+            setAddShowErrorToastMessage(msg);
+          }}
+          setAddShowToast={(show) => {
+            setAddShowToast(show);
+          }}
+          setAddShowToastMessage={(showMessage) => {
+            setAddShowToastMessage(showMessage);
+          }}
+        />
+      ),
+      modalTitle: "Add Child Category",
+    });
   };
+
   const DataTableHeader = () => {
     return (
       <thead>
@@ -149,12 +241,13 @@ const CategoryChildrenPage = () => {
                 >
                   {tableActions?.map((action, index) => (
                     <div
+                      key={index}
                       className={action.class.toLowerCase()}
                       onClick={() => action.onClick(category)}
                     >
-                      <Link to="#">
+                      <a href="#">
                         <i className={action.icon}></i>
-                      </Link>
+                      </a>
                     </div>
                   ))}
                 </div>
@@ -235,9 +328,7 @@ const CategoryChildrenPage = () => {
                 minHeight: "300px",
               }}
             >
-              <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
-              </Spinner>
+              <Spinner animation="border" role="status"></Spinner>
             </div>
           ) : (
             <>
@@ -248,16 +339,30 @@ const CategoryChildrenPage = () => {
         </Row>
       </div>
 
-      {/* Render the dynamic Modal component */}
       {modalData.type && (
         <DynamicModal
-          show={true}
-          onClose={() => setModalData({ type: null, data: null })}
-          type={modalData.type}
-          data={modalData.data}
-          onSubmit={() => {
-            // Handle form submission or deletion logic here based on modal type
+          show={showModal}
+          onClose={() => {
+            setShowModal(false);
           }}
+          modalTitle={modalData.modalTitle}
+          modalContent={modalData.modalContent}
+        />
+      )}
+      {addShowErrorToast && (
+        <ErrorToaster
+          showErrorToast={addShowErrorToast}
+          setShowErrorToast={setAddShowErrorToast}
+          showErrorToastMessage={addShowErrorToastMessage}
+          customErrorMessage={"Something wend wrong! Please Try Again"}
+        />
+      )}
+      {addShowToast && (
+        <SuccessToaster
+          showToast={addShowToast}
+          setShowToast={setAddShowToast}
+          showToastMessage={addShowToastMessage}
+          customMessage={`Please recheck your entry once`}
         />
       )}
     </Wrapper>

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "Components/Wrapper";
-import { Row, Col, Form, Table, InputGroup } from "react-bootstrap";
+import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Constants/DynamicModal";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
 import ViewDataModal from "./Modals/ViewDataModal";
 import EditDataModal from "./Modals/EditDataModal";
 import DeleteDataModal from "./Modals/DeleteDataModal";
@@ -130,7 +129,6 @@ const CategoryPage = () => {
               setAddShowToastMessage={(showMessage) => {
                 setAddShowToastMessage(showMessage);
               }}
-    
             />
           ),
           modalTitle: "Delete Category",

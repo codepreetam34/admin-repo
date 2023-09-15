@@ -40,3 +40,28 @@ ul {
 .custom_toaster_error .toast-container .toast-header strong {
   font-size: 16px;
 }
+
+/* /////////// */
+/* Add this CSS to your stylesheet */
+.custom-select  {
+  background-color: #fff;
+  color: #333;
+  font-weight: 500;
+  border-bottom: 1px solid #000;
+  padding: 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+
+  margin: 1rem 0;
+  color: inherit;
+  border: 0;
+  border-top: var(--bs-border-width) solid;
+  opacity: .25;
+
+}
+
+.custom-select:hover {
+  background-color: #007bff; /* Background color for options on hover */
+  color: #fff; /* Text color for options on hover */
+  cursor: pointer;
+}
