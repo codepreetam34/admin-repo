@@ -43,7 +43,7 @@ ul {
 
 /* /////////// */
 /* Add this CSS to your stylesheet */
-.custom-select  {
+.custom-select {
   background-color: #fff;
   color: #333;
   font-weight: 500;
@@ -56,12 +56,21 @@ ul {
   color: inherit;
   border: 0;
   border-top: var(--bs-border-width) solid;
-  opacity: .25;
-
+  opacity: 0.25;
 }
 
 .custom-select:hover {
   background-color: #007bff; /* Background color for options on hover */
   color: #fff; /* Text color for options on hover */
   cursor: pointer;
+}
+
+.text_heading span {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0 0 0 10px;
+}
+
+.form-group-padding-bottom {
+  padding-bottom: 30px;
 }

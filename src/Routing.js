@@ -7,7 +7,7 @@ import HomepageDisplay from "Components/DisplayPagesContainer/Containers/Homepag
 import HomepageBannerList from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList";
 import ParentCategory from "Pages/ParentCategory";
 import CategoryChildren from "Pages/ChildCategory";
-import Products from "Pages/Products";
+import ProductsByCategory from "Pages/ProductsByCategory";
 import {
   HOME,
   DISPLAY_PAGES,
@@ -19,10 +19,14 @@ import {
   LOGIN,
   SETUP_NEW_PASSWORD,
   FORGOT_PASSWORD,
+  PRODUCTS,
+  ADD_PRODUCTS,
 } from "Routes/Routes";
 import PrivateRoutes from "Routes/PrivateRoutes";
 import SetupNewPassword from "Components/LogIn/SetupNewPassword";
 import ForgotPassword from "Components/LogIn/ForgotPassword";
+import Products from "Pages/Products";
+import AddProduct from "Components/ProductsPage/Components/AddProductPage";
 const Routing = () => {
   return (
     <BrowserRouter>
@@ -56,9 +60,17 @@ const Routing = () => {
         />
         <Route
           path={CATEGORY_CHILD_PRODUCTS}
-          element={<PrivateRoutes Component={Products} />}
+          element={<PrivateRoutes Component={ProductsByCategory} />}
         />
 
+        <Route
+          path={PRODUCTS}
+          element={<PrivateRoutes Component={Products} />}
+        />
+        <Route
+          path={ADD_PRODUCTS}
+          element={<PrivateRoutes Component={AddProduct} />}
+        />
         <Route path="*" element={<p>There's nothing here: 404!</p>} />
       </Routes>
     </BrowserRouter>

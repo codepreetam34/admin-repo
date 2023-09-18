@@ -3,7 +3,7 @@ import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
-import { editMainCategory } from "Redux/Slices/Category/CategorySlice";
+import { editMainCategory, getCategory } from "Redux/Slices/Category/CategorySlice";
 import { categorySchema } from "ValidationSchema/categorySchema";
 
 const EditDataModal = ({
@@ -68,14 +68,14 @@ const EditDataModal = ({
             res?.payload?.error?.response?.data?.message
           );
         } else {
-          //   dispatch(getCategory());
+          dispatch(getCategory());
           setAddShowToastMessage(res?.payload?.message);
           setAddShowToast(true);
-          // setShowModal(false);
-          // setValue("name", "");
-          // setValue("categoryImage", "");
-          // setValue("imageAltText", "");
-          // setImagePreview("");
+          setShowModal(false);
+          setValue("name", "");
+          setValue("categoryImage", "");
+          setValue("imageAltText", "");
+          setImagePreview("");
         }
       })
       .catch((err) => {

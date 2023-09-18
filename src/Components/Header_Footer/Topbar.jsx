@@ -12,7 +12,7 @@ const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const authData = JSON.parse(localStorage.getItem("Sidebar_Module_Assigned"));
   const [showErrorToast, setShowErrorToast] = useState(false);
   const [showErrorToastMessage, setShowErrorToastMessage] = useState();
-
+  const [sideBarLink, setSideBarLink] = useState(false);
   const handleLogOut = () => {
     dispatch(logout())
       .then((response) => {
@@ -44,9 +44,13 @@ const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
             <div className="d-flex align-items-center">
               <div
                 className="toggle_button me-3 d-none d-xl-block"
-                onClick={() => ToggleBtn()}
+                onClick={() => ToggleBtn(setSideBarLink(!sideBarLink))}
               >
-                <i className="fa-solid fa-bars"></i>
+                {sideBarLink ? (
+                  <i className="fa-solid fa-bars"></i>
+                ) : (
+                  <i class="fa-solid fa-bars-staggered"></i>
+                )}
               </div>
               <div
                 className="toggle_button me-3 d-block d-xl-none"
@@ -72,7 +76,12 @@ const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
           <Col xs={5} md={6}>
             <div className="userprofile text-end">
               <Dropdown>
-                <Dropdown.Toggle variant="" className="p-0" id="dropdown-basic">
+                <Dropdown.Toggle
+                  variant=""
+                  className="p-0"
+                  id="dropdown-basic"
+                  style={{ textTransform: "capitalize" }}
+                >
                   <img src={User} className="img-fluid" alt="" loading="lazy" />{" "}
                   {authData && authData?.fullName}
                 </Dropdown.Toggle>

@@ -63,6 +63,7 @@ const CategoryChildrenPage = () => {
           data: data,
           modalContent: (
             <ViewDataModal
+              pageTitle={pageTitle}
               categoryData={data}
               setShowModal={setShowModal} // Make sure you pass setShowModal
             />

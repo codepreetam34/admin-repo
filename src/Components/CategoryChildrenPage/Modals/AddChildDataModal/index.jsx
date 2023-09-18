@@ -72,15 +72,15 @@ const AddChildDataModal = ({
             res?.payload?.error?.response?.data?.message
           );
         } else {
-          //    dispatch(getCategory());
-          //     setAddShowToastMessage(res?.payload?.message);
-          //    setAddShowToast(true);
-          //   setShowModal(false);
-          // setValue("name", "");
-          // setValue("categoryImage", "");
-          // setValue("imageAltText", "");
-          // setValue("parentId", "");
-          // setImagePreview("");
+          dispatch(getCategory());
+          setAddShowToastMessage(res?.payload?.message);
+          setAddShowToast(true);
+          setShowModal(false);
+          setValue("name", "");
+          setValue("categoryImage", "");
+          setValue("imageAltText", "");
+          setValue("parentId", "");
+          setImagePreview("");
         }
       })
       .catch((err) => {
@@ -92,7 +92,7 @@ const AddChildDataModal = ({
     reset({
       parentId: categoryId,
     });
-  });
+  }, [categoryId, reset]);
 
   return (
     <>
@@ -101,7 +101,16 @@ const AddChildDataModal = ({
           <Col md={6}>
             <Form.Group className="mb-4" controlId="name">
               <Form.Label>Category Name</Form.Label>
-              <Form.Control type="text" name="name" {...register("name")} />
+              <Form.Control
+                type="text"
+                name="name"
+                {...register("name")}
+                isInvalid={!!errors?.name}
+              />
+
+              <Form.Control.Feedback type="invalid">
+                {errors?.name?.message}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>{" "}
           <Col md={6}>
@@ -110,7 +119,7 @@ const AddChildDataModal = ({
               <Form.Control
                 as="select"
                 {...register("parentId")}
-                isInvalid={!!errors.parentId}
+                isInvalid={!!errors?.parentId}
               >
                 <option value="">Select</option>
                 {categoryList &&
@@ -121,7 +130,7 @@ const AddChildDataModal = ({
                   ))}
               </Form.Control>
               <Form.Control.Feedback type="invalid">
-                {errors.parentId?.message}
+                {errors?.parentId?.message}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
@@ -134,7 +143,13 @@ const AddChildDataModal = ({
                 name="categoryImage"
                 id="categoryImage"
                 onChange={handleImageChange}
+                //         isInvalid={!categoryImage}
               />
+              {/* {!categoryImage && (
+                <Form.Control.Feedback type="invalid">
+                  {"required image"}
+                </Form.Control.Feedback>
+              )} */}
             </Form.Group>
           </Col>{" "}
           <Col md={6}>
@@ -144,7 +159,11 @@ const AddChildDataModal = ({
                 type="text"
                 name="imageAltText"
                 {...register("imageAltText")}
+                isInvalid={!!errors?.imageAltText}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors?.imageAltText?.message}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>{" "}
           <Col md={12} className="mb-4">

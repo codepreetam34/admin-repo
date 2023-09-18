@@ -5,6 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "images/vibezterLogo.png";
 import { logout } from "Redux/Slices/Login/auth.slice";
 import { useDispatch } from "react-redux";
+import { CATEGORY, DISPLAY_PAGES, LOGIN, PRODUCTS } from "Routes/Routes";
 
 const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const [sideBarLink, setSideBarLink] = useState(false);
@@ -16,14 +17,34 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   }
 
   const handleLogOut = () => {
+    setSideBarLink(!sideBarLink);
+    document.body.classList.remove("togglesidebar");
+
     dispatch(logout())
       .then((response) => {
-        localStorage.clear();
-
-        navigate("/login");
+        if (
+          (response && response?.meta?.requestStatus === "fulfilled") ||
+          !response
+        ) {
+          localStorage.clear();
+          navigate("/login", {
+            state: {
+              showToastMessage: response?.payload?.message
+                ? response?.payload?.message
+                : "Logout successful. Have a great day!",
+            },
+          });
+        }
       })
-      .catch((rejectedWithValue) => {
-        navigate("/");
+      .catch((err) => {
+        navigate("/", {
+          state: {
+            showErrorToastMessage: err?.error?.response?.data?.message
+              ? err?.error?.response?.data?.message
+              : "Something went wrong please try again!",
+            showErrorToast: true,
+          },
+        });
       });
   };
 
@@ -59,24 +80,37 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               onClick={() => onhidesidebar()}
               as={NavLink}
               exact=""
-              to="/display-pages"
+              to={DISPLAY_PAGES}
             >
-              <i className="fa-solid fa-user"></i>Display Pages
+              <i class="fa-solid fa-layer-group"></i> Display Pages
             </Nav.Link>
             <Nav.Link
               onClick={() => onhidesidebar()}
               as={NavLink}
               exact=""
-              to="/category"
+              to={CATEGORY}
               style={{
                 display: "flex",
                 alignItems: "center",
               }}
             >
               <i className="fa-solid fa-gear"></i>
-              <div>Category & Products</div>
+              <div>Category</div>
             </Nav.Link>
-            <Nav.Link as={NavLink} exact="" to="/login" onClick={handleLogOut}>
+            <Nav.Link
+              onClick={() => onhidesidebar()}
+              as={NavLink}
+              exact=""
+              to={PRODUCTS}
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <i class="fa-solid fa-tag"></i>
+              <div>Products</div>
+            </Nav.Link>
+            <Nav.Link as={NavLink} exact="" to={LOGIN} onClick={handleLogOut}>
               <i className="fa-solid fa-arrow-right-from-bracket"></i> Log Out
             </Nav.Link>
           </Nav>

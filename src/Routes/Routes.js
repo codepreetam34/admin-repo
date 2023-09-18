@@ -11,7 +11,10 @@ export const SETUP_NEW_PASSWORD = "/passwordReset";
 export const HOME = "/";
 export const DISPLAY_PAGES = "/display-pages";
 export const HOMEPAGE_DISPLAY = "/display-pages/homepage-display";
-export const HOMEPAGE_BANNER_LIST = "/display-pages/homepage-display/homepage-banner-list";
+export const HOMEPAGE_BANNER_LIST =
+  "/display-pages/homepage-display/homepage-banner-list";
 export const CATEGORY = "/category";
 export const CATEGORY_CHILDREN = "/category/category-child/:id";
 export const CATEGORY_CHILD_PRODUCTS = "/category/category-child/:id/products";
+export const PRODUCTS = "/products";
+export const ADD_PRODUCTS = "/products/add-product";

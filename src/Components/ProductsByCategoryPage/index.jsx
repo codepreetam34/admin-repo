@@ -3,30 +3,33 @@ import Wrapper from "Components/Wrapper";
 import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Constants/DynamicModal";
-import { Link } from "react-router-dom";
-import { getProducts } from "Redux/Slices/Products/ProductsSlice";
-import AddProductPage from "./Components/AddProductPage";
-import EditProductPage from "./Components/EditProductPage";
-import ViewProductPage from "./Components/ViewProductPage";
-const ProductsPage = () => {
+import { Link, useParams } from "react-router-dom";
+import { getProductsByCategoryId } from "Redux/Slices/Products/ProductsSlice";
+const ProductsByCategoryPage = () => {
+  const params = useParams();
+  const { id } = params;
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [isLoading, setIsLoading] = useState(true); // Add loading state
-  const [openAddProductPage, setOpenAddProductPage] = useState(false);
-  const [openEditProductPage, setOpenEditProductPage] = useState(false);
-  const [openViewProductPage, setOpenViewProductPage] = useState(false);
   const dispatch = useDispatch();
 
   const productsList = useSelector(
-    (state) => state?.ProductsByCatId?.productsList?.products
+    (state) => state?.ProductsByCatId?.productsByCatId?.products
   );
   useEffect(() => {
-    dispatch(getProducts())
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch(() => setIsLoading(false));
-  }, [dispatch]);
+    if (!productsList || productsList.length === 0) {
+      dispatch(getProductsByCategoryId(id))
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch, productsList, id]);
 
+  const pageTitle = useSelector(
+    (state) => state?.ProductsByCatId?.ProductsByCatId?.pageTitle
+  );
   const tableHeaders = [
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
@@ -40,32 +43,29 @@ const ProductsPage = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setOpenViewProductPage(true);
-        setModalData({ data: data });
+        setModalData({ type: "View", data: data });
       },
     },
-    {
-      name: "Edit",
-      class: "edit",
-      icon: "far fa-edit",
-      onClick: (data) => {
-        setOpenEditProductPage(true);
-        setModalData({ type: "Edit", data: data });
-      },
-    },
-    {
-      name: "Delete",
-      class: "delete",
-      icon: "far fa-trash-alt",
-      onClick: (data) => {
-        setModalData({ type: "Delete", data: data });
-      },
-    },
+    // {
+    //   name: "Edit",
+    //   class: "edit",
+    //   icon: "far fa-edit",
+    //   onClick: (data) => {
+    //     setModalData({ type: "Edit", data: data });
+    //   },
+    // },
+    // {
+    //   name: "Delete",
+    //   class: "delete",
+    //   icon: "far fa-trash-alt",
+    //   onClick: (data) => {
+    //     setModalData({ type: "Delete", data: data });
+    //   },
+    // },
   ];
 
   const handleAdd = () => {
-    setOpenAddProductPage(true);
-    // setModalData({ type: "Add", data: null });
+    setModalData({ type: "Add", data: null });
   };
   const DataTableHeader = () => {
     return (
@@ -86,13 +86,13 @@ const ProductsPage = () => {
     return (
       <tbody>
         {productsList &&
-          productsList?.map((product, index) => (
-            <tr key={product?._id}>
+          productsList?.map((category, index) => (
+            <tr key={category?._id}>
               <td>{index + 1}</td>
-              <td>{product?.name}</td>
+              <td>{category?.name}</td>
               <td>
                 <img
-                  src={product?.productPictures[0].img}
+                  src={category?.productPictures[0].img}
                   alt=""
                   width={70}
                   height={70}
@@ -107,7 +107,7 @@ const ProductsPage = () => {
                   {tableActions?.map((action, index) => (
                     <div
                       className={action.class.toLowerCase()}
-                      onClick={() => action.onClick(product)}
+                      onClick={() => action.onClick(category)}
                     >
                       <Link to="#">
                         <i className={action.icon}></i>
@@ -127,8 +127,10 @@ const ProductsPage = () => {
       <>
         <Col md={4}>
           <div className="user_heading">
-            <h3 style={{ textTransform: "capitalize" }}>{"All Products"}</h3>
-            <p>Welcome to All Products page</p>
+            <h3 style={{ textTransform: "capitalize" }}>
+              {pageTitle ? `${pageTitle} Products` : "Products"}
+            </h3>
+            <p>Welcome to Category Products page</p>
           </div>
         </Col>
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
@@ -146,13 +148,13 @@ const ProductsPage = () => {
             </InputGroup>
           </div>
         </Col>
-        <Col md={4}>
+        {/* <Col md={4}>
           <div className="add_filter_btn d-flex justify-content-end">
-            <div className="bgbtnred" onClick={handleAdd}>
+            <a href="#" className="bgbtnred" onClick={handleAdd}>
               Add New Product
-            </div>
+            </a>
           </div>
-        </Col>
+        </Col> */}
       </>
     );
   };
@@ -192,20 +194,7 @@ const ProductsPage = () => {
           ) : (
             <>
               <InitialRender />
-              {openAddProductPage && openAddProductPage ? (
-                <AddProductPage setOpenAddProductPage={setOpenAddProductPage} />
-              ) : openEditProductPage && openEditProductPage ? (
-                <EditProductPage
-                  setOpenEditProductPage={setOpenEditProductPage}
-                />
-              ) : openViewProductPage && openViewProductPage ? (
-                <ViewProductPage
-                  categoryData={modalData?.data}
-                  setOpenViewProductPage={setOpenViewProductPage}
-                />
-              ) : (
-                <RenderTable />
-              )}
+              <RenderTable />
             </>
           )}
         </Row>
@@ -227,4 +216,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default ProductsByCategoryPage;
