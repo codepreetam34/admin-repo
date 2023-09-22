@@ -1,13 +1,13 @@
-import {
-  deleteCategory,
-  getCategory,
-} from "Redux/Slices/Category/CategorySlice";
 import React from "react";
 import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import {
+  deleteProductById,
+  getProducts,
+} from "Redux/Slices/Products/ProductsSlice";
 
 const DeleteDataModal = ({
-  categoryId,
+  productId,
   productName,
   setShowModal,
   setAddShowErrorToast,
@@ -16,33 +16,21 @@ const DeleteDataModal = ({
   setAddShowToastMessage,
 }) => {
   const dispatch = useDispatch();
-  const onSubmit = (categoryId) => {
-    const payload = {
-      ids: [
-        {
-          _id: categoryId,
-        },
-      ],
-    };
-
-    dispatch(deleteCategory(payload)).then((res) => {
+  const onSubmit = (productId) => {
+    console.log(productId);
+    dispatch(deleteProductById(productId)).then((res) => {
       if (res?.payload?.error?.response?.status === 400) {
         setAddShowErrorToast(true);
-        setAddShowErrorToastMessage(
-          res?.payload?.error?.response?.data?.message
-        );
+        setAddShowErrorToastMessage(res?.payload?.error?.response?.data?.error);
       } else if (res?.payload?.error?.response?.status === 500) {
         setAddShowErrorToast(true);
-        setAddShowErrorToastMessage(
-          res?.payload?.error?.response?.data?.message
-        );
+        setAddShowErrorToastMessage(res?.payload?.error?.response?.data?.error);
       } else {
-        dispatch(getCategory());
+        dispatch(getProducts());
         setAddShowToastMessage(res?.payload?.message);
         setAddShowToast(true);
         setShowModal(false);
       }
-      console.log("res ss ", res);
     });
   };
   return (
@@ -66,7 +54,7 @@ const DeleteDataModal = ({
         <Button
           variant="primary"
           onClick={() => {
-            onSubmit(categoryId);
+            onSubmit(productId);
           }}
         >
           Delete

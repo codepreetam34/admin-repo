@@ -8,24 +8,38 @@ import { getProducts } from "Redux/Slices/Products/ProductsSlice";
 import AddProductPage from "./Components/AddProductPage";
 import EditProductPage from "./Components/EditProductPage";
 import ViewProductPage from "./Components/ViewProductPage";
+import DeleteDataModal from "./Components/DeleteDataModal";
+import { ErrorToaster, SuccessToaster } from "Constants/utils";
 const ProductsPage = () => {
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const [openAddProductPage, setOpenAddProductPage] = useState(false);
   const [openEditProductPage, setOpenEditProductPage] = useState(false);
   const [openViewProductPage, setOpenViewProductPage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const [addShowErrorToast, setAddShowErrorToast] = useState(false);
+  const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
+  const [addShowToastMessage, setAddShowToastMessage] = useState("");
+  const [addShowToast, setAddShowToast] = useState(false);
+
   const dispatch = useDispatch();
 
   const productsList = useSelector(
     (state) => state?.ProductsByCatId?.productsList?.products
   );
+
   useEffect(() => {
-    dispatch(getProducts())
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch(() => setIsLoading(false));
-  }, [dispatch]);
+    if (!productsList || productsList.length === 0) {
+      dispatch(getProducts())
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch, productsList]);
 
   const tableHeaders = [
     { title: "S.No.", class: "" },
@@ -58,7 +72,31 @@ const ProductsPage = () => {
       class: "delete",
       icon: "far fa-trash-alt",
       onClick: (data) => {
-        setModalData({ type: "Delete", data: data });
+        setShowModal(true);
+        setModalData({
+          type: "Delete",
+          data: data,
+          modalContent: (
+            <DeleteDataModal
+              productId={data._id}
+              productName={data?.name}
+              setShowModal={setShowModal}
+              setAddShowErrorToast={(err) => {
+                setAddShowErrorToast(err);
+              }}
+              setAddShowErrorToastMessage={(msg) => {
+                setAddShowErrorToastMessage(msg);
+              }}
+              setAddShowToast={(show) => {
+                setAddShowToast(show);
+              }}
+              setAddShowToastMessage={(showMessage) => {
+                setAddShowToastMessage(showMessage);
+              }}
+            />
+          ),
+          modalTitle: "Delete Product",
+        });
       },
     },
   ];
@@ -210,7 +248,32 @@ const ProductsPage = () => {
           )}
         </Row>
       </div>
-
+      {modalData.type && (
+        <DynamicModal
+          show={showModal}
+          onClose={() => {
+            setShowModal(false);
+          }}
+          modalTitle={modalData.modalTitle}
+          modalContent={modalData.modalContent}
+        />
+      )}{" "}
+      {addShowErrorToast && (
+        <ErrorToaster
+          showErrorToast={addShowErrorToast}
+          setShowErrorToast={setAddShowErrorToast}
+          showErrorToastMessage={addShowErrorToastMessage}
+          customErrorMessage={"Something went wrong! Please Try Again"}
+        />
+      )}
+      {addShowToast && (
+        <SuccessToaster
+          showToast={addShowToast}
+          setShowToast={setAddShowToast}
+          showToastMessage={addShowToastMessage}
+          customMessage={`Please recheck your entry once`}
+        />
+      )}
     </Wrapper>
   );
 };

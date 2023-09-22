@@ -117,6 +117,7 @@ const CategoryPage = () => {
           modalContent: (
             <DeleteDataModal
               categoryId={data._id}
+              productName={data?.name}
               setShowModal={setShowModal} // Make sure you pass setShowModal
               setAddShowErrorToast={(err) => {
                 setAddShowErrorToast(err);

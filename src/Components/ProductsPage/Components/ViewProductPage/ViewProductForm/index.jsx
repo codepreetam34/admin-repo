@@ -106,7 +106,7 @@ const ViewProductForm = ({ categoryData }) => {
         </Col>
         <Col md={12} className="product-detail-design">
           <h3>Price Variants</h3>
-          <Row>
+          <Row className="pt-2">
             <Col md={6}>
               <div className="view-details pb-2">
                 <strong>Discount Price</strong> <br />{" "}
@@ -133,7 +133,7 @@ const ViewProductForm = ({ categoryData }) => {
           </Row>
         </Col>
         <DisplayTable reviews={categoryData?.reviews} />
-        <Col md={12} className="product-detail-design">
+        <Col md={12} className="product-detail-design pt-2">
           <h3>Product Pictures ({categoryData?.productPictures?.length})</h3>
 
           <Row style={{ paddingTop: "10px" }}>

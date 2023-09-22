@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../../../Services/AxiosInstance";
-import { ADD_PRODUCTS, GET_PRODUCTS, GET_PRODUCTS_BY_CATEGORYID } from "./type";
-import { PER_PAGE_LIMIT } from "Constants/AppConstant";
+import axiosInstance from "Services/AxiosInstance";
+import {
+  ADD_PRODUCTS,
+  DELETE_PRODUCT,
+  GET_PRODUCTS,
+  GET_PRODUCTS_BY_CATEGORYID,
+} from "./type";
 
 export const getProductsByCategoryId = createAsyncThunk(
   GET_PRODUCTS_BY_CATEGORYID,
@@ -44,6 +48,21 @@ export const getProducts = createAsyncThunk(
     }
   }
 );
+
+export const deleteProductById = createAsyncThunk(
+  DELETE_PRODUCT,
+  async (productId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.delete(
+        `product/deleteProductById/${productId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error });
+    }
+  }
+);
+
 export const ProductsByCaregoryIdSlice = createSlice({
   name: "ProductsByCaregoryIdSlice",
   initialState: {
