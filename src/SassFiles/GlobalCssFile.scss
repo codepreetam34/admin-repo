@@ -508,7 +508,6 @@ button.btn {
     position: relative;
     color: #000000;
     padding: 0 0 0 15px;
-    margin: 0 0 20px;
 
     &::after {
       position: absolute;
@@ -588,6 +587,100 @@ button.btn {
     }
   }
 }
+
+
+.detailstable {
+  padding: 30px;
+
+  h4 {
+    font-size: 20px;
+    font-weight: 600;
+    position: relative;
+    color: #000000;
+    padding: 0 0 0 15px;
+
+    &::after {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 6px;
+      height: 35px;
+      content: "";
+      border-radius: 100px;
+      background-color: #c22701;
+      transform: translateY(-50%);
+    }
+  }
+
+  .detailtablearea {
+    width: 100%;
+    height: auto;
+    max-height: 681px;
+    border-radius: 10px;
+    background-color: $white-clr;
+    position: relative;
+    overflow: auto;
+
+    .table {
+      vertical-align: middle;
+      border-bottom: 1px solid #e7e6e6;
+
+      thead {
+        tr {
+          th:first-child {
+            text-align: left;
+          }
+
+          th {
+            padding: 25px 10px;
+            text-align: center;
+          }
+        }
+      }
+
+      tbody {
+        border-top: none;
+
+        tr {
+          td:first-child {
+            text-align: left;
+          }
+
+          td {
+            text-align: center;
+            padding: 25px 10px;
+            font-size: 14px;
+            color: $secondary-clr;
+
+            img {
+              margin-right: 10px;
+            }
+
+            .bgbtn {
+              @include backgroundBtn;
+              padding: 8px 24px;
+              margin: 0;
+              font-size: 14px;
+            }
+
+            .complatedbtn {
+              @include backgroundBtn;
+              padding: 8px 24px;
+              background-color: #178225;
+              margin: 0;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
 
 .trandnfts {
   padding: 30px;

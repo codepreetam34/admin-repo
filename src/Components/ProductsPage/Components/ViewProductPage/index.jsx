@@ -3,6 +3,7 @@ import { Col, Container } from "react-bootstrap";
 import ViewProductForm from "./ViewProductForm";
 
 const ViewProductPage = ({ setOpenViewProductPage, categoryData }) => {
+  console.log("data ", categoryData);
   return (
     <Col md={12}>
       {" "}

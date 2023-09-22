@@ -211,18 +211,6 @@ const ProductsPage = () => {
         </Row>
       </div>
 
-      {/* Render the dynamic Modal component */}
-      {modalData.type && (
-        <DynamicModal
-          show={true}
-          onClose={() => setModalData({ type: null, data: null })}
-          type={modalData.type}
-          data={modalData.data}
-          onSubmit={() => {
-            // Handle form submission or deletion logic here based on modal type
-          }}
-        />
-      )}
     </Wrapper>
   );
 };

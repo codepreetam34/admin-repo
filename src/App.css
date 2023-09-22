@@ -74,3 +74,24 @@ ul {
 .form-group-padding-bottom {
   padding-bottom: 30px;
 }
+
+.product-detail-design {
+  padding: 10px;
+  margin: 10px 0px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.view-details-heading {
+  font-size: 2rem;
+}
+.view-details-subheading {
+  font-size: 1.5rem;
+}
+
+.image-detail-view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
