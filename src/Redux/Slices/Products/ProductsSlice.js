@@ -37,6 +37,23 @@ export const addProducts = createAsyncThunk(
     }
   }
 );
+
+export const updateProducts = createAsyncThunk(
+  ADD_PRODUCTS,
+  async (addProductData, thunkAPI) => {
+    try {
+      const response = await axiosInstance.patch(
+        `product/update`,
+        addProductData
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error });
+    }
+  }
+);
+
 export const getProducts = createAsyncThunk(
   GET_PRODUCTS,
   async (usersListData, thunkAPI) => {

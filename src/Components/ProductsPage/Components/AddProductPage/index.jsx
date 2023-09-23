@@ -22,7 +22,7 @@ const AddProductPage = ({ setOpenAddProductPage }) => {
               className="tablearea"
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
-              <AddProductForm />
+              <AddProductForm setOpenAddProductPage={setOpenAddProductPage} />
             </div>{" "}
           </div>
         </div>
