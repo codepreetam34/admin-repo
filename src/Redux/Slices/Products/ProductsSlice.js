@@ -40,11 +40,11 @@ export const addProducts = createAsyncThunk(
 
 export const updateProducts = createAsyncThunk(
   ADD_PRODUCTS,
-  async (addProductData, thunkAPI) => {
+  async (ProductData, thunkAPI) => {
     try {
       const response = await axiosInstance.patch(
         `product/update`,
-        addProductData
+        ProductData
       );
 
       return response.data;

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Col, Row } from "react-bootstrap";
 import DisplayTable from "../DisplayTable";
 
-const ViewProductForm = ({ categoryData }) => {
+const ViewProductForm = ({ productData }) => {
   return (
     <Form className="user_form" style={{ padding: "2rem" }}>
       <Row>
@@ -10,33 +10,33 @@ const ViewProductForm = ({ categoryData }) => {
         <div className="view-details-heading pb-2 text-center">
           <strong>Product Details</strong>
           <div style={{ fontSize: "1.2rem" }}>
-            Quantity ({categoryData?.quantity})
+            Quantity ({productData?.quantity})
           </div>
         </div>
         <Col md={12} className="product-detail-design">
           <Row>
             <Col md={6}>
               <div className="view-details pb-2">
-                <strong>Name</strong> <br /> {categoryData?.name}
+                <strong>Name</strong> <br /> {productData?.name}
               </div>
             </Col>
             <Col md={6}>
               <div className="view-details pb-2">
-                <strong>Price</strong> <br /> {categoryData?.actualPrice}
+                <strong>Price</strong> <br /> {productData?.actualPrice}
               </div>
             </Col>
 
             <Col md={6}>
               <div className="view-details pb-2">
                 <strong>Product Category</strong> <br />{" "}
-                {categoryData?.category}
+                {productData?.category}
               </div>
             </Col>
             <Col md={6}>
               <div className="view-details pb-2">
                 <strong>Delivery Day</strong>
                 <br />
-                {categoryData?.deliveryDay}
+                {productData?.deliveryDay}
               </div>{" "}
             </Col>
           </Row>
@@ -45,22 +45,22 @@ const ViewProductForm = ({ categoryData }) => {
           <div className="view-details pb-2">
             <strong>Description</strong>
             <br />
-            {categoryData?.description}
+            {productData?.description}
           </div>
         </Col>
         <Col md={12} className="product-detail-design">
           <div className="view-details pb-2">
             <strong>Specifications</strong> <br />{" "}
-            {categoryData?.specifications}
+            {productData?.specifications}
           </div>
         </Col>
         <Col md={12} className="product-detail-design">
           <div className="view-details pb-2">
-            <strong>Tags ({categoryData?.tags?.length})</strong>
+            <strong>Tags ({productData?.tags?.length})</strong>
 
             <div className="d-flex flex-wrap gap-3 pt-2">
-              {categoryData?.tags.length > 0 &&
-                categoryData?.tags.map((tag, index) => (
+              {productData?.tags.length > 0 &&
+                productData?.tags.map((tag, index) => (
                   <div
                     style={{
                       color: "rgba(0, 0, 0, 0.87)",
@@ -81,11 +81,11 @@ const ViewProductForm = ({ categoryData }) => {
         </Col>
         <Col md={12} className="product-detail-design">
           <div className="view-details pb-2">
-            <strong>Pincode ({categoryData?.pincode?.length})</strong>
+            <strong>Pincode ({productData?.pincode?.length})</strong>
 
             <div className="d-flex flex-wrap gap-3 pt-2">
-              {categoryData?.pincode.length > 0 &&
-                categoryData?.pincode.map((pin, index) => (
+              {productData?.pincode.length > 0 &&
+                productData?.pincode.map((pin, index) => (
                   <div
                     style={{
                       color: "rgba(0, 0, 0, 0.87)",
@@ -110,36 +110,36 @@ const ViewProductForm = ({ categoryData }) => {
             <Col md={6}>
               <div className="view-details pb-2">
                 <strong>Discount Price</strong> <br />{" "}
-                {categoryData?.discountPrice}
+                {productData?.discountPrice}
               </div>
               <div className="view-details pb-2">
                 <strong>1/2kg Price</strong>
                 <br />
-                {categoryData?.halfkgprice}
+                {productData?.halfkgprice}
               </div>{" "}
             </Col>
             <Col md={6}>
               <div className="view-details pb-2">
                 <strong>1kg Price</strong> <br />
-                {categoryData?.onekgprice}
+                {productData?.onekgprice}
               </div>
 
               <div className="view-details pb-2">
                 <strong>2kg Price</strong>
                 <br />
-                {categoryData?.twokgprice}
+                {productData?.twokgprice}
               </div>
             </Col>
           </Row>
         </Col>
-        <DisplayTable reviews={categoryData?.reviews} />
+        <DisplayTable reviews={productData?.reviews} />
         <Col md={12} className="product-detail-design pt-2">
-          <h3>Product Pictures ({categoryData?.productPictures?.length})</h3>
+          <h3>Product Pictures ({productData?.productPictures?.length})</h3>
 
           <Row style={{ paddingTop: "10px" }}>
             <Col md={12} className="image-detail-view">
-              {categoryData?.productPictures?.length > 0 &&
-                categoryData?.productPictures?.map((picture, index) => (
+              {productData?.productPictures?.length > 0 &&
+                productData?.productPictures?.map((picture, index) => (
                   <div
                     style={{
                       width: "200px",

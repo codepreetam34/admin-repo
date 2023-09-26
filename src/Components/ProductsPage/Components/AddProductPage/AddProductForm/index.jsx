@@ -54,231 +54,177 @@ const AddProductForm = ({ setOpenAddProductPage }) => {
     });
   };
 
-  //   const ColorVariantSection = ({
-  //     colors,
-  //     handleColorNameChange,
-  //     handleImgChange,
-  //     onRemovePicture,
-  //     addProductPicture,
-  //     onRemoveColor,
-  //     addColor,
-  //   }) => {
-  //     return (
-  //       <Col
-  //         md={12}
-  //         style={{
-  //           border: "0.0625rem solid #1a1a1a1f",
-  //           borderRadius: "0.5rem",
-  //           marginTop: "2rem",
-  //           padding: "0.625rem 0.875rem",
-  //         }}
-  //       >
-  //         <h5>Add Up to 4 Color Variants</h5>
-  //         <Form.Group>
-  //           {colors &&
-  //             colors?.map((color, colorIndex) => (
-  //               <div key={colorIndex}>
-  //                 <div
-  //                   style={{
-  //                     border: "0.0625rem solid #1a1a1a1f",
-  //                     borderRadius: "0.5rem",
-  //                     margin: "10px 0",
-  //                     padding: "0.625rem 0.875rem",
-  //                   }}
-  //                 >
-  //                   <div>
+  // const ColorVariantSection = ({
+  //   colors,
+  //   handleColorNameChange,
+  //   handleImgChange,
+  //   onRemovePicture,
+  //   addProductPicture,
+  //   onRemoveColor,
+  //   addColor,
+  // }) => {
+  //   return (
+  //     <Col
+  //       md={12}
+  //       style={{
+  //         border: "0.0625rem solid #1a1a1a1f",
+  //         borderRadius: "0.5rem",
+  //         marginTop: "2rem",
+  //         padding: "0.625rem 0.875rem",
+  //       }}
+  //     >
+  //       <h5>Add Up to 4 Color Variants</h5>
+  //       {colors?.map((color, colorIndex) => (
+  //         <div>
+  //           <div
+  //             style={{
+  //               border: "0.0625rem solid #1a1a1a1f",
+  //               borderRadius: "0.5rem",
+  //               margin: "10px 0",
+  //               padding: "0.625rem 0.875rem",
+  //             }}
+  //           >
+  //             <div key={colorIndex}>
+  //               <Form.Group>
+  //                 <Form.Label>Color Name {colorIndex + 1}</Form.Label>
+  //                 <Form.Control
+  //                   type="text"
+  //                   name={`colors[${colorIndex}].name`}
+  //                   id={`colors[${colorIndex}].name`}
+  //                   style={{ marginBottom: "10px" }}
+  //                   value={color?.name}
+  //                   onChange={(event) =>
+  //                     handleColorNameChange(event, colorIndex)
+  //                   }
+  //                 />
+  //               </Form.Group>
+  //             </div>
 
-  //                       <Form.Label>Color Name {colorIndex + 1}</Form.Label>
+  //             {color?.productPictures.map((picture, pictureIndex) => (
+  //               <div key={pictureIndex}>
+  //                 {picture?.picturePreview && (
+  //                   <div className="m-3">
+  //                     <div>{`Image Preview ${pictureIndex + 1}`}</div>
+  //                     <img
+  //                       src={picture?.picturePreview}
+  //                       style={{
+  //                         width: "200px",
+  //                         height: "200px",
+  //                       }}
+  //                       alt={`Color ${colorIndex + 1} - Image ${
+  //                         pictureIndex + 1
+  //                       }`}
+  //                     />
+  //                   </div>
+  //                 )}
+
+  //                 <Row>
+  //                   <Col md={6}>
+  //                     <Form.Group>
+  //                       <Form.Label>{`Color Picture ${
+  //                         pictureIndex + 1
+  //                       }`}</Form.Label>
+
   //                       <Form.Control
-  //                         type="text"
-  //                         name={`colors[${colorIndex}].name`}
-  //                         id={`colors[${colorIndex}].name`}
+  //                         type="file"
+  //                         accept="image/*"
   //                         style={{ marginBottom: "10px" }}
-  //                         value={color?.name}
+  //                         id={`colorPicture-${colorIndex}-${pictureIndex}`}
+  //                         name={`colorPicture-${colorIndex}-${pictureIndex}`}
   //                         onChange={(event) =>
-  //                           handleColorNameChange(event, colorIndex)
+  //                           handleImgChange(event, colorIndex, pictureIndex)
   //                         }
   //                       />
+  //                     </Form.Group>
+  //                   </Col>
+  //                   <Col md={6}>
+  //                     <Form.Group
+  //                     >
+  //                       <Form.Label>Image Alt Text</Form.Label>
+  //                       <Form.Control
+  //                         type="text"
+  //                         name={`colors[${colorIndex}].productPictures[${pictureIndex}].colorImageAltText`}
+  //                         style={{ marginBottom: "10px" }}
+  //                         value={picture?.colorImageAltText}
+  //                         onChange={(event) =>
+  //                           handleColorImageAltTextChange(
+  //                             event,
+  //                             colorIndex,
+  //                             pictureIndex
+  //                           )
+  //                         }
+  //                       />
+  //                     </Form.Group>
+  //                   </Col>
+  //                 </Row>
 
-  //                   </div>
+  //                 <div
+  //                   style={{
+  //                     display: "flex",
+  //                     justifyContent: "flex-end",
+  //                     paddingTop: "10px",
+  //                   }}
+  //                 >
+  //                   <Button
+  //                     variant="contained"
+  //                     onClick={() => onRemovePicture(colorIndex, pictureIndex)}
+  //                     style={{
+  //                       textTransform: "capitalize",
+  //                     }}
+  //                   >
+  //                     <i className="fa-solid fa-circle-xmark"></i>
+  //                   </Button>
+  //                 </div>
   //               </div>
-  // </div>
-  //         </Form.Group>
-  //       </Col>
-  //     );
-  //   };
+  //             ))}
 
-  const ColorVariantSection = ({
-    colors,
-    handleColorNameChange,
-    handleImgChange,
-    onRemovePicture,
-    addProductPicture,
-    onRemoveColor,
-    addColor,
-  }) => {
-    return (
-      <Col
-        md={12}
-        style={{
-          border: "0.0625rem solid #1a1a1a1f",
-          borderRadius: "0.5rem",
-          marginTop: "2rem",
-          padding: "0.625rem 0.875rem",
-        }}
-      >
-        <h5>Add Up to 4 Color Variants</h5>
-        {colors?.map((color, colorIndex) => (
-          <div>
-            <div
-              style={{
-                border: "0.0625rem solid #1a1a1a1f",
-                borderRadius: "0.5rem",
-                margin: "10px 0",
-                padding: "0.625rem 0.875rem",
-              }}
-            >
-              <div key={colorIndex}>
-                <Form.Group>
-                  <Form.Label>Color Name {colorIndex + 1}</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name={`colors[${colorIndex}].name`}
-                    id={`colors[${colorIndex}].name`}
-                    style={{ marginBottom: "10px" }}
-                    value={color?.name}
-                    onChange={(event) =>
-                      handleColorNameChange(event, colorIndex)
-                    }
-                  />
-                </Form.Group>
-              </div>
+  //             <div>
+  //               <Button
+  //                 variant="secondary"
+  //                 onClick={() => addProductPicture(colorIndex)}
+  //                 style={{
+  //                   textTransform: "capitalize",
+  //                 }}
+  //               >
+  //                 Add Color Picture
+  //               </Button>
+  //             </div>
+  //           </div>
+  //           <div
+  //             style={{
+  //               display: "flex",
+  //               justifyContent: "flex-end",
+  //               padding: "5px 0px 20px 0px",
+  //             }}
+  //           >
+  //             <Button
+  //               variant="contained"
+  //               onClick={() => onRemoveColor(colorIndex)}
+  //               style={{
+  //                 textTransform: "capitalize",
+  //               }}
+  //             >
+  //               <i className="fa-solid fa-circle-xmark"></i>
+  //             </Button>
+  //           </div>
+  //         </div>
+  //       ))}
 
-              {color?.productPictures.map((picture, pictureIndex) => (
-                <div key={pictureIndex}>
-                  {picture?.picturePreview && (
-                    <div className="m-3">
-                      <div>{`Image Preview ${pictureIndex + 1}`}</div>
-                      <img
-                        src={picture?.picturePreview}
-                        style={{
-                          width: "200px",
-                          height: "200px",
-                        }}
-                        alt={`Color ${colorIndex + 1} - Image ${
-                          pictureIndex + 1
-                        }`}
-                      />
-                    </div>
-                  )}
-
-                  <Row>
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>{`Color Picture ${
-                          pictureIndex + 1
-                        }`}</Form.Label>
-
-                        <Form.Control
-                          type="file"
-                          accept="image/*"
-                          style={{ marginBottom: "10px" }}
-                          id={`colorPicture-${colorIndex}-${pictureIndex}`}
-                          name={`colorPicture-${colorIndex}-${pictureIndex}`}
-                          onChange={(event) =>
-                            handleImgChange(event, colorIndex, pictureIndex)
-                          }
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group
-                      >
-                        <Form.Label>Image Alt Text</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name={`colors[${colorIndex}].productPictures[${pictureIndex}].colorImageAltText`}
-                          style={{ marginBottom: "10px" }}
-                          value={picture?.colorImageAltText}
-                          onChange={(event) =>
-                            handleColorImageAltTextChange(
-                              event,
-                              colorIndex,
-                              pictureIndex
-                            )
-                          }
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      onClick={() => onRemovePicture(colorIndex, pictureIndex)}
-                      style={{
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      <i className="fa-solid fa-circle-xmark"></i>
-                    </Button>
-                  </div>
-                </div>
-              ))}
-
-              <div>
-                <Button
-                  variant="secondary"
-                  onClick={() => addProductPicture(colorIndex)}
-                  style={{
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Add Color Picture
-                </Button>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                padding: "5px 0px 20px 0px",
-              }}
-            >
-              <Button
-                variant="contained"
-                onClick={() => onRemoveColor(colorIndex)}
-                style={{
-                  textTransform: "capitalize",
-                }}
-              >
-                <i className="fa-solid fa-circle-xmark"></i>
-              </Button>
-            </div>
-          </div>
-        ))}
-
-        <div>
-          <Button
-            variant="secondary"
-            style={{
-              textTransform: "capitalize",
-              marginTop: "2rem",
-            }}
-            onClick={addColor}
-          >
-            Add Color
-          </Button>
-        </div>
-      </Col>
-    );
-  };
+  //       <div>
+  //         <Button
+  //           variant="secondary"
+  //           style={{
+  //             textTransform: "capitalize",
+  //             marginTop: "2rem",
+  //           }}
+  //           onClick={addColor}
+  //         >
+  //           Add Color
+  //         </Button>
+  //       </div>
+  //     </Col>
+  //   );
+  // };
 
   const handleColorNameChange = (event, index) => {
     const newColors = [...colors];
@@ -440,11 +386,11 @@ const AddProductForm = ({ setOpenAddProductPage }) => {
         formData.append("specification", data?.specification?.toString());
 
       Array.from(formData?.pinCode).forEach((item) => {
-        formData.append("pinCode", item);
+        formData.append("pincode", item);
       });
 
       Array.from(formData?.pinCode).forEach((item) => {
-        formData.append("tag", item);
+        formData.append("tags", item);
       });
 
       if (bannerPicture && bannerPicture?.length > 1) {
@@ -588,7 +534,6 @@ const AddProductForm = ({ setOpenAddProductPage }) => {
             <Col md={6}>
               <Form.Group className="form-group-padding-bottom">
                 <Form.Label>Select Category</Form.Label>
-
                 <Form.Control
                   as="select"
                   name="categoryId"
@@ -818,7 +763,7 @@ const AddProductForm = ({ setOpenAddProductPage }) => {
           </Row>
         </Col>
 
-        <ColorVariantSection
+        {/* <ColorVariantSection
           colors={colors}
           handleColorNameChange={handleColorNameChange}
           handleImgChange={handleImgChange}
@@ -826,7 +771,7 @@ const AddProductForm = ({ setOpenAddProductPage }) => {
           addProductPicture={addProductPicture}
           onRemoveColor={onRemoveColor}
           addColor={addColor}
-        />
+        /> */}
 
         <Col
           md={12}
@@ -868,38 +813,35 @@ const AddProductForm = ({ setOpenAddProductPage }) => {
                 <Col md={6}>
                   <Form.Group>
                     <Form.Label>Image Alt Text</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="imageAltText"
-                      id="imageAltText"
-                      value={picture.imageAltText}
-                      isInvalid={!!errors.imageAltText}
-                      onChange={(e) => handleImageAltText(e, index)}
-                    />
+                    <div className="d-flex pb-3" key={index}>
+                      <Form.Control
+                        type="text"
+                        name="imageAltText"
+                        id="imageAltText"
+                        value={picture?.imageAltText}
+                        isInvalid={!!errors.imageAltText}
+                        onChange={(e) => handleImageAltText(e, index)}
+                      />
+                      <div
+                        className="ps-1"
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        <Button
+                          variant="contained"
+                          onClick={() => onRemoveBannerPicture(index)}
+                          style={{
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          <i className="fa-solid fa-circle-xmark"></i>
+                        </Button>
+                      </div>
+                    </div>
                   </Form.Group>
                 </Col>
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    paddingTop: "10px",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    onClick={() => onRemoveBannerPicture(index)}
-                    style={{
-                      textTransform: "capitalize",
-                      "&:hover": {
-                        border: "none",
-                        textDecoration: "none",
-                      },
-                    }}
-                  >
-                    <i class="fa-solid fa-circle-xmark"></i>
-                  </Button>
-                </div>
               </Row>
             ))}
             <div>
@@ -921,21 +863,23 @@ const AddProductForm = ({ setOpenAddProductPage }) => {
           </Form.Group>
         </Col>
 
-        <Button
-          type="submit"
-          variant="primary"
-          style={{
-            textTransform: "capitalize",
-            marginTop: "2rem",
-            "&:hover": {
-              border: "none",
-              textDecoration: "none",
-            },
-          }}
-          onClick={handleSubmit(onSubmit)}
-        >
-          Add Product
-        </Button>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            type="submit"
+            variant="primary"
+            style={{
+              textTransform: "capitalize",
+              marginTop: "2rem",
+              "&:hover": {
+                border: "none",
+                textDecoration: "none",
+              },
+            }}
+        //    onClick={handleSubmit(onSubmit)}
+          >
+            Add Product
+          </Button>
+        </div>
       </Row>
     </Form>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Container } from "react-bootstrap";
 import EditProductForm from "./EditProductForm";
 
-const EditProductPage = ({ setOpenEditProductPage }) => {
+const EditProductPage = ({ setOpenEditProductPage, productData }) => {
   return (
     <Col md={12}>
       <div className="pt-4">
@@ -22,7 +22,7 @@ const EditProductPage = ({ setOpenEditProductPage }) => {
               className="tablearea"
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
-              <EditProductForm />
+              <EditProductForm productData={productData} />
             </div>{" "}
           </div>
         </div>

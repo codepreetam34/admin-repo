@@ -10,6 +10,7 @@ import EditProductPage from "./Components/EditProductPage";
 import ViewProductPage from "./Components/ViewProductPage";
 import DeleteDataModal from "./Components/DeleteDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
+
 const ProductsPage = () => {
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [isLoading, setIsLoading] = useState(true); // Add loading state
@@ -234,11 +235,12 @@ const ProductsPage = () => {
                 <AddProductPage setOpenAddProductPage={setOpenAddProductPage} />
               ) : openEditProductPage && openEditProductPage ? (
                 <EditProductPage
+                  productData={modalData?.data}
                   setOpenEditProductPage={setOpenEditProductPage}
                 />
               ) : openViewProductPage && openViewProductPage ? (
                 <ViewProductPage
-                  categoryData={modalData?.data}
+                  productData={modalData?.data}
                   setOpenViewProductPage={setOpenViewProductPage}
                 />
               ) : (
