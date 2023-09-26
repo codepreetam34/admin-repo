@@ -11,14 +11,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 
-const EditProductForm = ({ setOpenAddProductPage, productData }) => {
+const EditProductForm = ({
+  setOpenEditProductPage,
+  setIsLoading,
+  productData,
+  setAddShowErrorToast,
+  setAddShowErrorToastMessage,
+  setAddShowToast,
+  setAddShowToastMessage,
+}) => {
   const [imageAltText, setImageAltText] = useState([""]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [pinCode, setPinCode] = useState([""]);
   const [tags, setTags] = useState([""]);
-  const [viewCategoryImage, setViewCategoryImage] = useState([""]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [viewProductImages, setViewProductImages] = useState([""]);
+  const [defaultCategory, setDefaultCategory] = useState();
+
   const [colors, setColors] = useState([
     {
       name: "",
@@ -47,6 +56,7 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
     });
   };
   const handleBannerPictures = (e, i) => {
+    setViewProductImages("");
     setBannerPicture((bannerPicture) => {
       const newBannerPicture = [...bannerPicture];
       newBannerPicture[i].img = e.target.files[0];
@@ -100,7 +110,7 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
     ]);
   };
 
-  const addProductPicture = (colorIndex) => {
+  const addColorProductPicture = (colorIndex) => {
     setColors((colors) => {
       const newState = [...colors];
       console.log("on newState", newState);
@@ -123,7 +133,8 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
     console.log("on remove", colors);
   };
 
-  const addBannerPicture = () => {
+  const addProductPicture = () => {
+    setViewProductImages("");
     setBannerPicture([
       ...bannerPicture,
       {
@@ -170,7 +181,7 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
     handleColorNameChange,
     handleImgChange,
     onRemovePicture,
-    addProductPicture,
+    addColorProductPicture,
     onRemoveColor,
     addColor,
   }) => {
@@ -294,7 +305,7 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
               <div>
                 <Button
                   variant="secondary"
-                  onClick={() => addProductPicture(colorIndex)}
+                  onClick={() => addColorProductPicture(colorIndex)}
                   style={{
                     textTransform: "capitalize",
                   }}
@@ -374,18 +385,20 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
       name: productData?.name,
       imageAltText: productData?.imageAltText,
       actualPrice: productData?.actualPrice,
-      categoryId: productData?.category,
       deliveryDay: productData?.deliveryDay,
       description: productData?.description,
       specifications: productData?.specifications,
       discountPrice: productData?.discountPrice,
+      quantity: productData?.quantity,
+      offer: productData?.offer,
       halfkgprice: productData?.halfkgprice,
       onekgprice: productData?.onekgprice,
       twokgprice: productData?.twokgprice,
     });
     setPinCode(productData?.pincode);
     setTags(productData?.tags);
-    setViewCategoryImage(productData?.productPictures);
+    setViewProductImages(productData?.productPictures);
+    setDefaultCategory(productData?.category);
   }, [productData, reset]);
 
   const categoryList = useSelector(
@@ -405,65 +418,59 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
   }, [dispatch, categoryList]);
 
   const onSubmit = (data) => {
-    console.log("data  ----->   ", data);
-
-    const validationErrors = editProductSchema.validate(data, {
-      abortEarly: false, // This ensures all validation errors are captured
+    const formData = new FormData();
+    if (data?.name) formData.append("name", data?.name?.toString());
+    if (productData._id) formData.append("_id", productData?._id);
+    if (data?.description)
+      formData.append("description", data?.description?.toString());
+    if (data?.categoryId) formData.append("category", defaultCategory);
+    if (data?.deliveryDay) formData.append("deliveryDay", data?.deliveryDay);
+    if (data?.discountPrice)
+      formData.append("discountPrice", data?.discountPrice);
+    if (data?.quantity) formData.append("quantity", data?.quantity);
+    if (data?.offer) formData.append("offer", data?.offer);
+    if (data?.halfkgprice) formData.append("halfkgprice", data?.halfkgprice);
+    if (data?.onekgprice) formData.append("onekgprice", data?.onekgprice);
+    if (data?.twokgprice) formData.append("twokgprice", data?.twokgprice);
+    if (data?.actualPrice) formData.append("actualPrice", data?.actualPrice);
+    if (data?.specifications)
+      formData.append("specifications", data?.specifications?.toString());
+    Array.from(pinCode).forEach((item) => {
+      formData.append("pincode", item);
     });
-
-    if (validationErrors.error) {
-      console.log(validationErrors.error);
-    } else {
-      console.log("Form data is valid:", data);
-
-      const formData = new FormData();
-      if (data?.name) formData.append("name", data?.name?.toString());
-      if (data?.productData._id)
-        formData.append("_id", productData?._id.toString());
-
-      if (data?.description)
-        formData.append("description", data?.description?.toString());
-
-      if (data?.categoryId) formData.append("category", data?.categoryId);
-
-      if (data?.specification)
-        formData.append("specification", data?.specification?.toString());
-
-      Array.from(data?.pinCode).forEach((item) => {
-        formData.append("pincode", item);
+    Array.from(tags).forEach((item) => {
+      formData.append("tags", item);
+    });
+    if (bannerPicture && bannerPicture?.length > 1) {
+      bannerPicture?.map((file, index) => {
+        return {
+          img: formData.append("productPicture", file?.img),
+          imageAltText: formData.append("imageAltText", file?.imageAltText),
+        };
       });
-      Array.from(data?.tags).forEach((item) => {
-        formData.append("tags", item);
-      });
-
-      if (bannerPicture && bannerPicture?.length > 1) {
-        bannerPicture?.map((file, index) => {
-          return {
-            img: formData.append("productPicture", file?.img),
-            imageAltText: formData.append("imageAltText", file?.imageAltText),
-          };
-        });
-      } else if (bannerPicture && bannerPicture?.length === 1) {
-        bannerPicture[0]?.img &&
-          formData.append("productPicture", bannerPicture[0]?.img);
-        bannerPicture[0]?.imageAltText &&
-          formData.append("imageAltText", bannerPicture[0]?.imageAltText);
-      }
-
-      dispatch(updateProducts(formData)).then(() => {
-        const usersListData = { page: 1 };
-        dispatch(getProducts(usersListData)).then(() => {
-          setTimeout(() => {
-            setOpenAddProductPage("Data Added Successfully");
-          }, 1000);
-        });
-      });
-      setOpenAddProductPage("Data Added Successfully");
-      setValue("name", "");
-      setValue("description", "");
-      setValue("category", "");
-      setValue("specification", "");
+    } else if (bannerPicture && bannerPicture?.length === 1) {
+      bannerPicture[0]?.img &&
+        formData.append("productPicture", bannerPicture[0]?.img);
+      bannerPicture[0]?.imageAltText &&
+        formData.append("imageAltText", bannerPicture[0]?.imageAltText);
     }
+    dispatch(updateProducts(formData)).then((res) => {
+      setIsLoading(true);
+      if (
+        res?.paylaod?.error?.response?.status === 400 ||
+        res?.paylaod?.error?.response?.status === 500
+      ) {
+        setIsLoading(false);
+        setAddShowErrorToast(true);
+        setAddShowErrorToastMessage(res.paylaod.error.message);
+      } else {
+        setIsLoading(false);
+        setAddShowToast(true);
+        setAddShowToastMessage(res.payload.message);
+        dispatch(getProducts());
+        setOpenEditProductPage(false);
+      }
+    });
   };
 
   return (
@@ -516,8 +523,9 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
                       as="select"
                       name="categoryId"
                       id="categoryId"
-                      {...register("categoryId")}
                       isInvalid={!!errors?.categoryId}
+                      value={defaultCategory}
+                      onChange={(e) => setDefaultCategory(e.target.value)}
                     >
                       <option value="">Select</option>
                       {categoryList &&
@@ -535,7 +543,6 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
-
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Delivery Day</Form.Label>
@@ -590,7 +597,7 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Tags</Form.Label>
-                  {tags.map((tag, index) => (
+                  {tags?.map((tag, index) => (
                     <div className="d-flex pb-3" key={index}>
                       <Form.Control
                         type="text"
@@ -635,7 +642,7 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Pincode</Form.Label>
-                  {pinCode.map((pincode, index) => (
+                  {pinCode?.map((pincode, index) => (
                     <div className="d-flex pb-3" key={index}>
                       <Form.Control
                         type="text"
@@ -745,6 +752,39 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
+
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Offer</Form.Label>
+
+                  <Form.Control
+                    type="text"
+                    id="offer"
+                    name="offer"
+                    {...register("offer")}
+                    isInvalid={!!errors.offer}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.offer?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Quantity</Form.Label>
+
+                  <Form.Control
+                    type="text"
+                    id="quantity"
+                    name="quantity"
+                    {...register("quantity")}
+                    isInvalid={!!errors.quantity}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.quantity?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
             </Row>
           </Col>
 
@@ -757,11 +797,11 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
               padding: "0.625rem 0.875rem",
             }}
           >
-            <Col className="mb-4">
+            <div className="mb-4">
               {bannerPicture &&
                 bannerPicture?.map((picture, index) => (
                   <div key={index}>
-                    {picture?.picturePreview && (
+                    {picture?.picturePreview && picture?.picturePreview ? (
                       <div className="m-3">
                         <div>{`Image Preview ${index + 1}`} </div>
                         <img
@@ -772,71 +812,81 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
                           }}
                         />
                       </div>
+                    ) : (
+                      <div className="d-flex flex-wrap gap-3 pb-3">
+                        {viewProductImages && viewProductImages.length > 0 ? (
+                          viewProductImages?.map((picture, index) => (
+                            <div>
+                              <div className="pb-2">
+                                {`Image ${index + 1}`}{" "}
+                              </div>
+                              <img
+                                src={picture?.img}
+                                style={{
+                                  width: "70px",
+                                  height: "50px",
+                                }}
+                              />
+                              <div className="pb-2">
+                                {picture?.imageAltText}
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <></>
+                        )}
+                      </div>
                     )}
-                    <div className="d-flex flex-wrap gap-3 pb-3">
-                      {viewCategoryImage &&
-                        viewCategoryImage.length > 0 &&
-                        viewCategoryImage?.map((picture, index) => (
-                          <div>
-                            <div className="pb-2">{`Image ${index + 1}`} </div>
-                            <img
-                              src={picture?.img}
-                              style={{
-                                width: "70px",
-                                height: "50px",
-                              }}
-                            />{" "}
-                            <div className="pb-2">{picture?.imageAltText} </div>
-                          </div>
-                        ))}
-                    </div>
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>Product Images {index + 1}</Form.Label>
-                        <Form.Control
-                          type="file"
-                          accept="image/*"
-                          name="banner"
-                          id="banner"
-                          onChange={(event) =>
-                            handleBannerPictures(event, index)
-                          }
-                        />
-                      </Form.Group>
-                    </Col>
 
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>Image Alt Text</Form.Label>
-                        <div className="d-flex pb-3" key={index}>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group>
+                          <Form.Label>Product Images {index + 1}</Form.Label>
                           <Form.Control
-                            type="text"
-                            name="imageAltText"
-                            id="imageAltText"
-                            value={picture.imageAltText}
-                            isInvalid={!!errors.imageAltText}
-                            onChange={(e) => handleImageAltText(e, index)}
+                            type="file"
+                            accept="image/*"
+                            name="banner"
+                            id="banner"
+                            onChange={(event) =>
+                              handleBannerPictures(event, index)
+                            }
                           />
-                          <div
-                            className="ps-1"
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            <Button
-                              variant="contained"
-                              onClick={() => onRemoveTags(index)}
+                        </Form.Group>
+                      </Col>
+
+                      <Col md={6}>
+                        <Form.Group>
+                          <Form.Label>Image Alt Text</Form.Label>
+                          <div className="d-flex pb-3" key={index}>
+                            <Form.Control
+                              type="text"
+                              name="imageAltText"
+                              id="imageAltText"
+                              value={picture.imageAltText}
+                              isInvalid={!!errors.imageAltText}
+                              onChange={(e) => handleImageAltText(e, index)}
+                            />
+                            <div
+                              className="ps-1"
                               style={{
-                                textTransform: "capitalize",
+                                display: "flex",
+                                justifyContent: "flex-end",
                               }}
                             >
-                              <i className="fa-solid fa-circle-xmark"></i>
-                            </Button>
+                              <Button
+                                variant="contained"
+                                onClick={() => onRemoveTags(index)}
+                                style={{
+                                  textTransform: "capitalize",
+                                }}
+                              >
+                                <i className="fa-solid fa-circle-xmark"></i>
+                              </Button>
+                            </div>
                           </div>
-                        </div>
-                      </Form.Group>
-                    </Col>
+                        </Form.Group>
+                      </Col>
+                    </Row>
                   </div>
                 ))}
               <div>
@@ -850,12 +900,12 @@ const EditProductForm = ({ setOpenAddProductPage, productData }) => {
                       textDecoration: "none",
                     },
                   }}
-                  onClick={addBannerPicture}
+                  onClick={addProductPicture}
                 >
                   Add Picture
                 </Button>
               </div>
-            </Col>
+            </div>
           </Col>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button

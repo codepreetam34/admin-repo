@@ -2,7 +2,14 @@ import React from "react";
 import { Col, Container } from "react-bootstrap";
 import AddProductForm from "./AddProductForm";
 
-const AddProductPage = ({ setOpenAddProductPage }) => {
+const AddProductPage = ({
+  setOpenAddProductPage,
+  setIsLoading,
+  setAddShowErrorToast,
+  setAddShowErrorToastMessage,
+  setAddShowToast,
+  setAddShowToastMessage,
+}) => {
   return (
     <Col md={12}>
       {" "}
@@ -22,7 +29,14 @@ const AddProductPage = ({ setOpenAddProductPage }) => {
               className="tablearea"
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
-              <AddProductForm setOpenAddProductPage={setOpenAddProductPage} />
+              <AddProductForm
+                setOpenAddProductPage={setOpenAddProductPage}
+                setIsLoading={setIsLoading}
+                setAddShowErrorToast={setAddShowErrorToast}
+                setAddShowErrorToastMessage={setAddShowErrorToastMessage}
+                setAddShowToast={setAddShowToast}
+                setAddShowToastMessage={setAddShowToastMessage}
+              />
             </div>{" "}
           </div>
         </div>

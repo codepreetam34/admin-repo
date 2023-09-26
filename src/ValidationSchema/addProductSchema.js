@@ -5,12 +5,15 @@ export const addProductSchema = Yup.object().shape({
   actualPrice: Yup.number()
     .typeError("Actual Price must be a number")
     .required("Actual Price is required"),
-  categoryId: Yup.string().required("Category is required"),
   deliveryDay: Yup.string().required("Delivery Day is required"),
   description: Yup.string().required("Description is required"),
   specifications: Yup.string().required("Specifications are required"),
-  tags: Yup.string().required("Tags are required"),
-  pincode: Yup.string().required("Pincode is required"),
+  quantity: Yup.number()
+  .typeError("Quantity must be a number")
+  .required("Discount Price is required"),
+  offer: Yup.number()
+  .typeError("Offer must be a number")
+  .required("Offer Price is required"),
   discountPrice: Yup.number()
     .typeError("Discount Price must be a number")
     .required("Discount Price is required"),
@@ -23,5 +26,4 @@ export const addProductSchema = Yup.object().shape({
   twokgprice: Yup.number()
     .typeError("Two KG Price must be a number")
     .required("Two KG Price is required"),
-
 });

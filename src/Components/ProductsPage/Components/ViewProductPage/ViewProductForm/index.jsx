@@ -9,8 +9,13 @@ const ViewProductForm = ({ productData }) => {
         {" "}
         <div className="view-details-heading pb-2 text-center">
           <strong>Product Details</strong>
-          <div style={{ fontSize: "1.2rem" }}>
-            Quantity ({productData?.quantity})
+          <div className="d-flex justify-content-center gap-3">
+            <div style={{ fontSize: "1.2rem" }}>
+              Quantity - ({productData?.quantity})
+            </div>
+            <div style={{ fontSize: "1.2rem" }}>
+              Offer - ({productData?.offer})
+            </div>
           </div>
         </div>
         <Col md={12} className="product-detail-design">
@@ -28,8 +33,7 @@ const ViewProductForm = ({ productData }) => {
 
             <Col md={6}>
               <div className="view-details pb-2">
-                <strong>Product Category</strong> <br />{" "}
-                {productData?.category}
+                <strong>Product Category</strong> <br /> {productData?.categoryName}
               </div>
             </Col>
             <Col md={6}>
@@ -50,8 +54,7 @@ const ViewProductForm = ({ productData }) => {
         </Col>
         <Col md={12} className="product-detail-design">
           <div className="view-details pb-2">
-            <strong>Specifications</strong> <br />{" "}
-            {productData?.specifications}
+            <strong>Specifications</strong> <br /> {productData?.specifications}
           </div>
         </Col>
         <Col md={12} className="product-detail-design">

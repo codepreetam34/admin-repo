@@ -45,6 +45,7 @@ const ProductsPage = () => {
   const tableHeaders = [
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
+    { title: "Category", class: "" },
     { title: "Image", class: "" },
     { title: "Action", class: "text-center" },
   ];
@@ -82,6 +83,7 @@ const ProductsPage = () => {
               productId={data._id}
               productName={data?.name}
               setShowModal={setShowModal}
+              setIsLoading={setIsLoading}
               setAddShowErrorToast={(err) => {
                 setAddShowErrorToast(err);
               }}
@@ -124,11 +126,12 @@ const ProductsPage = () => {
   const DataTableBody = () => {
     return (
       <tbody>
-        {productsList &&
+        {productsList && productsList.length > 0 ? (
           productsList?.map((product, index) => (
             <tr key={product?._id}>
               <td>{index + 1}</td>
               <td>{product?.name}</td>
+              <td>{product?.categoryName}</td>
               <td>
                 <img
                   src={product?.productPictures[0].img}
@@ -156,7 +159,16 @@ const ProductsPage = () => {
                 </div>
               </td>
             </tr>
-          ))}
+          ))
+        ) : (
+          <tr>
+            <td>
+              <div className="d-flex justify-content-center pt-4">
+                <p className="text-red">Product list is empty !!</p>
+              </div>
+            </td>
+          </tr>
+        )}
       </tbody>
     );
   };
@@ -232,11 +244,39 @@ const ProductsPage = () => {
             <>
               <InitialRender />
               {openAddProductPage && openAddProductPage ? (
-                <AddProductPage setOpenAddProductPage={setOpenAddProductPage} />
+                <AddProductPage
+                  setOpenAddProductPage={setOpenAddProductPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
+                />
               ) : openEditProductPage && openEditProductPage ? (
                 <EditProductPage
                   productData={modalData?.data}
                   setOpenEditProductPage={setOpenEditProductPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
                 />
               ) : openViewProductPage && openViewProductPage ? (
                 <ViewProductPage
