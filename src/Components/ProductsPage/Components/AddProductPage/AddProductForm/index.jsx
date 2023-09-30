@@ -127,7 +127,7 @@ const AddProductForm = ({
     console.log("on remove", colors);
   };
 
-  const addProductPicture = () => { 
+  const addProductPicture = () => {
     setBannerPicture([
       ...bannerPicture,
       {
@@ -387,12 +387,11 @@ const AddProductForm = ({
   }, [dispatch, categoryList]);
 
   const onSubmit = (data) => {
-    console.log("data --->  ", data);
     const formData = new FormData();
     if (data?.name) formData.append("name", data?.name?.toString());
     if (data?.description)
       formData.append("description", data?.description?.toString());
-    if (data?.categoryId) formData.append("category", defaultCategory);
+    if (defaultCategory) formData.append("category", defaultCategory);
     if (data?.deliveryDay) formData.append("deliveryDay", data?.deliveryDay);
     if (data?.discountPrice)
       formData.append("discountPrice", data?.discountPrice);

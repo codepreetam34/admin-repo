@@ -55,18 +55,21 @@ const HomepageDisplay = () => {
                   pageInfo?.map((info, index) => (
                     <Col md={6} xl={6} xxl={3} key={index}>
                       <Link to={info?.boxHref} className="link-text">
-                        <div className={`fourbox ${info?.imgClass}`}>
-                          <img
-                            src={info?.imgSrc}
-                            className="img-fluid"
-                            alt=""
-                            loading="lazy"
-                          />
+                        <div className={`fourbox ${info?.imgClass} d-flex justify-content-center flex-column align-items-center`}>
+                          <div class="">
+                            <div className="pb-1">
+                              <img
+                                src={info?.imgSrc}
+                                className="img-fluid"
+                                alt=""
+                                loading="lazy"
+                              />
+                            </div>
+                          </div>
                           <h4>{info?.title}</h4>
-                          <p>Modify {info?.title} UI</p>
-                          <h3>
+                          <div>
                             <span className="greentext">Click</span> Here
-                          </h3>
+                          </div>
                         </div>
                       </Link>
                     </Col>

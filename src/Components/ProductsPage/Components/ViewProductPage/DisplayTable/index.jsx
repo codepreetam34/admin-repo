@@ -7,9 +7,9 @@ const DisplayTable = ({ reviews }) => {
     const day = dateObject.getDate().toString().padStart(2, "0");
     const month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
     const year = dateObject.getFullYear();
-
     return `${day}/${month}/${year}`;
   };
+
   return (
     <div className="detailstable product-detail-design">
       <h4>Reviews ({reviews && reviews?.length})</h4>
@@ -24,7 +24,7 @@ const DisplayTable = ({ reviews }) => {
             </tr>
           </thead>
           <tbody>
-            {reviews && reviews?.length > 0 &&
+            {reviews && reviews?.length > 0 ? (
               reviews?.map((review, index) => (
                 <tr key={review?._id}>
                   <td>{review?.name}</td>
@@ -32,7 +32,16 @@ const DisplayTable = ({ reviews }) => {
                   <td>{review?.comment}</td>
                   <td>{formatDate(review?.updatedAt)}</td>
                 </tr>
-              ))}
+              ))
+            ) : (
+              <tr>
+                <td>
+                  <div className="d-flex justify-content-center pt-4">
+                    <p className="text-red">No Reviews !!</p>
+                  </div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </div>

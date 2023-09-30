@@ -426,20 +426,13 @@ button.btn {
       0 10px 20px -2px rgb(0 0 0 / 4%);
     border-radius: 10px;
     border-top: 5px solid #00ada3;
-    position: relative;
+
     padding: 15px;
     box-sizing: border-box;
 
-    img {
-      position: absolute;
-      right: 20px;
-      top: -35px;
-    }
-
     h4 {
-      padding-top: 60px;
-      font-size: 25px;
-      font-weight: 700;
+      font-size: 1.5rem;
+      font-weight: 600;
       color: $secondary-clr;
     }
 
@@ -451,14 +444,14 @@ button.btn {
       padding-bottom: 13px;
     }
 
-    h3 {
-      font-size: 30px;
-      font-weight: 900;
+    div {
+      font-size: 1rem;
+      font-weight: 600;
       color: #6c757d;
       margin: 0;
 
       span {
-        font-weight: 900;
+        font-weight: 600;
         color: #00ada3;
       }
     }
