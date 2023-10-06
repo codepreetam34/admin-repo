@@ -22,6 +22,7 @@ const AddProductForm = ({
   const [pinCode, setPinCode] = useState([""]);
   const [tags, setTags] = useState([""]);
   const [defaultCategory, setDefaultCategory] = useState();
+  const [defaultCategoryName, setDefaultCategoryName] = useState();
 
   const [colors, setColors] = useState([
     {
@@ -387,6 +388,7 @@ const AddProductForm = ({
   }, [dispatch, categoryList]);
 
   const onSubmit = (data) => {
+    console.log("enter");
     const formData = new FormData();
     if (data?.name) formData.append("name", data?.name?.toString());
     if (data?.description)
@@ -442,6 +444,33 @@ const AddProductForm = ({
     });
   };
 
+  const handleSelectCategory = (e) => {
+    setDefaultCategory(e.target.value);
+    const categoryIdToFind = e.target.value; // Replace 'your_target_id' with the actual id you want to find
+
+    const foundCategory = categoryList.find(
+      (item) => item._id === categoryIdToFind
+    );
+
+    if (foundCategory) {
+      setDefaultCategoryName(foundCategory.name);
+    } else {
+      // If not found in the main categoryList, check in children arrays
+      const foundInChildren = categoryList
+        .map((category) =>
+          category.children.find((child) => child._id === categoryIdToFind)
+        )
+        .filter((child) => child !== undefined);
+      if (foundInChildren) {
+        console.log("foundInChildren  found ", foundInChildren);
+        setDefaultCategoryName(foundInChildren[0].name);
+      } else {
+        console.log("Category not found ", defaultCategoryName);
+      }
+    }
+    console.log("Category  found ", defaultCategoryName);
+  };
+
   return (
     <div className="container">
       <Form
@@ -484,6 +513,7 @@ const AddProductForm = ({
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
+
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Select Category</Form.Label>
@@ -494,24 +524,30 @@ const AddProductForm = ({
                       id="categoryId"
                       isInvalid={!!errors?.categoryId}
                       value={defaultCategory}
-                      onChange={(e) => setDefaultCategory(e.target.value)}
+                      onChange={(e) => handleSelectCategory(e)}
                     >
-                      <option value="">Select</option>
+                      <option disabled selected style={{ fontWeight: "600" }}>
+                        Select Category
+                      </option>
                       {categoryList &&
                         categoryList?.map((option) => (
-                          <option key={option?._id} value={option?._id}>
-                            {option?.name}
-                          </option>
+                          <optgroup key={option._id} label={option.name}>
+                            {option?.children?.map((e) => (
+                              <option key={e._id} value={e?._id}>
+                                {e.name}
+                              </option>
+                            ))}
+                          </optgroup>
                         ))}
                     </Form.Control>
                     <div className="select-arrow"></div>
                   </div>
-
                   <Form.Control.Feedback type="invalid">
                     {errors?.categoryId?.message}
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
+
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Delivery Day</Form.Label>
@@ -560,6 +596,7 @@ const AddProductForm = ({
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
+
           <Col className="product-detail-design">
             <Row>
               <Col md={6}>
@@ -606,7 +643,6 @@ const AddProductForm = ({
                   </div>
                 </Form.Group>
               </Col>
-
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Pincode</Form.Label>
@@ -654,73 +690,83 @@ const AddProductForm = ({
             </Row>
           </Col>
 
+          {defaultCategoryName &&
+          (defaultCategoryName.toLowerCase() === "cake" ||
+            defaultCategoryName.toLowerCase() === "cakes") ? (
+            <Col md={12} className="product-detail-design">
+              <Row>
+                <Col md={6}>
+                  <Form.Group className="form-group-padding-bottom">
+                    <Form.Label>Discount Price</Form.Label>
+
+                    <Form.Control
+                      type="text"
+                      id="discountPrice"
+                      name="discountPrice"
+                      {...register("discountPrice")}
+                      isInvalid={!!errors.discountPrice}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.discountPrice?.message}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="form-group-padding-bottom">
+                    <Form.Label>Half Kg Price</Form.Label>
+
+                    <Form.Control
+                      type="text"
+                      id="halfkgprice"
+                      name="halfkgprice"
+                      {...register("halfkgprice")}
+                      isInvalid={!!errors.halfkgprice}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.halfkgprice?.message}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="form-group-padding-bottom">
+                    <Form.Label>One Kg Price</Form.Label>
+
+                    <Form.Control
+                      type="text"
+                      name="onekgprice"
+                      id="onekgprice"
+                      {...register("onekgprice")}
+                      isInvalid={!!errors.onekgprice}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.onekgprice?.message}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="form-group-padding-bottom">
+                    <Form.Label>Two Kg Price</Form.Label>
+
+                    <Form.Control
+                      type="text"
+                      name="twokgprice"
+                      id="twokgprice"
+                      {...register("twokgprice")}
+                      isInvalid={!!errors.twokgprice}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.twokgprice?.message}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+              </Row>
+            </Col>
+          ) : (
+            <></>
+          )}
+
           <Col md={12} className="product-detail-design">
             <Row>
-              <Col md={6}>
-                <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>Discount Price</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    id="discountPrice"
-                    name="discountPrice"
-                    {...register("discountPrice")}
-                    isInvalid={!!errors.discountPrice}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.discountPrice?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>Half Kg Price</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    id="halfkgprice"
-                    name="halfkgprice"
-                    {...register("halfkgprice")}
-                    isInvalid={!!errors.halfkgprice}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.halfkgprice?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>One Kg Price</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    name="onekgprice"
-                    id="onekgprice"
-                    {...register("onekgprice")}
-                    isInvalid={!!errors.onekgprice}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.onekgprice?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>Two Kg Price</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    name="twokgprice"
-                    id="twokgprice"
-                    {...register("twokgprice")}
-                    isInvalid={!!errors.twokgprice}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.twokgprice?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Offer</Form.Label>

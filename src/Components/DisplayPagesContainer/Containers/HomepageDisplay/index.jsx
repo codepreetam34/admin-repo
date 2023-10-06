@@ -68,7 +68,7 @@ const HomepageDisplay = () => {
                           </div>
                           <h4>{info?.title}</h4>
                           <div>
-                            <span className="greentext">Click</span> Here
+                            <span className="greentext">Update &nbsp;</span>Page
                           </div>
                         </div>
                       </Link>

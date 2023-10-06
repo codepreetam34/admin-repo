@@ -14,16 +14,16 @@ export const editProductSchema = Yup.object().shape({
   offer: Yup.number()
   .typeError("Offer must be a number")
   .required("Offer Price is required"),
-  discountPrice: Yup.number()
-    .typeError("Discount Price must be a number")
-    .required("Discount Price is required"),
-  halfkgprice: Yup.number()
-    .typeError("Half KG Price must be a number")
-    .required("Half KG Price is required"),
-  onekgprice: Yup.number()
-    .typeError("One KG Price must be a number")
-    .required("One KG Price is required"),
-  twokgprice: Yup.number()
-    .typeError("Two KG Price must be a number")
-    .required("Two KG Price is required"),
+  // discountPrice: Yup.number()
+  //   .typeError("Discount Price must be a number")
+  //   .required("Discount Price is required"),
+  // halfkgprice: Yup.number()
+  //   .typeError("Half KG Price must be a number")
+  //   .required("Half KG Price is required"),
+  // onekgprice: Yup.number()
+  //   .typeError("One KG Price must be a number")
+  //   .required("One KG Price is required"),
+  // twokgprice: Yup.number()
+  //   .typeError("Two KG Price must be a number")
+  //   .required("Two KG Price is required"),
 });

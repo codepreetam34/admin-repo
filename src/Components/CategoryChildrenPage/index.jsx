@@ -269,6 +269,15 @@ const CategoryChildrenPage = () => {
             </h3>
             <p>Welcome to Child Category page</p>
           </div>
+          <div className="pt-4">
+            <div
+              className="text_heading"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(-1)}
+            >
+              <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+            </div>
+          </div>
         </Col>
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
           <div className="manage_searchbar">
@@ -314,7 +323,7 @@ const CategoryChildrenPage = () => {
   };
 
   const ViewParticularUserHandler = (id) => {
-    navigate(`category/category-child/${id}/products`);
+    navigate(`/category/category-child/${id}/products`);
   };
   return (
     <Wrapper>

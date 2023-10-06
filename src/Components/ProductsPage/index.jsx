@@ -18,7 +18,6 @@ const ProductsPage = () => {
   const [openEditProductPage, setOpenEditProductPage] = useState(false);
   const [openViewProductPage, setOpenViewProductPage] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
   const [addShowErrorToast, setAddShowErrorToast] = useState(false);
   const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
   const [addShowToastMessage, setAddShowToastMessage] = useState("");

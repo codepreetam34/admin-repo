@@ -473,7 +473,6 @@ const EditProductForm = ({
     });
   };
 
-
   return (
     <div className="container">
       <Form
@@ -528,14 +527,21 @@ const EditProductForm = ({
                       value={defaultCategory}
                       onChange={(e) => setDefaultCategory(e.target.value)}
                     >
-                      <option value="">Select</option>
+                      <option disabled style={{ fontWeight: "600" }}>
+                        Select Category
+                      </option>{" "}
                       {categoryList &&
                         categoryList?.map((option) => (
-                          <option key={option?._id} value={option?._id}>
-                            {option?.name}
-                          </option>
+                          <optgroup key={option._id} label={option.name}>
+                            {option?.children?.map((e) => (
+                              <option key={e._id} value={e?._id}>
+                                {e.name}
+                              </option>
+                            ))}
+                          </optgroup>
                         ))}
                     </Form.Control>
+
                     <div className="select-arrow"></div>
                   </div>
 

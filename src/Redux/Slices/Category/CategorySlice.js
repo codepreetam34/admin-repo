@@ -143,6 +143,7 @@ export const CategorySlice = createSlice({
       state.error = true;
     });
     ///////////////////
+    
     builder
       .addCase(getCategoryChildrens.pending, (state) => {
         state.loading = true;

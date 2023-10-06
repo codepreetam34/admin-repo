@@ -2,19 +2,23 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "Components/Wrapper";
 import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import DynamicModal from "Constants/DynamicModal";
-import { Link, useParams } from "react-router-dom";
+// import DynamicModal from "Constants/DynamicModal";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProductsByCategoryId } from "Redux/Slices/Products/ProductsSlice";
+import ViewProductPage from "Components/ProductsPage/Components/ViewProductPage";
 const ProductsByCategoryPage = () => {
   const params = useParams();
   const { id } = params;
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [openViewProductPage, setOpenViewProductPage] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const productsList = useSelector(
     (state) => state?.ProductsByCatId?.productsByCatId?.products
   );
+
   useEffect(() => {
     if (!productsList || productsList.length === 0) {
       dispatch(getProductsByCategoryId(id))
@@ -30,6 +34,7 @@ const ProductsByCategoryPage = () => {
   const pageTitle = useSelector(
     (state) => state?.ProductsByCatId?.ProductsByCatId?.pageTitle
   );
+
   const tableHeaders = [
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
@@ -43,9 +48,11 @@ const ProductsByCategoryPage = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setModalData({ type: "View", data: data });
+        setOpenViewProductPage(true);
+        setModalData({ data: data });
       },
     },
+
     // {
     //   name: "Edit",
     //   class: "edit",
@@ -67,6 +74,7 @@ const ProductsByCategoryPage = () => {
   const handleAdd = () => {
     setModalData({ type: "Add", data: null });
   };
+
   const DataTableHeader = () => {
     return (
       <thead>
@@ -132,6 +140,19 @@ const ProductsByCategoryPage = () => {
             </h3>
             <p>Welcome to Category Products page</p>
           </div>
+          {!openViewProductPage ? (
+            <div className="pt-4">
+              <div
+                className="text_heading"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(-1)}
+              >
+                <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
         </Col>
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
           <div className="manage_searchbar">
@@ -194,13 +215,19 @@ const ProductsByCategoryPage = () => {
           ) : (
             <>
               <InitialRender />
-              <RenderTable />
+              {openViewProductPage && openViewProductPage ? (
+                <ViewProductPage
+                  productData={modalData?.data}
+                  setOpenViewProductPage={setOpenViewProductPage}
+                />
+              ) : (
+                <RenderTable />
+              )}
             </>
           )}
         </Row>
       </div>
-
-      {/* Render the dynamic Modal component */}
+      {/* 
       {modalData.type && (
         <DynamicModal
           show={true}
@@ -211,7 +238,8 @@ const ProductsByCategoryPage = () => {
             // Handle form submission or deletion logic here based on modal type
           }}
         />
-      )}
+      )} 
+      */}
     </Wrapper>
   );
 };

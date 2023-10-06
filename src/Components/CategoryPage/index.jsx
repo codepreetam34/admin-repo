@@ -252,11 +252,11 @@ const CategoryPage = () => {
                     textDecoration: "none",
                     fontWeight: "bold",
                     transition: "text-decoration 0.2s ease-in-out",
-                    cursor: "default",
+                    color:"#c22701"
                   }}
-                  //     onClick={() => handleChildAdd(category?._id)}
+              //   onClick={() => handleChildAdd(category?._id)}
                 >
-                  {`No Sub Category`}
+                  {`Add Child Category`}
                 </td>
               )}
               <td>

@@ -1,8 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Col, Row } from "react-bootstrap";
 import DisplayTable from "../DisplayTable";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategory } from "Redux/Slices/Category/CategorySlice";
 
 const ViewProductForm = ({ productData }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [defaultCategoryName, setDefaultCategoryName] = useState();
+  const dispatch = useDispatch();
+
+  const categoryList = useSelector(
+    (state) => state?.CategoryList?.categoryList?.categoryList
+  );
+
+  useEffect(() => {
+    if (!categoryList || categoryList?.length === 0) {
+      dispatch(getCategory())
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch, categoryList]);
+
+  useEffect(() => {
+    if (categoryList && categoryList || categoryList?.length > 0) {
+      const categoryIdToFind = productData?.category; // Replace 'your_target_id' with the actual id you want to find
+
+      const foundCategory = categoryList.find(
+        (item) => item._id === categoryIdToFind
+      );
+
+      if (foundCategory) {
+        setDefaultCategoryName(foundCategory.name);
+      } else {
+        // If not found in the main categoryList, check in children arrays
+        const foundInChildren = categoryList
+          .map((category) =>
+            category.children.find((child) => child._id === categoryIdToFind)
+          )
+          .filter((child) => child !== undefined);
+        if (foundInChildren) {
+          setDefaultCategoryName(foundInChildren[0].name);
+        } else {
+          console.log("Category not found ", defaultCategoryName);
+        }
+      }
+    } else {
+    }
+  }, [dispatch, categoryList]);
+
   return (
     <Form className="user_form" style={{ padding: "2rem" }}>
       <Row>
@@ -33,7 +82,8 @@ const ViewProductForm = ({ productData }) => {
 
             <Col md={6}>
               <div className="view-details pb-2">
-                <strong>Product Category</strong> <br /> {productData?.categoryName}
+                <strong>Product Category</strong> <br />{" "}
+                {productData?.categoryName}
               </div>
             </Col>
             <Col md={6}>
@@ -59,10 +109,13 @@ const ViewProductForm = ({ productData }) => {
         </Col>
         <Col md={12} className="product-detail-design">
           <div className="view-details pb-2">
-            <strong>Tags ({productData?.tags?.length})</strong>
+            <strong>
+              Tags ({productData?.tags && productData?.tags?.length})
+            </strong>
 
             <div className="d-flex flex-wrap gap-3 pt-2">
-              {productData?.tags.length > 0 &&
+              {productData?.tags &&
+                productData?.tags.length > 0 &&
                 productData?.tags.map((tag, index) => (
                   <div
                     style={{
@@ -84,10 +137,13 @@ const ViewProductForm = ({ productData }) => {
         </Col>
         <Col md={12} className="product-detail-design">
           <div className="view-details pb-2">
-            <strong>Pincode ({productData?.pincode?.length})</strong>
+            <strong>
+              Pincode ({productData?.pincode && productData?.pincode?.length})
+            </strong>
 
             <div className="d-flex flex-wrap gap-3 pt-2">
-              {productData?.pincode.length > 0 &&
+              {productData?.pincode &&
+                productData?.pincode.length > 0 &&
                 productData?.pincode.map((pin, index) => (
                   <div
                     style={{
@@ -107,41 +163,53 @@ const ViewProductForm = ({ productData }) => {
             </div>
           </div>
         </Col>
-        <Col md={12} className="product-detail-design">
-          <h3>Price Variants</h3>
-          <Row className="pt-2">
-            <Col md={6}>
-              <div className="view-details pb-2">
-                <strong>Discount Price</strong> <br />{" "}
-                {productData?.discountPrice}
-              </div>
-              <div className="view-details pb-2">
-                <strong>1/2kg Price</strong>
-                <br />
-                {productData?.halfkgprice}
-              </div>{" "}
-            </Col>
-            <Col md={6}>
-              <div className="view-details pb-2">
-                <strong>1kg Price</strong> <br />
-                {productData?.onekgprice}
-              </div>
+        {defaultCategoryName &&
+        (defaultCategoryName.toLowerCase() === "cake" ||
+          defaultCategoryName.toLowerCase() === "cakes") ? (
+          <Col md={12} className="product-detail-design">
+            <h3>Price Variants</h3>
+            <Row className="pt-2">
+              <Col md={6}>
+                <div className="view-details pb-2">
+                  <strong>Discount Price</strong> <br />{" "}
+                  {productData?.discountPrice}
+                </div>
+                <div className="view-details pb-2">
+                  <strong>1/2kg Price</strong>
+                  <br />
+                  {productData?.halfkgprice}
+                </div>{" "}
+              </Col>
+              <Col md={6}>
+                <div className="view-details pb-2">
+                  <strong>1kg Price</strong> <br />
+                  {productData?.onekgprice}
+                </div>
 
-              <div className="view-details pb-2">
-                <strong>2kg Price</strong>
-                <br />
-                {productData?.twokgprice}
-              </div>
-            </Col>
-          </Row>
-        </Col>
+                <div className="view-details pb-2">
+                  <strong>2kg Price</strong>
+                  <br />
+                  {productData?.twokgprice}
+                </div>
+              </Col>
+            </Row>
+          </Col>
+        ) : (
+          <></>
+        )}
         <DisplayTable reviews={productData?.reviews} />
         <Col md={12} className="product-detail-design pt-2">
-          <h3>Product Pictures ({productData?.productPictures?.length})</h3>
+          <h3>
+            Product Pictures (
+            {productData?.productPictures &&
+              productData?.productPictures?.length}
+            )
+          </h3>
 
           <Row style={{ paddingTop: "10px" }}>
             <Col md={12} className="image-detail-view">
-              {productData?.productPictures?.length > 0 &&
+              {productData?.productPictures &&
+                productData?.productPictures?.length > 0 &&
                 productData?.productPictures?.map((picture, index) => (
                   <div
                     style={{
@@ -154,7 +222,7 @@ const ViewProductForm = ({ productData }) => {
                       src={picture?.img}
                       style={{
                         width: "100%",
-                        height: "auto",
+                        height: "100%",
                         borderRadius: "10px",
                       }}
                     />
