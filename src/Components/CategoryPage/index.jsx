@@ -217,7 +217,7 @@ const CategoryPage = () => {
     };
     return (
       <tbody>
-        {categoryList &&
+        {categoryList && categoryList.length > 0 ? (
           categoryList?.map((category, index) => (
             <tr key={category?._id}>
               <td>{index + 1}</td>
@@ -252,9 +252,9 @@ const CategoryPage = () => {
                     textDecoration: "none",
                     fontWeight: "bold",
                     transition: "text-decoration 0.2s ease-in-out",
-                    color:"#c22701"
+                    color: "#c22701",
                   }}
-              //   onClick={() => handleChildAdd(category?._id)}
+                  //   onClick={() => handleChildAdd(category?._id)}
                 >
                   {`Add Child Category`}
                 </td>
@@ -278,7 +278,16 @@ const CategoryPage = () => {
                 </div>
               </td>
             </tr>
-          ))}
+          ))
+        ) : (
+          <tr>
+            <td>
+              <div className="d-flex justify-content-center pt-4">
+                <p className="text-red">Category list is empty !!</p>
+              </div>
+            </td>
+          </tr>
+        )}
       </tbody>
     );
   };
