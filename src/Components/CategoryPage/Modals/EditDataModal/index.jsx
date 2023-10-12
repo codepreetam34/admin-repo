@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { editMainCategory, getCategory } from "Redux/Slices/Category/CategorySlice";
 import { categorySchema } from "ValidationSchema/categorySchema";
 
-const EditDataModal = ({
+const EditCategoryPage= ({
   setShowModal,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
@@ -56,7 +56,7 @@ const EditDataModal = ({
     if (categoryImage) {
       formData.append("categoryImage", categoryImage);
     }
-    console.log("categoryImage 1", categoryImage);
+
 
     formData.append("_id", categoryById._id);
 
@@ -173,4 +173,4 @@ const EditDataModal = ({
   );
 };
 
-export default EditDataModal;
+export default EditCategoryPage;

@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Constants/DynamicModal";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { useNavigate } from "react-router-dom";
-import ViewDataModal from "./Modals/ViewDataModal";
-import EditDataModal from "./Modals/EditDataModal";
 import DeleteDataModal from "./Modals/DeleteDataModal";
-import AddDataModal from "./Modals/AddDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import AddChildDataModal from "Components/CategoryChildrenPage/Modals/AddChildDataModal";
+import AddCategoryPage from "./Modals/AddCategoryPage";
+import EditCategoryPage from "./Modals/EditDataModal";
+import ViewCategoryForm from "./Modals/ViewCategoryPage/ViewCategoryForm";
+import ViewCategoryPage from "./Modals/ViewCategoryPage";
 
 const CategoryPage = () => {
   const [modalData, setModalData] = useState({
@@ -26,6 +27,10 @@ const CategoryPage = () => {
   const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
   const [addShowToastMessage, setAddShowToastMessage] = useState("");
   const [addShowToast, setAddShowToast] = useState(false);
+
+  const [openAddProductPage, setOpenAddProductPage] = useState(false);
+  const [openEditProductPage, setOpenEditProductPage] = useState(false);
+  const [openViewCategoryPage, setOpenViewCategoryPage] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,18 +64,8 @@ const CategoryPage = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setShowModal(true);
-        setModalData({
-          type: "View",
-          data: data,
-          modalContent: (
-            <ViewDataModal
-              categoryData={data}
-              setShowModal={setShowModal} // Make sure you pass setShowModal
-            />
-          ),
-          modalTitle: "View Category",
-        });
+        setOpenViewCategoryPage(true);
+        setModalData({ data: data });
       },
     },
     {
@@ -78,31 +73,8 @@ const CategoryPage = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
-        console.log("_categoryId ", data);
-        setShowModal(true);
-        setModalData({
-          type: "Edit",
-          data: data,
-          modalContent: (
-            <EditDataModal
-              categoryById={data}
-              setShowModal={setShowModal} // Make sure you pass setShowModal
-              setAddShowErrorToast={(err) => {
-                setAddShowErrorToast(err);
-              }} // Pass setShowErrorToast
-              setAddShowErrorToastMessage={(msg) => {
-                setAddShowErrorToastMessage(msg);
-              }}
-              setAddShowToast={(show) => {
-                setAddShowToast(show);
-              }}
-              setAddShowToastMessage={(showMessage) => {
-                setAddShowToastMessage(showMessage);
-              }}
-            />
-          ),
-          modalTitle: "Edit Category",
-        });
+        setOpenEditProductPage(true);
+        setModalData({ type: "Edit", data: data });
       },
     },
     {
@@ -140,29 +112,8 @@ const CategoryPage = () => {
   ];
 
   const handleAdd = () => {
-    setShowModal(true);
-    setModalData({
-      type: "Add",
-      data: null,
-      modalContent: (
-        <AddDataModal
-          setShowModal={setShowModal} // Make sure you pass setShowModal
-          setAddShowErrorToast={(err) => {
-            setAddShowErrorToast(err);
-          }} // Pass setShowErrorToast
-          setAddShowErrorToastMessage={(msg) => {
-            setAddShowErrorToastMessage(msg);
-          }}
-          setAddShowToast={(show) => {
-            setAddShowToast(show);
-          }}
-          setAddShowToastMessage={(showMessage) => {
-            setAddShowToastMessage(showMessage);
-          }}
-        />
-      ),
-      modalTitle: "Add Category",
-    });
+    setOpenAddProductPage(true);
+    // setModalData({ type: "Add", data: null });
   };
 
   const DataTableHeader = () => {
@@ -189,32 +140,32 @@ const CategoryPage = () => {
       fontWeight: "bold",
       transition: "text-decoration 0.2s ease-in-out",
     };
-    const handleChildAdd = (id) => {
-      setShowModal(true);
-      setModalData({
-        type: "Add",
-        data: null,
-        modalContent: (
-          <AddChildDataModal
-            setShowModal={setShowModal}
-            categoryId={id}
-            setAddShowErrorToast={(err) => {
-              setAddShowErrorToast(err);
-            }} // Pass setShowErrorToast
-            setAddShowErrorToastMessage={(msg) => {
-              setAddShowErrorToastMessage(msg);
-            }}
-            setAddShowToast={(show) => {
-              setAddShowToast(show);
-            }}
-            setAddShowToastMessage={(showMessage) => {
-              setAddShowToastMessage(showMessage);
-            }}
-          />
-        ),
-        modalTitle: "Add Child Category",
-      });
-    };
+    // const handleChildAdd = (id) => {
+    //   setShowModal(true);
+    //   setModalData({
+    //     type: "Add",
+    //     data: null,
+    //     modalContent: (
+    //       <AddChildDataModal
+    //         setShowModal={setShowModal}
+    //         categoryId={id}
+    //         setAddShowErrorToast={(err) => {
+    //           setAddShowErrorToast(err);
+    //         }} // Pass setShowErrorToast
+    //         setAddShowErrorToastMessage={(msg) => {
+    //           setAddShowErrorToastMessage(msg);
+    //         }}
+    //         setAddShowToast={(show) => {
+    //           setAddShowToast(show);
+    //         }}
+    //         setAddShowToastMessage={(showMessage) => {
+    //           setAddShowToastMessage(showMessage);
+    //         }}
+    //       />
+    //     ),
+    //     modalTitle: "Add Child Category",
+    //   });
+    // };
     return (
       <tbody>
         {categoryList && categoryList.length > 0 ? (
@@ -368,7 +319,49 @@ const CategoryPage = () => {
           ) : (
             <>
               <InitialRender />
-              <RenderTable />
+              {openAddProductPage && openAddProductPage ? (
+                <AddCategoryPage
+                  setOpenAddProductPage={setOpenAddProductPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
+                />
+              ) : openEditProductPage && openEditProductPage ? (
+                <EditCategoryPage
+                  categoryById={modalData?.data}
+                  setOpenEditProductPage={setOpenEditProductPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
+                />
+              ) : openViewCategoryPage && openViewCategoryPage ? (
+                <ViewCategoryPage
+                  categoryData={modalData?.data}
+                  setOpenViewCategoryPage={setOpenViewCategoryPage}
+                />
+              ) : (
+                <RenderTable />
+              )}
             </>
           )}
         </Row>
