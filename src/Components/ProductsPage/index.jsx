@@ -39,7 +39,7 @@ const ProductsPage = () => {
     } else {
       setIsLoading(false);
     }
-  }, [dispatch, productsList]);
+  }, [dispatch]);
 
   const tableHeaders = [
     { title: "S.No.", class: "" },

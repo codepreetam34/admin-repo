@@ -1,102 +1,160 @@
-import React, { useState } from "react";
-import { Row, Col, Form, Button, Modal } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Row, Col, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
 import {
-  addMainCategory,
+  editMainCategory,
   getCategory,
 } from "Redux/Slices/Category/CategorySlice";
 import { categorySchema } from "ValidationSchema/categorySchema";
-
-const AddCategoryForm = ({
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from "react-redux";
+const EditCategoryForm = ({
   setAddShowErrorToast,
+  categoryById,
   setAddShowErrorToastMessage,
   setAddShowToast,
   setAddShowToastMessage,
 }) => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
+  const [viewCategoryImage, setViewCategoryImage] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [tags, setTags] = useState([]);
+  const [tagType, setTagType] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTagNames, setSelectedTagNames] = useState([]);
+  const [additionalTags, setAdditionalTags] = useState([]);
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(categorySchema),
     mode: "onChange",
   });
 
-  const tagOptions = {
-    "By Featured": [
-      "All Cakes",
-      "Best Sellers",
-      "Same Day Delivery",
-      "New Arrivals",
-      "Midnight Delivery",
-      "Flowers N Cakes",
-      "Cake Combos",
-      "Cake With Chocolates",
-      "Cake With Plants",
-      "Cakes and Guitarist",
-    ],
-    "By Occasion": [
-      "Birthday Cakes",
-      "Kid's Birthday Cakes",
-      "Anniversary Cakes",
-      "1st Anniversary",
-      "25th Anniversary",
-      "Wedding Cakes",
-      "Congratulations",
-      "Make Small Celebrations Big",
-    ],
-    "By Flavours": [
-      "Truffle Cakes",
-      "Chocolate Cakes",
-      "Black Forest Cakes",
-      "Butterscotch Cakes",
-      "Caramel Cakes",
-      "Coffee Cakes",
-      "Walnut Cakes",
-      "Pineapple Cakes",
-      "Fresh Fruit Cakes",
-      "Pinata Cakes",
-    ],
-    "By Types": [
-      "Bento CakesNeW",
-      "Eggless Cakes",
-      "Photo Cakes",
-      "Designer Cakes",
-      "Fondant Cakes",
-      "Fusion Cakes",
-      "Cup Cakes",
-      "Dry Cakes",
-      "Jar Cakes",
-    ],
-    "By Collections": [
-      "Birthday Cakes",
-      "Kid's Birthday Cakes",
-      "Anniversary Cakes",
-      "1st Anniversary",
-      "25th Anniversary",
-      "Wedding Cakes",
-      "Congratulations",
-      "Make Small Celebrations Big",
-    ],
-    "By Cities": [
-      "Delhi NCR",
-      "Bengaluru",
-      "Mumbai",
-      "Pune",
-      "Hyderabad",
-      "Kolkata",
-      "Chennai",
-      "Lucknow",
-      "Ahmedabad",
-      "All Other Cities",
-    ],
-  };
+  useEffect(() => {
+    reset({
+      name: categoryById?.name,
+      imageAltText: categoryById?.imageAltText,
+      parentId: categoryById?.parentId,
+    });
+    setViewCategoryImage(categoryById?.categoryImage);
+  }, [categoryById, reset]);
+//   const tagOptions = {
+//     "By Featured": [
+//       "All Cakes",
+//       "Best Sellers",
+//       "Same Day Delivery",
+//       "New Arrivals",
+//       "Midnight Delivery",
+//       "Flowers N Cakes",
+//       "Cake Combos",
+//       "Cake With Chocolates",
+//       "Cake With Plants",
+//       "Cakes and Guitarist",
+//     ],
+//     "By Occasion": [
+//       "Birthday Cakes",
+//       "Kid's Birthday Cakes",
+//       "Anniversary Cakes",
+//       "1st Anniversary",
+//       "25th Anniversary",
+//       "Wedding Cakes",
+//       "Congratulations",
+//       "Make Small Celebrations Big",
+//     ],
+//     "By Flavours": [
+//       "Truffle Cakes",
+//       "Chocolate Cakes",
+//       "Black Forest Cakes",
+//       "Butterscotch Cakes",
+//       "Caramel Cakes",
+//       "Coffee Cakes",
+//       "Walnut Cakes",
+//       "Pineapple Cakes",
+//       "Fresh Fruit Cakes",
+//       "Pinata Cakes",
+//     ],
+//     "By Types": [
+//       "Bento CakesNeW",
+//       "Eggless Cakes",
+//       "Photo Cakes",
+//       "Designer Cakes",
+//       "Fondant Cakes",
+//       "Fusion Cakes",
+//       "Cup Cakes",
+//       "Dry Cakes",
+//       "Jar Cakes",
+//     ],
+//     "By Collections": [
+//       "Birthday Cakes",
+//       "Kid's Birthday Cakes",
+//       "Anniversary Cakes",
+//       "1st Anniversary",
+//       "25th Anniversary",
+//       "Wedding Cakes",
+//       "Congratulations",
+//       "Make Small Celebrations Big",
+//     ],
+//     "By Cities": [
+//       "Delhi NCR",
+//       "Bengaluru",
+//       "Mumbai",
+//       "Pune",
+//       "Hyderabad",
+//       "Kolkata",
+//       "Chennai",
+//       "Lucknow",
+//       "Ahmedabad",
+//       "All Other Cities",
+//     ],
+//   };
+
+//   const renderTagCheckboxes = () => {
+//     return categoryById.tags.map((category, index) => (
+//       <div key={category._id}>
+//         {" "}
+//         <h5>{category.tagType}</h5>
+//         {category.names.map((tagName) => (
+//         <Form.Check
+//           key={tagName}
+//           type="checkbox"
+//           label={tagName}
+//           checked={selectedTags.includes(tagName)}
+//           onChange={() => handleTagCheckboxChange(tagName)}
+//           value={tagName}
+//         />
+//         ))}
+//       </div>
+//     ));
+//   };
+
+  //   const renderTagCheckboxes = () => {
+  //     console.log("categoryById ",categoryById)
+  //     return categoryById.tags.map((category) => (
+  //       <div key={category._id}>
+  //         <h5>{category.tagType}</h5>
+  //         {category.names.map((tagName) => (
+  //           <Form.Check
+  //             key={tagName}
+  //             type="checkbox"
+  //             label={tagName}
+  //             checked={selectedTags.includes(tagName)}
+  //             onChange={() => handleTagCheckboxChange(tagName)}
+  //           />
+  //         ))}
+  //       </div>
+  //     ));
+  //   };
+
+  const tagOptions = categoryById.tags.reduce((acc, tag) => {
+    acc[tag.tagType] = tag.names;
+    return acc;
+  }, {});
 
   const renderTagCheckboxes = () => {
     if (tagType) {
@@ -106,15 +164,7 @@ const AddCategoryForm = ({
           type="checkbox"
           label={tagName}
           checked={selectedTags.includes(tagName)}
-          onChange={(e) => {
-            if (e.target.checked) {
-              setSelectedTags((prevTags) => [...prevTags, tagName]);
-            } else {
-              setSelectedTags((prevTags) =>
-                prevTags.filter((tag) => tag !== tagName)
-              );
-            }
-          }}
+          onChange={() => handleTagCheckboxChange(tagName)}
           value={tagName}
         />
       ));
@@ -122,11 +172,13 @@ const AddCategoryForm = ({
     return null;
   };
 
-  const [tags, setTags] = useState([]);
-  const [tagType, setTagType] = useState("");
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedTagNames, setSelectedTagNames] = useState([]);
-  const [additionalTags, setAdditionalTags] = useState([]);
+  const handleTagCheckboxChange = (tagName) => {
+    if (selectedTags.includes(tagName)) {
+      setSelectedTags(selectedTags.filter((tag) => tag !== tagName));
+    } else {
+      setSelectedTags([...selectedTags, tagName]);
+    }
+  };
 
   const handleAddTag = () => {
     if (tagType && selectedTags.length > 0) {
@@ -263,6 +315,7 @@ const AddCategoryForm = ({
     formData.append("name", data?.name?.toString());
     formData.append("imageAltText", data?.imageAltText?.toString());
     formData.append("categoryImage", categoryImage);
+    formData.append("_id", categoryById._id);
     const tagsArray = additionalTags.map((additionalTag) => {
       return {
         tagType: additionalTag.tagType,
@@ -271,22 +324,26 @@ const AddCategoryForm = ({
     });
     formData.append("tags", JSON.stringify(tagsArray));
 
-    dispatch(addMainCategory(formData))
+    dispatch(editMainCategory(formData))
       .then((res) => {
         if (res?.payload?.error?.response?.status === 400) {
           setAddShowErrorToast(true);
           setAddShowErrorToastMessage(
             res?.payload?.error?.response?.data?.message
           );
-        }
-        else if (res?.payload?.error?.response?.status === 500) {
+        } else if (res?.payload?.error?.response?.status === 500) {
           setAddShowErrorToast(true);
           setAddShowErrorToastMessage(
             res?.payload?.error?.response?.data?.message
           );
         } else {
-          setAddShowToast(true);
+          dispatch(getCategory());
           setAddShowToastMessage(res?.payload?.message);
+          setAddShowToast(true);
+          setValue("name", "");
+          setValue("categoryImage", "");
+          setValue("imageAltText", "");
+          setImagePreview("");
         }
       })
       .catch((err) => {
@@ -299,8 +356,8 @@ const AddCategoryForm = ({
     const file = e.target.files[0];
     setCategoryImage(file);
     setImagePreview(URL.createObjectURL(file));
+    setViewCategoryImage("");
   };
-
   return (
     <>
       <div className="container">
@@ -339,17 +396,40 @@ const AddCategoryForm = ({
               </Form.Group>
             </Col>{" "}
             <Col md={12} className="mb-4">
-              {imagePreview && (
+              {imagePreview && imagePreview ? (
                 <div className="">
                   <div className="mb-2">{`Image Preview`} </div>
-                  <div style={{ width: "100%", height: "300px" }}>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                    }}
+                  >
                     <img
                       src={imagePreview}
+                      alt="categoryImage"
+                      style={{ maxWidth: "100%", height: "300px" }}
+                    />
+                  </div>
+                </div>
+              ) : viewCategoryImage && viewCategoryImage ? (
+                <div className="">
+                  <div className="mb-2">{`Image Preview`} </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                    }}
+                  >
+                    <img
+                      src={viewCategoryImage}
                       alt="categoryImage"
                       style={{ maxWidth: "100%", height: "300px" }}
                     />{" "}
                   </div>
                 </div>
+              ) : (
+                <></>
               )}
             </Col>
             <Row>
@@ -400,4 +480,4 @@ const AddCategoryForm = ({
   );
 };
 
-export default AddCategoryForm;
+export default EditCategoryForm;

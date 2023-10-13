@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "Components/Wrapper";
-import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Table,
+  InputGroup,
+  Spinner,
+  Button,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Constants/DynamicModal";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
@@ -9,8 +17,8 @@ import DeleteDataModal from "./Modals/DeleteDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import AddChildDataModal from "Components/CategoryChildrenPage/Modals/AddChildDataModal";
 import AddCategoryPage from "./Modals/AddCategoryPage";
-import EditCategoryPage from "./Modals/EditDataModal";
-import ViewCategoryForm from "./Modals/ViewCategoryPage/ViewCategoryForm";
+import EditCategoryPage from "./Modals/EditCategoryPage";
+//import ViewCategoryForm from "./Modals/ViewCategoryPage/ViewCategoryForm";
 import ViewCategoryPage from "./Modals/ViewCategoryPage";
 
 const CategoryPage = () => {
@@ -28,8 +36,8 @@ const CategoryPage = () => {
   const [addShowToastMessage, setAddShowToastMessage] = useState("");
   const [addShowToast, setAddShowToast] = useState(false);
 
-  const [openAddProductPage, setOpenAddProductPage] = useState(false);
-  const [openEditProductPage, setOpenEditProductPage] = useState(false);
+  const [openAddCategoryPage, setOpenAddCategoryPage] = useState(false);
+  const [openEditCategoryPage, setOpenEditCategoryPage] = useState(false);
   const [openViewCategoryPage, setOpenViewCategoryPage] = useState(false);
 
   const dispatch = useDispatch();
@@ -48,7 +56,7 @@ const CategoryPage = () => {
     } else {
       setIsLoading(false);
     }
-  }, [dispatch, categoryList]);
+  }, [dispatch]);
 
   const tableHeaders = [
     { title: "S.No.", class: "" },
@@ -65,6 +73,8 @@ const CategoryPage = () => {
       icon: "fa-solid fa-eye",
       onClick: (data) => {
         setOpenViewCategoryPage(true);
+        setOpenAddCategoryPage(false);
+        setOpenEditCategoryPage(false);
         setModalData({ data: data });
       },
     },
@@ -73,8 +83,10 @@ const CategoryPage = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
-        setOpenEditProductPage(true);
-        setModalData({ type: "Edit", data: data });
+        setOpenEditCategoryPage(true);
+        setOpenViewCategoryPage(false);
+        setOpenAddCategoryPage(false);
+        setModalData({ data: data });
       },
     },
     {
@@ -112,7 +124,9 @@ const CategoryPage = () => {
   ];
 
   const handleAdd = () => {
-    setOpenAddProductPage(true);
+    setOpenAddCategoryPage(true);
+    setOpenEditCategoryPage(false);
+    setOpenViewCategoryPage(false);
     // setModalData({ type: "Add", data: null });
   };
 
@@ -269,9 +283,9 @@ const CategoryPage = () => {
         </Col>
         <Col md={4}>
           <div className="add_filter_btn d-flex justify-content-end">
-            <a href="#" className="bgbtnred" onClick={handleAdd}>
+            <div className="bgbtnred" onClick={handleAdd}>
               Add New Category
-            </a>
+            </div>
           </div>
         </Col>
       </>
@@ -319,9 +333,9 @@ const CategoryPage = () => {
           ) : (
             <>
               <InitialRender />
-              {openAddProductPage && openAddProductPage ? (
+              {openAddCategoryPage && openAddCategoryPage ? (
                 <AddCategoryPage
-                  setOpenAddProductPage={setOpenAddProductPage}
+                  setOpenAddCategoryPage={setOpenAddCategoryPage}
                   setIsLoading={setIsLoading}
                   setAddShowErrorToast={(err) => {
                     setAddShowErrorToast(err);
@@ -336,10 +350,10 @@ const CategoryPage = () => {
                     setAddShowToastMessage(showMessage);
                   }}
                 />
-              ) : openEditProductPage && openEditProductPage ? (
+              ) : openEditCategoryPage && openEditCategoryPage ? (
                 <EditCategoryPage
                   categoryById={modalData?.data}
-                  setOpenEditProductPage={setOpenEditProductPage}
+                  setOpenEditCategoryPage={setOpenEditCategoryPage}
                   setIsLoading={setIsLoading}
                   setAddShowErrorToast={(err) => {
                     setAddShowErrorToast(err);

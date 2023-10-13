@@ -3,6 +3,7 @@ import { Form, Col, Row } from "react-bootstrap";
 import DisplayTable from "../DisplayTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
+import axios from "axios";
 
 const ViewProductForm = ({ productData }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +27,7 @@ const ViewProductForm = ({ productData }) => {
   }, [dispatch, categoryList]);
 
   useEffect(() => {
-    if (categoryList && categoryList || categoryList?.length > 0) {
+    if ((categoryList && categoryList) || categoryList?.length > 0) {
       const categoryIdToFind = productData?.category; // Replace 'your_target_id' with the actual id you want to find
 
       const foundCategory = categoryList.find(
@@ -34,16 +35,16 @@ const ViewProductForm = ({ productData }) => {
       );
 
       if (foundCategory) {
-        setDefaultCategoryName(foundCategory.name);
+        setDefaultCategoryName(foundCategory?.name);
       } else {
         // If not found in the main categoryList, check in children arrays
         const foundInChildren = categoryList
           .map((category) =>
-            category.children.find((child) => child._id === categoryIdToFind)
+            category?.children.find((child) => child?._id === categoryIdToFind)
           )
           .filter((child) => child !== undefined);
         if (foundInChildren) {
-          setDefaultCategoryName(foundInChildren[0].name);
+          setDefaultCategoryName(foundInChildren[0]?.name);
         } else {
           console.log("Category not found ", defaultCategoryName);
         }
@@ -51,6 +52,15 @@ const ViewProductForm = ({ productData }) => {
     } else {
     }
   }, [dispatch, categoryList]);
+
+  const handleTag = async (tagName) => {
+    const payload = {
+      tagName,
+      categoryId: productData?.category,
+    };
+    const response = await axios.post(`http://localhost:5000/api/product/getProductsByTagName`, payload);
+    console.log("response ", response);
+  };
 
   return (
     <Form className="user_form" style={{ padding: "2rem" }}>
@@ -107,7 +117,7 @@ const ViewProductForm = ({ productData }) => {
             <strong>Specifications</strong> <br /> {productData?.specifications}
           </div>
         </Col>
-        <Col md={12} className="product-detail-design">
+        {/* <Col md={12} className="product-detail-design">
           <div className="view-details pb-2">
             <strong>
               Tags ({productData?.tags && productData?.tags?.length})
@@ -134,6 +144,34 @@ const ViewProductForm = ({ productData }) => {
                 ))}
             </div>
           </div>
+        </Col> */}
+        <Col md={12}>
+          <div className="view-details pb-2">
+            <strong>Product Tags</strong>
+            <br />
+            <Row>
+              {productData?.tags?.map((tag) => {
+                return (
+                  <Col
+                    md={6}
+                    style={{ paddingBottom: "0.7rem", paddingTop: "0.2rem" }}
+                  >
+                    <div className="fw-bold" style={{ fontSize: "0.9rem" }}>
+                      {" "}
+                      {tag?.tagType}{" "}
+                    </div>
+                    <div>
+                      {tag?.names?.map((name) => {
+                        return (
+                          <div onClick={() => handleTag(name)}>{name}</div>
+                        );
+                      })}
+                    </div>
+                  </Col>
+                );
+              })}
+            </Row>
+          </div>
         </Col>
         <Col md={12} className="product-detail-design">
           <div className="view-details pb-2">
@@ -144,7 +182,7 @@ const ViewProductForm = ({ productData }) => {
             <div className="d-flex flex-wrap gap-3 pt-2">
               {productData?.pincode &&
                 productData?.pincode.length > 0 &&
-                productData?.pincode.map((pin, index) => (
+                productData?.pincode?.map((pin, index) => (
                   <div
                     style={{
                       color: "rgba(0, 0, 0, 0.87)",
