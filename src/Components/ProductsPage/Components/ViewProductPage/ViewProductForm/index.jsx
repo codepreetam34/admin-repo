@@ -145,7 +145,7 @@ const ViewProductForm = ({ productData }) => {
             </div>
           </div>
         </Col> */}
-        <Col md={12}>
+        <Col md={12} className="product-detail-design">
           <div className="view-details pb-2">
             <strong>Product Tags</strong>
             <br />
@@ -153,7 +153,7 @@ const ViewProductForm = ({ productData }) => {
               {productData?.tags?.map((tag) => {
                 return (
                   <Col
-                    md={6}
+                    md={3}
                     style={{ paddingBottom: "0.7rem", paddingTop: "0.2rem" }}
                   >
                     <div className="fw-bold" style={{ fontSize: "0.9rem" }}>
