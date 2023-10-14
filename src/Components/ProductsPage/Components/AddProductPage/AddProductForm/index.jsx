@@ -363,6 +363,7 @@ const AddProductForm = ({
       </Col>
     ));
   };
+  
   const onRemoveTags = (index) => {
     const updatedTags = [...additionalTags];
     updatedTags.splice(index, 1);
