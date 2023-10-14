@@ -8,6 +8,7 @@ import {
   getCategory,
 } from "Redux/Slices/Category/CategorySlice";
 import { categorySchema } from "ValidationSchema/categorySchema";
+import AddCategoryTag from "../../../../TagsPage/AddCategoryTag";
 
 const AddCategoryForm = ({
   setIsLoading,
@@ -461,6 +462,7 @@ const AddCategoryForm = ({
                 </Col>
               </Row>
             </Col>
+            <AddCategoryTag />
           </Row>
 
           <div className="pt-3">

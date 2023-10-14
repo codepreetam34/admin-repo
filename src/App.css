@@ -81,7 +81,11 @@ ul {
   border: 0.0625rem solid rgba(26, 26, 26, 0.12);
   border-radius: 10px;
 }
-
+.product-detail-design-new {
+  padding: 10px;
+  border: 0.0625rem solid rgba(26, 26, 26, 0.12);
+  border-radius: 10px;
+}
 .view-details-heading {
   font-size: 2rem;
 }

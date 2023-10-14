@@ -1,6 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../Services/AxiosInstance";
-import { GET_CATEGORY, GET_CATEGORY_CHILDREN, ADD_MAIN_CATEGORY, CATEGORY_BY_ID, DELETE_CATEGORY } from "./type";
+import {
+  GET_CATEGORY,
+  GET_CATEGORY_CHILDREN,
+  ADD_MAIN_CATEGORY,
+  CATEGORY_BY_ID,
+  DELETE_CATEGORY,
+} from "./type";
 
 export const getCategory = createAsyncThunk(
   GET_CATEGORY,
@@ -13,6 +19,7 @@ export const getCategory = createAsyncThunk(
     }
   }
 );
+
 export const getCategoryChildrens = createAsyncThunk(
   GET_CATEGORY_CHILDREN,
   async (payload, thunkAPI) => {
@@ -39,6 +46,7 @@ export const addMainCategory = createAsyncThunk(
     }
   }
 );
+
 export const editMainCategory = createAsyncThunk(
   ADD_MAIN_CATEGORY,
   async (payload, thunkAPI) => {
@@ -56,16 +64,13 @@ export const getCategoryById = createAsyncThunk(
   CATEGORY_BY_ID,
   async (id, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(
-        `category/${id}`
-      );
+      const response = await axiosInstance.get(`category/${id}`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
     }
   }
 );
-
 
 export const deleteCategory = createAsyncThunk(
   DELETE_CATEGORY,
@@ -143,7 +148,7 @@ export const CategorySlice = createSlice({
       state.error = true;
     });
     ///////////////////
-    
+
     builder
       .addCase(getCategoryChildrens.pending, (state) => {
         state.loading = true;

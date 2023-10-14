@@ -21,12 +21,14 @@ import {
   FORGOT_PASSWORD,
   PRODUCTS,
   ADD_PRODUCTS,
+  TAGS,
 } from "Routes/Routes";
 import PrivateRoutes from "Routes/PrivateRoutes";
 import SetupNewPassword from "Components/LogIn/SetupNewPassword";
 import ForgotPassword from "Components/LogIn/ForgotPassword";
 import Products from "Pages/Products";
 import AddProduct from "Components/ProductsPage/Components/AddProductPage";
+import TagsPage from "Components/TagsPage";
 const Routing = () => {
   return (
     <BrowserRouter>
@@ -62,6 +64,8 @@ const Routing = () => {
           path={CATEGORY_CHILD_PRODUCTS}
           element={<PrivateRoutes Component={ProductsByCategory} />}
         />
+
+        <Route path={TAGS} element={<PrivateRoutes Component={TagsPage} />} />
 
         <Route
           path={PRODUCTS}

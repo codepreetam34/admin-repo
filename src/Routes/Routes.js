@@ -18,3 +18,5 @@ export const CATEGORY_CHILDREN = "/category/category-child/:id";
 export const CATEGORY_CHILD_PRODUCTS = "/category/category-child/:id/products";
 export const PRODUCTS = "/products";
 export const ADD_PRODUCTS = "/products/add-product";
+
+export const TAGS = "/tags";

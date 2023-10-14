@@ -5,7 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "images/vibezterLogo.png";
 import { logout } from "Redux/Slices/Login/auth.slice";
 import { useDispatch } from "react-redux";
-import { CATEGORY, DISPLAY_PAGES, LOGIN, PRODUCTS } from "Routes/Routes";
+import { CATEGORY, DISPLAY_PAGES, LOGIN, PRODUCTS, TAGS } from "Routes/Routes";
 
 const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const [sideBarLink, setSideBarLink] = useState(false);
@@ -84,6 +84,21 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
             >
               <i class="fa-solid fa-layer-group"></i> Display Pages
             </Nav.Link>
+
+            <Nav.Link
+              onClick={() => onhidesidebar()}
+              as={NavLink}
+              exact=""
+              to={TAGS}
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <i class="fa-solid fa-tag"></i>
+              <div>Tags</div>
+            </Nav.Link>
+
             <Nav.Link
               onClick={() => onhidesidebar()}
               as={NavLink}
