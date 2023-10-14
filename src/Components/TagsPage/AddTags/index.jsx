@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { addTags } from "Redux/Slices/Tags/TagsSlice";
 
-const DynamicTagForm = () => {
+const AddTags = () => {
   const [tagStructure, setTagStructure] = useState([
     { tagType: "", categories: [""], options: [""] },
   ]);
@@ -231,4 +231,4 @@ const DynamicTagForm = () => {
   );
 };
 
-export default DynamicTagForm;
+export default AddTags;

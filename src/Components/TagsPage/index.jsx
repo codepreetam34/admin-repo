@@ -6,10 +6,16 @@ import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import { Link } from "react-router-dom";
 import DeleteDataModal from "./DeleteDataModal";
 import DynamicModal from "Constants/DynamicModal";
+import AddTags from "./AddTags";
+import EditTags from "./EditTags";
+import ViewTags from "./ViewTags";
 
 const TagsPage = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [openAddProductPage, setOpenAddProductPage] = useState(false);
+  const [openEditProductPage, setOpenEditProductPage] = useState(false);
+  const [openViewProductPage, setOpenViewProductPage] = useState(false);
   const [addShowErrorToast, setAddShowErrorToast] = useState(false);
   const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
   const [addShowToastMessage, setAddShowToastMessage] = useState("");
@@ -115,7 +121,7 @@ const TagsPage = () => {
           <tr>
             <td>
               <div className="d-flex justify-content-center pt-4">
-                <p className="text-red">Product list is empty !!</p>
+                <p className="text-red">Tag list is empty !!</p>
               </div>
             </td>
           </tr>
@@ -196,7 +202,50 @@ const TagsPage = () => {
             </div>
           ) : (
             <>
-              <InitialRender /> <RenderTable />
+              <InitialRender />{" "}
+              {openAddProductPage && openAddProductPage ? (
+                <AddTags
+                  setOpenAddProductPage={setOpenAddProductPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
+                />
+              ) : openEditProductPage && openEditProductPage ? (
+                <EditTags
+                  productData={modalData?.data}
+                  setOpenEditProductPage={setOpenEditProductPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
+                />
+              ) : openViewProductPage && openViewProductPage ? (
+                <ViewTags
+                  productData={modalData?.data}
+                  setOpenViewProductPage={setOpenViewProductPage}
+                />
+              ) : (
+                <RenderTable />
+              )}
             </>
           )}
         </Row>
