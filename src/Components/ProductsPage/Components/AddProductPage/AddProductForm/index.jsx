@@ -267,7 +267,7 @@ const AddProductForm = ({
   const renderTagCheckboxes = () => {
     if (defaultCategoryName && tagType) {
       const category = combinedOptions.find(
-        (option) => option.name === defaultCategoryName
+        (option) => option.name && option.name.toLowerCase() === defaultCategoryName
       );
       if (category) {
         const tagCategory =
@@ -524,7 +524,11 @@ const AddProductForm = ({
                     </option>
                     {defaultCategoryName ? (
                       combinedOptions
-                        .find((option) => option.name === defaultCategoryName)
+                        .find(
+                          (option) =>
+                            option.name &&
+                            option.name.toLowerCase() === defaultCategoryName
+                        )
                         ?.categories?.map((option) => (
                           <option key={option} value={option}>
                             {option}
