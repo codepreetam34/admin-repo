@@ -23,7 +23,7 @@ const EditCategoryPage = ({
           style={{ cursor: "pointer" }}
           onClick={() => setOpenEditCategoryPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>Edit Product</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>Edit Category</span>
         </div>
       </div>
 

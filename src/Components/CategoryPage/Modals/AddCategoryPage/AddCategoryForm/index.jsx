@@ -258,7 +258,7 @@ const AddCategoryForm = ({
           setAddShowToast(true);
           setAddShowToastMessage(res?.payload?.message);
           setOpenAddCategoryPage(false);
-          dispatch(getCategory())
+          dispatch(getCategory());
         }
       })
       .catch((err) => {
@@ -340,43 +340,6 @@ const AddCategoryForm = ({
                 </div>
               )}
             </Col>
-            {/* <Row>
-              <Col md={6}>
-                <Form.Group className="mb-4" controlId="tags">
-                  <Form.Label>Select Tag Type</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={tagType}
-                    onChange={(e) => setTagType(e.target.value)}
-                  >
-                    <option value="">Select Tag Type</option>
-                    {Object.keys(tagOptions).map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              {tagType && (
-                <Col md={6}>
-                  <Form.Group className="pb-3" controlId="selectedTags">
-                    <Form.Label style={{ fontWeight: "600" }}>
-                      Select Tags
-                    </Form.Label>
-                    <div>{renderTagCheckboxes()}</div>
-                  </Form.Group>
-                </Col>
-              )}
-            </Row>
-            <Col md={12} className="pb-3">
-              <Button variant="secondary" onClick={handleAddTag}>
-                Add Tag
-              </Button>
-            </Col>
-            {renderAddedTags()}
-            {renderAdditionalTags()}
- */}
             <Col md={12} className="product-detail-design">
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">

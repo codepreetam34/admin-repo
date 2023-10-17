@@ -26,6 +26,8 @@ const EditCategoryForm = ({
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedTagNames, setSelectedTagNames] = useState([]);
   const [additionalTags, setAdditionalTags] = useState([]);
+  const [defaultCategory, setDefaultCategory] = useState();
+  const [defaultCategoryName, setDefaultCategoryName] = useState();
   const {
     register,
     handleSubmit,
@@ -45,140 +47,129 @@ const EditCategoryForm = ({
     });
     setViewCategoryImage(categoryById?.categoryImage);
   }, [categoryById, reset]);
-  //   const tagOptions = {
-  //     "By Featured": [
-  //       "All Cakes",
-  //       "Best Sellers",
-  //       "Same Day Delivery",
-  //       "New Arrivals",
-  //       "Midnight Delivery",
-  //       "Flowers N Cakes",
-  //       "Cake Combos",
-  //       "Cake With Chocolates",
-  //       "Cake With Plants",
-  //       "Cakes and Guitarist",
-  //     ],
-  //     "By Occasion": [
-  //       "Birthday Cakes",
-  //       "Kid's Birthday Cakes",
-  //       "Anniversary Cakes",
-  //       "1st Anniversary",
-  //       "25th Anniversary",
-  //       "Wedding Cakes",
-  //       "Congratulations",
-  //       "Make Small Celebrations Big",
-  //     ],
-  //     "By Flavours": [
-  //       "Truffle Cakes",
-  //       "Chocolate Cakes",
-  //       "Black Forest Cakes",
-  //       "Butterscotch Cakes",
-  //       "Caramel Cakes",
-  //       "Coffee Cakes",
-  //       "Walnut Cakes",
-  //       "Pineapple Cakes",
-  //       "Fresh Fruit Cakes",
-  //       "Pinata Cakes",
-  //     ],
-  //     "By Types": [
-  //       "Bento CakesNeW",
-  //       "Eggless Cakes",
-  //       "Photo Cakes",
-  //       "Designer Cakes",
-  //       "Fondant Cakes",
-  //       "Fusion Cakes",
-  //       "Cup Cakes",
-  //       "Dry Cakes",
-  //       "Jar Cakes",
-  //     ],
-  //     "By Collections": [
-  //       "Birthday Cakes",
-  //       "Kid's Birthday Cakes",
-  //       "Anniversary Cakes",
-  //       "1st Anniversary",
-  //       "25th Anniversary",
-  //       "Wedding Cakes",
-  //       "Congratulations",
-  //       "Make Small Celebrations Big",
-  //     ],
-  //     "By Cities": [
-  //       "Delhi NCR",
-  //       "Bengaluru",
-  //       "Mumbai",
-  //       "Pune",
-  //       "Hyderabad",
-  //       "Kolkata",
-  //       "Chennai",
-  //       "Lucknow",
-  //       "Ahmedabad",
-  //       "All Other Cities",
-  //     ],
-  //   };
-
-  //   const renderTagCheckboxes = () => {
-  //     return categoryById.tags.map((category, index) => (
-  //       <div key={category._id}>
-  //         {" "}
-  //         <h5>{category.tagType}</h5>
-  //         {category.names.map((tagName) => (
-  //         <Form.Check
-  //           key={tagName}
-  //           type="checkbox"
-  //           label={tagName}
-  //           checked={selectedTags.includes(tagName)}
-  //           onChange={() => handleTagCheckboxChange(tagName)}
-  //           value={tagName}
-  //         />
-  //         ))}
-  //       </div>
-  //     ));
-  //   };
-
-  //   const renderTagCheckboxes = () => {
-  //     console.log("categoryById ",categoryById)
-  //     return categoryById.tags.map((category) => (
-  //       <div key={category._id}>
-  //         <h5>{category.tagType}</h5>
-  //         {category.names.map((tagName) => (
-  //           <Form.Check
-  //             key={tagName}
-  //             type="checkbox"
-  //             label={tagName}
-  //             checked={selectedTags.includes(tagName)}
-  //             onChange={() => handleTagCheckboxChange(tagName)}
-  //           />
-  //         ))}
-  //       </div>
-  //     ));
-  //   };
 
   const tagOptions = categoryById.tags.reduce((acc, tag) => {
     acc[tag.tagType] = tag.names;
     return acc;
   }, {});
 
+  const handleSelectCategory = (e) => {
+    setDefaultCategoryName(e.target.value);
+  };
+
+  const combinedOptions = [
+    {
+      name: "Cakes",
+      categories: ["By Featured", "By Occasion", "By Flavours", "By Types"],
+      options: [
+        // An array of options for each category.
+        [
+          "All Cakes",
+          "Best Sellers",
+          "Same Day Delivery",
+          "New Arrivals",
+          "Midnight Delivery",
+          "Flowers N Cakes",
+          "Cake Combos",
+          "Cake With Chocolates",
+          "Cake With Plants",
+          "Cakes and Guitarist",
+        ],
+        [
+          "Birthday Cakes",
+          "Kid's Birthday Cakes",
+          "Anniversary Cakes",
+          "1st Anniversary",
+          "25th Anniversary",
+          "Wedding Cakes",
+          "Congratulations",
+          "Make Small Celebrations Big",
+        ],
+        [
+          "Truffle Cakes",
+          "Chocolate Cakes",
+          "Black Forest Cakes",
+          "Butterscotch Cakes",
+          "Caramel Cakes",
+          "Coffee Cakes",
+          "Walnut Cakes",
+          "Pineapple Cakes",
+          "Fresh Fruit Cakes",
+          "Pinata Cakes",
+        ],
+        [
+          "Bento CakesNeW",
+          "Eggless Cakes",
+          "Photo Cakes",
+          "Designer Cakes",
+          "Fondant Cakes",
+          "Fusion Cakes",
+          "Cup Cakes",
+          "Dry Cakes",
+          "Jar Cakes",
+        ],
+      ],
+    },
+    {
+      name: "Plants",
+      categories: ["By Featured", "By Occasion", "By Planters", "By Types"],
+      options: [
+        [
+          "Best Sellers",
+          "Same Day Delivery",
+          "New Arrivals",
+          "Air Purifying Plants",
+          "Low Maintenance Plants",
+          "Indoor Plants",
+        ],
+        ["Birthday", "Anniversary", "House Warming", "Good Luck"],
+        [
+          "Ceramic Planters",
+          "Metal Planters",
+          "Glass Planters",
+          "Self Watering Planters",
+        ],
+        [
+          "Money Plants",
+          "Lucky Bamboo",
+          "Snake Plants",
+          "Jade Plants",
+          "Bonsai Plants",
+          "Flowering Plants",
+        ],
+      ],
+    },
+  ];
+
   const renderTagCheckboxes = () => {
-    if (tagType) {
-      return tagOptions[tagType].map((tagName, index) => (
+    if (defaultCategoryName && tagType) {
+      const category = combinedOptions.find(
+        (option) => option.name === defaultCategoryName
+      );
+      const tagCategory =
+        category.options[category.categories.indexOf(tagType)];
+
+      return tagCategory.map((tagName, index) => (
         <Form.Check
           key={index}
           type="checkbox"
           label={tagName}
           checked={selectedTags.includes(tagName)}
-          onChange={() => handleTagCheckboxChange(tagName)}
+          onChange={(e) => {
+            if (e.target.checked) {
+              setSelectedTags((prevTags) => [...prevTags, tagName]);
+            } else {
+              setSelectedTags((prevTags) =>
+                prevTags.filter((tag) => tag !== tagName)
+              );
+            }
+          }}
           value={tagName}
+          style={{ width: "10rem" }}
         />
       ));
     }
     return null;
-  };
-
-  const handleTagCheckboxChange = (tagName) => {
-    if (selectedTags.includes(tagName)) {
-      setSelectedTags(selectedTags.filter((tag) => tag !== tagName));
-    } else {
-      setSelectedTags([...selectedTags, tagName]);
-    }
   };
 
   const handleAddTag = () => {
@@ -187,60 +178,6 @@ const EditCategoryForm = ({
       setAdditionalTags([...additionalTags, newTag]);
       setSelectedTags([]);
     }
-  };
-
-  const handleAddAnotherTag = () => {
-    if (tagType) {
-      const newTag = { tagType, names: [] };
-      setTags([...tags, newTag]);
-    }
-    // Clear the selectedTags array
-    setSelectedTags([]);
-    // Clear the selectedTagNames array
-    setSelectedTagNames([]);
-  };
-
-  const renderAddedTags = () => {
-    return tags.map((tag, index) => (
-      <div key={index}>
-        <Form.Group controlId={`tagType_${index}`}>
-          <Form.Label>Tag Type</Form.Label>
-          <Form.Control
-            type="text"
-            name={`tags[${index}].tagType`}
-            defaultValue={tag.tagType}
-            disabled
-          />
-        </Form.Group>
-        <Form.Group controlId={`tagNames_${index}`}>
-          <Form.Label>Tag Names</Form.Label>
-          {tag.names.map((name, nameIndex) => (
-            <div key={nameIndex}>
-              <Form.Check
-                type="checkbox"
-                label={name}
-                checked={selectedTagNames[index]?.includes(name)}
-                onChange={(e) => {
-                  const updatedNames = selectedTagNames[index] || [];
-                  if (e.target.checked) {
-                    updatedNames.push(name);
-                  } else {
-                    const nameIndex = updatedNames.indexOf(name);
-                    if (nameIndex !== -1) {
-                      updatedNames.splice(nameIndex, 1);
-                    }
-                  }
-                  const updatedSelectedTagNames = [...selectedTagNames];
-                  updatedSelectedTagNames[index] = updatedNames;
-                  setSelectedTagNames(updatedSelectedTagNames);
-                }}
-                value={name}
-              />
-            </div>
-          ))}
-        </Form.Group>
-      </div>
-    ));
   };
 
   const renderAdditionalTags = () => {
@@ -273,7 +210,7 @@ const EditCategoryForm = ({
         <Form.Group controlId={`additionalTagNames_${index}`}>
           <Form.Label>Tag Names</Form.Label>
           {tag.names.map((name, nameIndex) => (
-            <Col md={6} key={nameIndex}>
+            <div key={nameIndex}>
               <Form.Check
                 type="checkbox"
                 label={name}
@@ -281,7 +218,7 @@ const EditCategoryForm = ({
                 disabled
                 checked
                 onChange={(e) => {
-                  const updatedNames = selectedTagNames[index] || [];
+                  const updatedNames = tag.names || [];
                   if (e.target.checked) {
                     updatedNames.push(name);
                   } else {
@@ -290,13 +227,13 @@ const EditCategoryForm = ({
                       updatedNames.splice(nameIndex, 1);
                     }
                   }
-                  const updatedSelectedTagNames = [...selectedTagNames];
+                  const updatedSelectedTagNames = [...selectedTags];
                   updatedSelectedTagNames[index] = updatedNames;
-                  setSelectedTagNames(updatedSelectedTagNames);
+                  setSelectedTags(updatedSelectedTagNames);
                 }}
                 value={name}
               />
-            </Col>
+            </div>
           ))}
         </Form.Group>
       </Col>
@@ -315,6 +252,7 @@ const EditCategoryForm = ({
     formData.append("imageAltText", data?.imageAltText?.toString());
     formData.append("categoryImage", categoryImage);
     formData.append("_id", categoryById._id);
+
     const tagsArray = additionalTags.map((additionalTag) => {
       return {
         tagType: additionalTag.tagType,
@@ -432,42 +370,93 @@ const EditCategoryForm = ({
                 <></>
               )}
             </Col>
-            <Row>
+            <Col md={12} className="product-detail-design">
               <Col md={6}>
-                <Form.Group className="mb-4" controlId="tags">
-                  <Form.Label>Select Tag Type</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={tagType}
-                    onChange={(e) => setTagType(e.target.value)}
-                  >
-                    <option value="">Select Tag Type</option>
-                    {Object.keys(tagOptions).map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Select Category</Form.Label>
+                  <div className="select-wrapper">
+                    <Form.Control
+                      as="select"
+                      name="categoryId"
+                      id="categoryId"
+                      isInvalid={!!errors?.categoryId}
+                      value={defaultCategory}
+                      onChange={(e) => handleSelectCategory(e)}
+                    >
+                      <option disabled selected style={{ fontWeight: "600" }}>
+                        Select Category
                       </option>
-                    ))}
-                  </Form.Control>
+
+                      <option key="Cakes" value="Cakes">
+                        Cakes
+                      </option>
+                      <option key="Plants" value="Plants">
+                        Plants & Flower
+                      </option>
+                    </Form.Control>
+                    <div className="select-arrow"></div>
+                  </div>
+                  <Form.Control.Feedback type="invalid">
+                    {errors?.categoryId?.message}
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
-              {tagType && (
+              <Row>
                 <Col md={6}>
+                  <Form.Group className="mb-4" controlId="tags">
+                    <Form.Label>Select Tag Type</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={tagType}
+                      onChange={(e) => setTagType(e.target.value)}
+                    >
+                      <option value="" disabled>
+                        Select Tag Type
+                      </option>
+                      {defaultCategoryName &&
+                        combinedOptions
+                          .find((option) => option.name === defaultCategoryName)
+                          .categories.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                    </Form.Control>
+                  </Form.Group>
+                  <div className="pt-4 d-flex justify-content-center">
+                    <Button variant="secondary" onClick={handleAddTag}>
+                      Add Tag
+                    </Button>
+                  </div>
+                </Col>
+                {tagType && (
+                  <Col md={6}>
+                    <Form.Group className="pb-3" controlId="selectedTags">
+                      <Form.Label style={{ fontWeight: "600" }}>
+                        Select Tags
+                      </Form.Label>
+                      <div
+                        className="d-flex flex-wrap gap-2 product-detail-design"
+                        style={{ margin: "0" }}
+                      >
+                        {renderTagCheckboxes()}
+                      </div>
+                    </Form.Group>
+                  </Col>
+                )}
+              </Row>
+
+              <Row className="p-4">
+                <Col md={12} className="pb-3 product-detail-design">
                   <Form.Group className="pb-3" controlId="selectedTags">
                     <Form.Label style={{ fontWeight: "600" }}>
-                      Select Tags
+                      {defaultCategoryName} Selected Tags
                     </Form.Label>
-                    <div>{renderTagCheckboxes()}</div>
+                    <Row>{renderAdditionalTags()}</Row>
                   </Form.Group>
                 </Col>
-              )}
-            </Row>
-            <Col md={12} className="pb-3">
-              <Button variant="secondary" onClick={handleAddTag}>
-                Add Tag
-              </Button>
+              </Row>
             </Col>
-            {renderAddedTags()}
-            {renderAdditionalTags()}
           </Row>
           <div className="pt-3">
             <Button variant="primary" type="submit">
