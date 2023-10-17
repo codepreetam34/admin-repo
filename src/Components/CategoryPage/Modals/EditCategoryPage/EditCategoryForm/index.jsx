@@ -13,6 +13,7 @@ const EditCategoryForm = ({
   categoryById,
   setAddShowErrorToastMessage,
   setAddShowToast,
+  setOpenEditCategoryPage,
   setAddShowToastMessage,
 }) => {
   const dispatch = useDispatch();
@@ -44,94 +45,94 @@ const EditCategoryForm = ({
     });
     setViewCategoryImage(categoryById?.categoryImage);
   }, [categoryById, reset]);
-//   const tagOptions = {
-//     "By Featured": [
-//       "All Cakes",
-//       "Best Sellers",
-//       "Same Day Delivery",
-//       "New Arrivals",
-//       "Midnight Delivery",
-//       "Flowers N Cakes",
-//       "Cake Combos",
-//       "Cake With Chocolates",
-//       "Cake With Plants",
-//       "Cakes and Guitarist",
-//     ],
-//     "By Occasion": [
-//       "Birthday Cakes",
-//       "Kid's Birthday Cakes",
-//       "Anniversary Cakes",
-//       "1st Anniversary",
-//       "25th Anniversary",
-//       "Wedding Cakes",
-//       "Congratulations",
-//       "Make Small Celebrations Big",
-//     ],
-//     "By Flavours": [
-//       "Truffle Cakes",
-//       "Chocolate Cakes",
-//       "Black Forest Cakes",
-//       "Butterscotch Cakes",
-//       "Caramel Cakes",
-//       "Coffee Cakes",
-//       "Walnut Cakes",
-//       "Pineapple Cakes",
-//       "Fresh Fruit Cakes",
-//       "Pinata Cakes",
-//     ],
-//     "By Types": [
-//       "Bento CakesNeW",
-//       "Eggless Cakes",
-//       "Photo Cakes",
-//       "Designer Cakes",
-//       "Fondant Cakes",
-//       "Fusion Cakes",
-//       "Cup Cakes",
-//       "Dry Cakes",
-//       "Jar Cakes",
-//     ],
-//     "By Collections": [
-//       "Birthday Cakes",
-//       "Kid's Birthday Cakes",
-//       "Anniversary Cakes",
-//       "1st Anniversary",
-//       "25th Anniversary",
-//       "Wedding Cakes",
-//       "Congratulations",
-//       "Make Small Celebrations Big",
-//     ],
-//     "By Cities": [
-//       "Delhi NCR",
-//       "Bengaluru",
-//       "Mumbai",
-//       "Pune",
-//       "Hyderabad",
-//       "Kolkata",
-//       "Chennai",
-//       "Lucknow",
-//       "Ahmedabad",
-//       "All Other Cities",
-//     ],
-//   };
+  //   const tagOptions = {
+  //     "By Featured": [
+  //       "All Cakes",
+  //       "Best Sellers",
+  //       "Same Day Delivery",
+  //       "New Arrivals",
+  //       "Midnight Delivery",
+  //       "Flowers N Cakes",
+  //       "Cake Combos",
+  //       "Cake With Chocolates",
+  //       "Cake With Plants",
+  //       "Cakes and Guitarist",
+  //     ],
+  //     "By Occasion": [
+  //       "Birthday Cakes",
+  //       "Kid's Birthday Cakes",
+  //       "Anniversary Cakes",
+  //       "1st Anniversary",
+  //       "25th Anniversary",
+  //       "Wedding Cakes",
+  //       "Congratulations",
+  //       "Make Small Celebrations Big",
+  //     ],
+  //     "By Flavours": [
+  //       "Truffle Cakes",
+  //       "Chocolate Cakes",
+  //       "Black Forest Cakes",
+  //       "Butterscotch Cakes",
+  //       "Caramel Cakes",
+  //       "Coffee Cakes",
+  //       "Walnut Cakes",
+  //       "Pineapple Cakes",
+  //       "Fresh Fruit Cakes",
+  //       "Pinata Cakes",
+  //     ],
+  //     "By Types": [
+  //       "Bento CakesNeW",
+  //       "Eggless Cakes",
+  //       "Photo Cakes",
+  //       "Designer Cakes",
+  //       "Fondant Cakes",
+  //       "Fusion Cakes",
+  //       "Cup Cakes",
+  //       "Dry Cakes",
+  //       "Jar Cakes",
+  //     ],
+  //     "By Collections": [
+  //       "Birthday Cakes",
+  //       "Kid's Birthday Cakes",
+  //       "Anniversary Cakes",
+  //       "1st Anniversary",
+  //       "25th Anniversary",
+  //       "Wedding Cakes",
+  //       "Congratulations",
+  //       "Make Small Celebrations Big",
+  //     ],
+  //     "By Cities": [
+  //       "Delhi NCR",
+  //       "Bengaluru",
+  //       "Mumbai",
+  //       "Pune",
+  //       "Hyderabad",
+  //       "Kolkata",
+  //       "Chennai",
+  //       "Lucknow",
+  //       "Ahmedabad",
+  //       "All Other Cities",
+  //     ],
+  //   };
 
-//   const renderTagCheckboxes = () => {
-//     return categoryById.tags.map((category, index) => (
-//       <div key={category._id}>
-//         {" "}
-//         <h5>{category.tagType}</h5>
-//         {category.names.map((tagName) => (
-//         <Form.Check
-//           key={tagName}
-//           type="checkbox"
-//           label={tagName}
-//           checked={selectedTags.includes(tagName)}
-//           onChange={() => handleTagCheckboxChange(tagName)}
-//           value={tagName}
-//         />
-//         ))}
-//       </div>
-//     ));
-//   };
+  //   const renderTagCheckboxes = () => {
+  //     return categoryById.tags.map((category, index) => (
+  //       <div key={category._id}>
+  //         {" "}
+  //         <h5>{category.tagType}</h5>
+  //         {category.names.map((tagName) => (
+  //         <Form.Check
+  //           key={tagName}
+  //           type="checkbox"
+  //           label={tagName}
+  //           checked={selectedTags.includes(tagName)}
+  //           onChange={() => handleTagCheckboxChange(tagName)}
+  //           value={tagName}
+  //         />
+  //         ))}
+  //       </div>
+  //     ));
+  //   };
 
   //   const renderTagCheckboxes = () => {
   //     console.log("categoryById ",categoryById)
@@ -184,8 +185,6 @@ const EditCategoryForm = ({
     if (tagType && selectedTags.length > 0) {
       const newTag = { tagType, names: [...selectedTags] };
       setAdditionalTags([...additionalTags, newTag]);
-      // Clear the selectedTags array
-      console.log("tags are : ", additionalTags);
       setSelectedTags([]);
     }
   };
@@ -337,6 +336,7 @@ const EditCategoryForm = ({
             res?.payload?.error?.response?.data?.message
           );
         } else {
+          setOpenEditCategoryPage(false);
           dispatch(getCategory());
           setAddShowToastMessage(res?.payload?.message);
           setAddShowToast(true);

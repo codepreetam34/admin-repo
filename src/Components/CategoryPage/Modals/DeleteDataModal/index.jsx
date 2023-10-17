@@ -42,7 +42,6 @@ const DeleteDataModal = ({
         setAddShowToast(true);
         setShowModal(false);
       }
-      console.log("res ss ", res);
     });
   };
   return (

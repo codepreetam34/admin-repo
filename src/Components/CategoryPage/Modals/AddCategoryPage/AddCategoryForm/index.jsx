@@ -15,6 +15,7 @@ const AddCategoryForm = ({
   setAddShowErrorToastMessage,
   setAddShowToast,
   setAddShowToastMessage,
+  setOpenAddCategoryPage,
 }) => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
@@ -256,6 +257,8 @@ const AddCategoryForm = ({
         } else {
           setAddShowToast(true);
           setAddShowToastMessage(res?.payload?.message);
+          setOpenAddCategoryPage(false);
+          dispatch(getCategory())
         }
       })
       .catch((err) => {

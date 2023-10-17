@@ -7,6 +7,9 @@ const ViewCategoryForm = ({ categoryData }) => {
       <div className="container">
         <Form className="user_form" style={{ padding: "2rem" }}>
           <Row>
+            <div className="view-details-heading pb-2 text-center">
+              <strong>Category Details</strong>
+            </div>
             <Col md={6}>
               <div className="view-details pb-2">
                 <strong>Category Name</strong> <br /> {categoryData?.name}
@@ -26,8 +29,17 @@ const ViewCategoryForm = ({ categoryData }) => {
                 <Row>
                   {categoryData?.tags?.map((tag) => {
                     return (
-                      <Col md={6} style={{ paddingBottom: "0.7rem" ,paddingTop: "0.2rem" }}>
-                        <div className="fw-bold" style={{fontSize:"0.9rem"}}> {tag?.tagType} </div>
+                      <Col
+                        md={6}
+                        style={{
+                          paddingBottom: "0.7rem",
+                          paddingTop: "0.2rem",
+                        }}
+                      >
+                        <div className="fw-bold" style={{ fontSize: "0.9rem" }}>
+                          {" "}
+                          {tag?.tagType}{" "}
+                        </div>
                         <div>
                           {tag?.names?.map((name) => {
                             return <div>{name}</div>;

@@ -35,6 +35,7 @@ const AddCategoryPage = ({
                 setAddShowErrorToastMessage={setAddShowErrorToastMessage}
                 setAddShowToast={setAddShowToast}
                 setAddShowToastMessage={setAddShowToastMessage}
+                setOpenAddCategoryPage={setOpenAddCategoryPage}
               />
             </div>{" "}
           </div>

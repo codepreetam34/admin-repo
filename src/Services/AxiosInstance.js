@@ -1,5 +1,5 @@
 import axios from "axios";
-
+//  baseURL: "http://64.227.157.200:5000/api",
 const axiosInstance = axios.create({
   baseURL: "http://64.227.157.200:5000/api",
   headers: {

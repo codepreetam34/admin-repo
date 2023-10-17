@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { addProducts } from "Redux/Slices/Products/ProductsSlice";
+import { addProducts, getProducts } from "Redux/Slices/Products/ProductsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { addProductSchema } from "ValidationSchema/addProductSchema";
@@ -98,7 +98,6 @@ const AddProductForm = ({
   }, [dispatch]);
 
   const onSubmit = (data) => {
-    console.log("enter");
     const formData = new FormData();
     if (data?.name) formData.append("name", data?.name?.toString());
     if (data?.description)
@@ -155,10 +154,10 @@ const AddProductForm = ({
         setAddShowErrorToastMessage(res.paylaod.error.message);
       } else {
         setIsLoading(false);
-        //    setAddShowToast(true);
-        //      setAddShowToastMessage(res.payload.message);
-        //     dispatch(getProducts());
-        //     setOpenAddProductPage(false);
+        setAddShowToast(true);
+        setAddShowToastMessage(res.payload.message);
+        setOpenAddProductPage(false);
+        dispatch(getProducts());
       }
     });
   };
@@ -270,29 +269,34 @@ const AddProductForm = ({
       const category = combinedOptions.find(
         (option) => option.name === defaultCategoryName
       );
-      const tagCategory =
-        category.options[category.categories.indexOf(tagType)];
+      if (category) {
+        const tagCategory =
+          category.options[category.categories.indexOf(tagType)];
 
-      return tagCategory.map((tagName, index) => (
-        <Form.Check
-          key={index}
-          type="checkbox"
-          label={tagName}
-          checked={selectedTags.includes(tagName)}
-          onChange={(e) => {
-            if (e.target.checked) {
-              setSelectedTags((prevTags) => [...prevTags, tagName]);
-            } else {
-              setSelectedTags((prevTags) =>
-                prevTags.filter((tag) => tag !== tagName)
-              );
-            }
-          }}
-          value={tagName}
-          style={{ width: "10rem" }}
-        />
-      ));
+        return tagCategory.map((tagName, index) => (
+          <Form.Check
+            key={index}
+            type="checkbox"
+            label={tagName}
+            checked={selectedTags.includes(tagName)}
+            onChange={(e) => {
+              if (e.target.checked) {
+                setSelectedTags((prevTags) => [...prevTags, tagName]);
+              } else {
+                setSelectedTags((prevTags) =>
+                  prevTags.filter((tag) => tag !== tagName)
+                );
+              }
+            }}
+            value={tagName}
+            style={{ width: "10rem" }}
+          />
+        ));
+      } else {
+        return null;
+      }
     }
+
     return null;
   };
 
@@ -333,52 +337,55 @@ const AddProductForm = ({
 
         <Form.Group controlId={`additionalTagNames_${index}`}>
           <Form.Label>Tag Names</Form.Label>
-          {tag.names.map((name, nameIndex) => (
-            <div key={nameIndex}>
-              <Form.Check
-                type="checkbox"
-                label={name}
-                className="mb-2"
-                disabled
-                checked
-                onChange={(e) => {
-                  const updatedNames = tag.names || [];
-                  if (e.target.checked) {
-                    updatedNames.push(name);
-                  } else {
-                    const nameIndex = updatedNames.indexOf(name);
-                    if (nameIndex !== -1) {
-                      updatedNames.splice(nameIndex, 1);
+          {tag ? (
+            tag?.names?.map((name, nameIndex) => (
+              <div key={nameIndex}>
+                <Form.Check
+                  type="checkbox"
+                  label={name}
+                  className="mb-2"
+                  disabled
+                  checked
+                  onChange={(e) => {
+                    const updatedNames = tag.names || [];
+                    if (e.target.checked) {
+                      updatedNames.push(name);
+                    } else {
+                      const nameIndex = updatedNames.indexOf(name);
+                      if (nameIndex !== -1) {
+                        updatedNames.splice(nameIndex, 1);
+                      }
                     }
-                  }
-                  const updatedSelectedTagNames = [...selectedTags];
-                  updatedSelectedTagNames[index] = updatedNames;
-                  setSelectedTags(updatedSelectedTagNames);
-                }}
-                value={name}
-              />
-            </div>
-          ))}
+                    const updatedSelectedTagNames = [...selectedTags];
+                    updatedSelectedTagNames[index] = updatedNames;
+                    setSelectedTags(updatedSelectedTagNames);
+                  }}
+                  value={name}
+                />
+              </div>
+            ))
+          ) : (
+            <></>
+          )}
         </Form.Group>
       </Col>
     ));
   };
-  
+
   const onRemoveTags = (index) => {
     const updatedTags = [...additionalTags];
     updatedTags.splice(index, 1);
     setAdditionalTags(updatedTags);
   };
 
-
-const onRemoveBannerPicture = (index) => {
-  const inputList = [...bannerPicture];
-  inputList.splice(index, 1);
-  setBannerPicture(inputList);
-  // const list2 = [...imageAltText];
-  // list2.splice(index, 1);
-  // setImageAltText(list2);
-};
+  const onRemoveBannerPicture = (index) => {
+    const inputList = [...bannerPicture];
+    inputList.splice(index, 1);
+    setBannerPicture(inputList);
+    // const list2 = [...imageAltText];
+    // list2.splice(index, 1);
+    // setImageAltText(list2);
+  };
 
   return (
     <div className="container">
@@ -515,34 +522,42 @@ const onRemoveBannerPicture = (index) => {
                     <option value="" disabled>
                       Select Tag Type
                     </option>
-                    {defaultCategoryName &&
+                    {defaultCategoryName ? (
                       combinedOptions
                         .find((option) => option.name === defaultCategoryName)
-                        .categories.map((option) => (
+                        ?.categories?.map((option) => (
                           <option key={option} value={option}>
                             {option}
                           </option>
-                        ))}
+                        )) || <option value="">No options available</option>
+                    ) : (
+                      <option value="">No options available</option>
+                    )}
                   </Form.Control>
                 </Form.Group>
                 <div className="pt-4 d-flex justify-content-center">
-                    <Button variant="secondary" onClick={handleAddTag}>
-                      Add Tag
-                    </Button>
-                  </div>
+                  <Button variant="secondary" onClick={handleAddTag}>
+                    Add Tag
+                  </Button>
+                </div>
               </Col>
-              {tagType && (
+
+              {tagType ? (
                 <Col md={6}>
                   <Form.Group className="pb-3" controlId="selectedTags">
                     <Form.Label style={{ fontWeight: "600" }}>
                       Select Tags
                     </Form.Label>
-                    <div className="d-flex flex-wrap gap-2 product-detail-design" style={{margin:'0'}}>
+                    <div
+                      className="d-flex flex-wrap gap-2 product-detail-design"
+                      style={{ margin: "0" }}
+                    >
                       {renderTagCheckboxes()}
-                      
                     </div>
                   </Form.Group>
                 </Col>
+              ) : (
+                <></>
               )}
             </Row>
 
@@ -839,20 +854,6 @@ const onRemoveBannerPicture = (index) => {
 };
 
 export default AddProductForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///////////   prodcut color picture component     /////////////////////
 

@@ -62,7 +62,6 @@ const CategoryPage = () => {
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
     { title: "Image", class: "" },
-    { title: "Sub Categories", class: "" },
     { title: "Action", class: "text-center" },
   ];
 
@@ -196,7 +195,7 @@ const CategoryPage = () => {
                   loading="lazy"
                 />
               </td>
-              {category?.children?.length > 0 ? (
+              {/* {category?.children?.length > 0 ? (
                 <td
                   style={{
                     ...linkStyles,
@@ -223,7 +222,7 @@ const CategoryPage = () => {
                 >
                   {`Add Child Category`}
                 </td>
-              )}
+              )} */}
               <td>
                 <div
                   className="table_icons d-flex align-items-center justify-content-center"

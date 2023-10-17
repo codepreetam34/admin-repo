@@ -467,8 +467,8 @@ const EditProductForm = ({
         setIsLoading(false);
         setAddShowToast(true);
         setAddShowToastMessage(res.payload.message);
-        dispatch(getProducts());
         setOpenEditProductPage(false);
+        dispatch(getProducts());
       }
     });
   };
