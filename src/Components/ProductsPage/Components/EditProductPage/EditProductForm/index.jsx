@@ -233,9 +233,8 @@ const EditProductForm = ({
                           width: "200px",
                           height: "200px",
                         }}
-                        alt={`Color ${colorIndex + 1} - Image ${
-                          pictureIndex + 1
-                        }`}
+                        alt={`Color ${colorIndex + 1} - Image ${pictureIndex + 1
+                          }`}
                       />
                       <div>{`${picture?.imageAltText}`}</div>
                     </div>
@@ -244,9 +243,8 @@ const EditProductForm = ({
                   <Row>
                     <Col md={6}>
                       <Form.Group>
-                        <Form.Label>{`Color Picture ${
-                          pictureIndex + 1
-                        }`}</Form.Label>
+                        <Form.Label>{`Color Picture ${pictureIndex + 1
+                          }`}</Form.Label>
 
                         <Form.Control
                           type="file"
@@ -438,9 +436,13 @@ const EditProductForm = ({
     Array.from(pinCode).forEach((item) => {
       formData.append("pincode", item);
     });
-    Array.from(tags).forEach((item) => {
-      formData.append("tags", item);
+    const tagsArray = tags.map((additionalTag) => {
+      return {
+        tagType: additionalTag.tagType,
+        names: additionalTag.names,
+      };
     });
+  //  / formData.append("tags", JSON.stringify(tagsArray));
     if (bannerPicture && bannerPicture?.length > 1) {
       bannerPicture?.map((file, index) => {
         return {
