@@ -230,7 +230,7 @@ const AddProductForm = ({
       ],
     },
     {
-      name: "Plants",
+      name: "Flowers & Plants",
       categories: ["By Featured", "By Occasion", "By Planters", "By Types"],
       options: [
         [
@@ -267,7 +267,7 @@ const AddProductForm = ({
   const renderTagCheckboxes = () => {
     if (defaultCategoryName && tagType) {
       const category = combinedOptions.find(
-        (option) => option.name && option.name.toLowerCase() === defaultCategoryName
+        (option) => option.name && option.name.toLowerCase() === defaultCategoryName.toLowerCase()
       );
       if (category) {
         const tagCategory =
@@ -383,7 +383,7 @@ const AddProductForm = ({
     inputList.splice(index, 1);
     setBannerPicture(inputList);
     // const list2 = [...imageAltText];
-    // list2.splice(index, 1);
+    // list2.splice(, 1);Plan
     // setImageAltText(list2);
   };
 
@@ -527,7 +527,7 @@ const AddProductForm = ({
                         .find(
                           (option) =>
                             option.name &&
-                            option.name.toLowerCase() === defaultCategoryName
+                            option.name.toLowerCase() === defaultCategoryName.toLowerCase()
                         )
                         ?.categories?.map((option) => (
                           <option key={option} value={option}>
