@@ -1,6 +1,6 @@
 import React from 'react';
 import Wrapper from '../Wrapper';
-import {Row, Col} from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import TotalBox from '../HomePage/TotalBox'
 import DashGraph from './DashGraph';
 import NftsTable from './NftsTable';
@@ -17,21 +17,21 @@ const Dashboard = () => {
 
   return (
     <Wrapper>
-      
+
       <div className="dashbcontent">
         <Row>
 
-          <Col md={6} xl={7} xxl={8}>
+          <Col>
             <div className="collect-bg">
-              <h3>Explore, Collect, Sell and Create your Own NFT</h3>
+              <h3>Vibezter Dashboard is coming soon...</h3>
               <div className="">
-                <a href="#"  className='bgbtn'>Discover</a>
-                <a href="#"  className='borderbtn'>Create</a>
+                <a href="#" className='bgbtn'>Discover</a>
+                <a href="#" className='borderbtn'>Create</a>
               </div>
             </div>
           </Col>
 
-          <Col md={6} xl={5} xxl={4}>
+          {/* <Col md={6} xl={5} xxl={4}>
             <div className="top-creators">
 
               <div className="boxheading d-flex justify-content-between">
@@ -105,15 +105,15 @@ const Dashboard = () => {
               </div>
 
             </div>
-          </Col>
+          </Col> */}
 
         </Row>
       </div>
-      
-      <TotalBox />
+
+      {/* <TotalBox />
       <DashGraph />
       <NftsTable />
-      <TrandSlider ATData={AllTrendData} />
+      <TrandSlider ATData={AllTrendData} /> */}
 
     </Wrapper>
   )

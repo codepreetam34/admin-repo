@@ -62,6 +62,7 @@ const CategoryPage = () => {
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
     { title: "Image", class: "" },
+    // { title: "View Products", class: "" },
     { title: "Action", class: "text-center" },
   ];
 
@@ -223,6 +224,34 @@ const CategoryPage = () => {
                   {`Add Child Category`}
                 </td>
               )} */}
+
+
+              {/* {category?.productCount > 0 ? (
+                <td
+                  style={{
+                    ...linkStyles,
+                    ":hover": {
+                      textDecoration: "underline", // Apply underline on hover
+                    },
+                  }}
+                  onClick={() => ViewParticularUserProductsHandler(category?._id)}
+                >
+                  {`View Products (${category?.productCount})`}
+                </td>
+              ) : (
+                <td
+                  style={{
+                    fontSize: "12px",
+                    marginRight: "1rem",
+                    textDecoration: "none",
+                    fontWeight: "bold",
+                    transition: "text-decoration 0.2s ease-in-out",
+                    cursor: "default",
+                  }}
+                >
+                  {`No Products`}
+                </td>
+              )} */}
               <td>
                 <div
                   className="table_icons d-flex align-items-center justify-content-center"
@@ -310,6 +339,11 @@ const CategoryPage = () => {
 
   const ViewParticularUserHandler = (id) => {
     navigate(`/category/category-child/${id}`);
+  };
+
+
+  const ViewParticularUserProductsHandler = (id) => {
+    navigate(`/category/category-child/${id}/products`);
   };
 
   return (
