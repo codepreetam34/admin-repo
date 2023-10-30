@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 
 const EditProductForm = ({
+
   setOpenEditProductPage,
   setIsLoading,
   productData,
@@ -19,7 +20,9 @@ const EditProductForm = ({
   setAddShowErrorToastMessage,
   setAddShowToast,
   setAddShowToastMessage,
+
 }) => {
+  
   const [imageAltText, setImageAltText] = useState([""]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -421,7 +424,7 @@ const EditProductForm = ({
     if (productData._id) formData.append("_id", productData?._id);
     if (data?.description)
       formData.append("description", data?.description?.toString());
-    if (data?.categoryId) formData.append("category", defaultCategory);
+    if (defaultCategory) formData.append("category", defaultCategory);
     if (data?.deliveryDay) formData.append("deliveryDay", data?.deliveryDay);
     if (data?.discountPrice)
       formData.append("discountPrice", data?.discountPrice);
@@ -442,7 +445,7 @@ const EditProductForm = ({
         names: additionalTag.names,
       };
     });
-  //  / formData.append("tags", JSON.stringify(tagsArray));
+    //  / formData.append("tags", JSON.stringify(tagsArray));
     if (bannerPicture && bannerPicture?.length > 1) {
       bannerPicture?.map((file, index) => {
         return {
@@ -529,21 +532,16 @@ const EditProductForm = ({
                       value={defaultCategory}
                       onChange={(e) => setDefaultCategory(e.target.value)}
                     >
-                      <option disabled style={{ fontWeight: "600" }}>
+                      <option disabled selected style={{ fontWeight: "600" }}>
                         Select Category
-                      </option>{" "}
+                      </option>
                       {categoryList &&
                         categoryList?.map((option) => (
-                          <optgroup key={option._id} label={option.name}>
-                            {option?.children?.map((e) => (
-                              <option key={e._id} value={e?._id}>
-                                {e.name}
-                              </option>
-                            ))}
-                          </optgroup>
+                          <option key={option._id} value={option?._id}>
+                            {option?.name}
+                          </option>
                         ))}
                     </Form.Control>
-
                     <div className="select-arrow"></div>
                   </div>
 
