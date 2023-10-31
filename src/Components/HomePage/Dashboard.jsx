@@ -23,9 +23,9 @@ const Dashboard = () => {
 
           <Col>
             <div className="collect-bg">
-              <h3>Vibezter Dashboard is coming soon...</h3>
+              <h3>Vibezter Dashboard is Coming Soon...</h3>
               <div className="">
-                <a href="#" className='bgbtn'>Discover</a>
+                <a href="#" className='bgbtn'>Discover</a> 
                 <a href="#" className='borderbtn'>Create</a>
               </div>
             </div>
