@@ -18,9 +18,9 @@ const HomepageDisplay = () => {
       imgClass: "green",
     },
     {
-      boxHref: "/",
+      boxHref: "/display-pages/homepage-display/homepage-category-slider",
       imgSrc: Redbox,
-      title: "Category Page",
+      title: "Category Slider Carousel",
       imgClass: "redbox",
     },
     {

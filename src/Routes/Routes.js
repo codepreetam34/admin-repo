@@ -13,6 +13,8 @@ export const DISPLAY_PAGES = "/display-pages";
 export const HOMEPAGE_DISPLAY = "/display-pages/homepage-display";
 export const HOMEPAGE_BANNER_LIST =
   "/display-pages/homepage-display/homepage-banner-list";
+export const HOMEPAGE_CATEGORY_SLIDER =
+  "/display-pages/homepage-display/homepage-category-slider";
 export const CATEGORY = "/category";
 export const CATEGORY_CHILDREN = "/category/category-child/:id";
 export const CATEGORY_CHILD_PRODUCTS = "/category/category-child/:id/products";

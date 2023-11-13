@@ -5,6 +5,7 @@ import LogIn from "Pages/LogIn";
 import DisplayPages from "Pages/DisplayPages";
 import HomepageDisplay from "Components/DisplayPagesContainer/Containers/HomepageDisplay";
 import HomepageBannerList from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList";
+import HomepageCategorySlider from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomepageCategorySlider";
 import ParentCategory from "Pages/ParentCategory";
 import CategoryChildren from "Pages/ChildCategory";
 import ProductsByCategory from "Pages/ProductsByCategory";
@@ -22,6 +23,7 @@ import {
   PRODUCTS,
   ADD_PRODUCTS,
   TAGS,
+  HOMEPAGE_CATEGORY_SLIDER
 } from "Routes/Routes";
 import PrivateRoutes from "Routes/PrivateRoutes";
 import SetupNewPassword from "Components/LogIn/SetupNewPassword";
@@ -51,6 +53,10 @@ const Routing = () => {
         <Route
           path={HOMEPAGE_BANNER_LIST}
           element={<PrivateRoutes Component={HomepageBannerList} />}
+        />
+                <Route
+          path={HOMEPAGE_CATEGORY_SLIDER}
+          element={<PrivateRoutes Component={HomepageCategorySlider} />}
         />
         <Route
           path={CATEGORY}
