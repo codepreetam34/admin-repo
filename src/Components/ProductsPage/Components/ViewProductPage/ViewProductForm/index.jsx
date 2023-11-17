@@ -58,7 +58,7 @@ const ViewProductForm = ({ productData }) => {
       tagName,
       categoryId: productData?.category,
     };
-    const response = await axios.post(`http://localhost:5000/api/product/getProductsByTagName`, payload);
+    const response = await axios.post(`http://165.22.222.7:5000/api/product/getProductsByTagName`, payload);
     console.log("response ", response);
   };
 
