@@ -4,13 +4,25 @@ import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
 import DynamicModal from "Constants/DynamicModal";
-import ViewDataModal from "./Modals/ViewDataModal";
-import EditDataModal from "./Modals/EditDataModal";
 import DeleteDataModal from "./Modals/DeleteDataModal";
-import AddDataModal from "./Modals/AddDataModal";
-
+import { ErrorToaster, SuccessToaster } from "Constants/utils";
+import AddHomepageBannerPage from "./Modals/AddHomepageBannerPage";
+import EditHomepageBannerPage from "./Modals/EditHomepageBannerPage";
+import ViewHomepageBannerPage from "./Modals/ViewHomepageBannerPage";
 const HomePageBannerList = () => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const [showModal, setShowModal] = useState(true);
+
+  const [addShowErrorToast, setAddShowErrorToast] = useState(false);
+  const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
+  const [addShowToastMessage, setAddShowToastMessage] = useState("");
+  const [addShowToast, setAddShowToast] = useState(false);
+
+  const [OpenAddHomepageBannerPage, setOpenAddHomepageBannerPage] = useState(false);
+  const [OpenEditHomepageBannerPage, setOpenEditHomepageBannerPage] = useState(false);
+  const [openViewHomepageBannerPage, setOpenViewHomepageBannerPage] = useState(false);
+
   const [modalData, setModalData] = useState({
     type: null,
     data: null,
@@ -23,15 +35,17 @@ const HomePageBannerList = () => {
     (state) => state?.HomePageBanner?.homePagebanners?.homePageBanners
   );
   useEffect(() => {
-    if (!banners || banners.length === 0) {
+    if (banners == [] || !banners || banners.length === 0) {
       setIsLoading(true);
-      dispatch(getHomePageBanner()).then(() => {
+      dispatch(getHomePageBanner()).then((res) => {
+        setIsLoading(false);
+      }).catch((err) => {
         setIsLoading(false);
       });
     } else {
       setIsLoading(false);
     }
-  }, [dispatch, banners]);
+  }, [dispatch]);
 
   const tableHeaders = [
     { title: "S.No.", class: "" },
@@ -46,12 +60,10 @@ const HomePageBannerList = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setModalData({
-          type: "View",
-          data: data,
-          modalContent: <ViewDataModal />,
-          modalTitle: "View Category",
-        });
+        setOpenViewHomepageBannerPage(true);
+        setOpenAddHomepageBannerPage(false);
+        setOpenEditHomepageBannerPage(false);
+        setModalData({ data: data });
       },
     },
     {
@@ -59,12 +71,10 @@ const HomePageBannerList = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
-        setModalData({
-          type: "Edit",
-          data: data,
-          modalContent: <EditDataModal />,
-          modalTitle: "Edit Category",
-        });
+        setOpenEditHomepageBannerPage(true);
+        setOpenViewHomepageBannerPage(false);
+        setOpenAddHomepageBannerPage(false);
+        setModalData({ data: data });
       },
     },
     {
@@ -72,24 +82,41 @@ const HomePageBannerList = () => {
       class: "delete",
       icon: "far fa-trash-alt",
       onClick: (data) => {
+        setShowModal(true);
         setModalData({
           type: "Delete",
           data: data,
-          modalContent: <DeleteDataModal />,
+          modalContent: (
+            <DeleteDataModal
+              bannerId={data._id}
+              productName={data?.title}
+              setShowModal={setShowModal} // Make sure you pass setShowModal
+              setAddShowErrorToast={(err) => {
+                setAddShowErrorToast(err);
+              }} // Pass setShowErrorToast
+              setAddShowErrorToastMessage={(msg) => {
+                setAddShowErrorToastMessage(msg);
+              }}
+              setAddShowToast={(show) => {
+                setAddShowToast(show);
+              }}
+              setAddShowToastMessage={(showMessage) => {
+                setAddShowToastMessage(showMessage);
+              }}
+            />
+          ),
           modalTitle: "Delete Category",
         });
       },
     },
   ];
-
   const handleAdd = () => {
-    setModalData({
-      type: "Add",
-      data: null,
-      modalContent: <AddDataModal />,
-      modalTitle: "Add Category",
-    });
+    setOpenAddHomepageBannerPage(true);
+    setOpenEditHomepageBannerPage(false);
+    setOpenViewHomepageBannerPage(false);
+    // setModalData({ type: "Add", data: null });
   };
+
   const DataTableHeader = () => {
     return (
       <thead>
@@ -115,7 +142,7 @@ const HomePageBannerList = () => {
               <td>{banner?.title}</td>
               <td>
                 <img
-                  src={banner?.banners[0]?.img}
+                  src={banner?.banner}
                   alt=""
                   width={70}
                   height={70}
@@ -209,6 +236,7 @@ const HomePageBannerList = () => {
     <Wrapper>
       <div className="user_management_list">
         <Row>
+
           {isLoading && isLoading ? (
             <div
               style={{
@@ -218,12 +246,56 @@ const HomePageBannerList = () => {
                 minHeight: "300px",
               }}
             >
-              <Spinner animation="border" role="status"></Spinner>
+              <Spinner animation="border" role="status">
+                <span className="sr-only"></span>
+              </Spinner>
             </div>
           ) : (
             <>
               <InitialRender />
-              <RenderTable />
+              {OpenAddHomepageBannerPage && OpenAddHomepageBannerPage ? (
+                <AddHomepageBannerPage
+                  setOpenAddHomepageBannerPage={setOpenAddHomepageBannerPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
+                />
+              ) : OpenEditHomepageBannerPage && OpenEditHomepageBannerPage ? (
+                <EditHomepageBannerPage
+                  bannerById={modalData?.data}
+                  setOpenEditHomepageBannerPage={setOpenEditHomepageBannerPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
+                />
+              ) : openViewHomepageBannerPage && openViewHomepageBannerPage ? (
+                <ViewHomepageBannerPage
+                  bannerData={modalData?.data}
+                  setOpenViewHomepageBannerPage={setOpenViewHomepageBannerPage}
+                />
+              ) : (
+                <RenderTable />
+              )}
             </>
           )}
         </Row>
@@ -232,22 +304,28 @@ const HomePageBannerList = () => {
       {/* Render the dynamic Modal component */}
       {modalData.type && (
         <DynamicModal
-          show={true}
-          onClose={() =>
-            setModalData({
-              type: null,
-              data: null,
-              modalContent: <></>,
-              modalTitle: null,
-            })
-          }
-          type={modalData.type}
-          data={modalData.data}
+          show={showModal}
+          onClose={() => {
+            setShowModal(false);
+          }}
           modalTitle={modalData.modalTitle}
           modalContent={modalData.modalContent}
-          onSubmit={() => {
-            // Handle form submission or deletion logic here based on modal type
-          }}
+        />
+      )}
+      {addShowErrorToast && (
+        <ErrorToaster
+          showErrorToast={addShowErrorToast}
+          setShowErrorToast={setAddShowErrorToast}
+          showErrorToastMessage={addShowErrorToastMessage}
+          customErrorMessage={"Something went wrong! Please Try Again"}
+        />
+      )}
+      {addShowToast && (
+        <SuccessToaster
+          showToast={addShowToast}
+          setShowToast={setAddShowToast}
+          showToastMessage={addShowToastMessage}
+          customMessage={`Please recheck your entry once`}
         />
       )}
     </Wrapper>

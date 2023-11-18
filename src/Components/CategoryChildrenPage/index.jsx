@@ -364,7 +364,7 @@ const CategoryChildrenPage = () => {
           showErrorToast={addShowErrorToast}
           setShowErrorToast={setAddShowErrorToast}
           showErrorToastMessage={addShowErrorToastMessage}
-          customErrorMessage={"Something wend wrong! Please Try Again"}
+          customErrorMessage={"Something went wrong! Please Try Again"}
         />
       )}
       {addShowToast && (

@@ -1,30 +1,66 @@
 import React from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button, Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { deleteHomepageBanner, getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
 
-const DeleteDataModal = ({ show, onClose }) => {
+const DeleteDataModal = ({
+  bannerId,
+  productName,
+  setShowModal,
+  setAddShowErrorToast,
+  setAddShowErrorToastMessage,
+  setAddShowToast,
+  setAddShowToastMessage,
+}) => {
+  const dispatch = useDispatch();
+  const onSubmit = (bannerId) => {
+    dispatch(deleteHomepageBanner({bannerId})).then((res) => {
+      if (res?.payload?.error?.response?.status === 400) {
+        console.log("r ",res?.payload?.error?.response?.data?.message)
+        setAddShowErrorToast(true);
+        setAddShowErrorToastMessage(
+          res?.payload?.error?.response?.data?.message
+        );
+      } else if (res?.payload?.error?.response?.status === 500) {
+        setAddShowErrorToast(true);
+        setAddShowErrorToastMessage(
+          res?.payload?.error?.response?.data?.message
+        );
+      } else {
+        dispatch(getHomePageBanner());
+        setAddShowToastMessage(res?.payload?.message);
+        setAddShowToast(true);
+        setShowModal(false);
+      }
+    });
+  };
   return (
     <Form className="user_form">
       <Row>
         <Col md={12}>
           <div className="delete-para">
-            <p>Are you sure you want to delete this items?</p>
-          </div>
-        </Col>
-        <Col xs={6} md={6}>
-          <div className="text-end">
-            <Button variant="dark" type="submit">
-              Cancel
-            </Button>
-          </div>
-        </Col>
-        <Col xs={6} md={6}>
-          <div className="text-start">
-            <Button variant="" type="submit">
-              Delete
-            </Button>
+            <p>Are you sure you want to delete "{productName}" item?</p>
           </div>
         </Col>
       </Row>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setShowModal(false);
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => {
+            onSubmit(bannerId);
+          }}
+        >
+          Delete
+        </Button>
+      </Modal.Footer>
     </Form>
   );
 };
