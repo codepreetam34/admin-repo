@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // Import the images
 import Greenbox from "../../../../../src/images/greenbox.png";
@@ -10,6 +10,7 @@ import Bluebox from "../../../../../src/images/bluebox.png";
 import Wrapper from "../../../Wrapper";
 
 const HomepageDisplay = () => {
+  const navigate = useNavigate()
   const pageInfo = [
     {
       boxHref: "/display-pages/homepage-display/homepage-banner-list",
@@ -49,6 +50,14 @@ const HomepageDisplay = () => {
           </Col>
 
           <Col md={12}>
+          <div
+          className="text_heading pt-4"
+          style={{ cursor: "pointer" }}
+          onClick={() => { navigate(-1) }}
+        >
+          <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+        </div>
+      
             <div className="fourboxarea">
               <Row>
                 {pageInfo &&

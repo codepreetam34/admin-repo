@@ -9,9 +9,10 @@ import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import AddHomepageBannerPage from "./Modals/AddHomepageBannerPage";
 import EditHomepageBannerPage from "./Modals/EditHomepageBannerPage";
 import ViewHomepageBannerPage from "./Modals/ViewHomepageBannerPage";
+import { useNavigate } from "react-router-dom";
 const HomePageBannerList = () => {
   const [isLoading, setIsLoading] = useState(false);
-
+  const navigate = useNavigate()
   const [showModal, setShowModal] = useState(true);
 
   const [addShowErrorToast, setAddShowErrorToast] = useState(false);
@@ -217,8 +218,16 @@ const HomePageBannerList = () => {
   };
 
   const RenderTable = () => {
+
     return (
       <Col md={12}>
+        <div
+          className="text_heading pt-4"
+          style={{ cursor: "pointer" }}
+          onClick={() => { navigate(-1) }}
+        >
+          <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+        </div>
         <div className="user_table">
           <div className="nftstable">
             <div className="tablearea">
