@@ -121,9 +121,11 @@ const EditProductForm = ({
     if (data?.specifications) {
       formData.append("specifications", data?.specifications?.toString());
     }
-    Array.from(pinCode).forEach((item) => {
-      formData.append("pincode", item);
-    });
+    if (pinCode && pinCode.length > 0 && pinCode != []) {
+      Array.from(pinCode).forEach((item) => {
+        formData.append("pincode", item);
+      });
+    }
     // Array.from(tags).forEach((item) => {
     //   formData.append("tags", item);
     // });
@@ -134,7 +136,7 @@ const EditProductForm = ({
         names: additionalTag.names,
       };
     });
-    formData.append("tags", JSON.stringify(tagsArray));
+    if (tagsArray && tagsArray.length > 0 && tagsArray != []) formData.append("tags", JSON.stringify(tagsArray));
 
     if (bannerPicture && bannerPicture?.length > 1) {
       bannerPicture?.map((file, index) => {
@@ -169,18 +171,19 @@ const EditProductForm = ({
   };
 
   const handleSelectCategory = (e) => {
-    setDefaultCategory(e.target.value);
     const categoryIdToFind = e.target.value;
-    const foundCategory = categoryList.find(
-      (item) => item._id === categoryIdToFind
-    );
+    const foundCategory = categoryList?.find((item) => item?._id === categoryIdToFind);
+
     if (foundCategory) {
+      setDefaultCategory(e.target.value);
       setDefaultCategoryName(foundCategory?.name);
+      setTagType("");
     } else {
-      console.log("Category not found ", defaultCategoryName);
+      console.log("Category not found for ID:", categoryIdToFind);
+      // You might want to handle this case, such as showing an error message.
     }
-    setTagType("");
   };
+
 
   const combinedOptions = [
     {
