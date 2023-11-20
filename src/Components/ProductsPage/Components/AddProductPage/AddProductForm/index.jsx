@@ -273,6 +273,44 @@ const AddProductForm = ({
         ],
       ],
     },
+    {
+      name: "Testing Category",
+      categories: ["By Featured", "By Occasion", "By Planters", "By Types"],
+      options: [
+        // Options for "BY FEATURED"
+        [
+          "Best Sellers",
+          "Same Day Delivery",
+          "New Arrivals",
+          "Air Purifying Plants",
+          "Low Maintenance Plants",
+          "Indoor Plants",
+        ],
+        // Options for "BY OCCASION"
+        [
+          "Birthday",
+          "Anniversary",
+          "House Warming",
+          "Good Luck",
+        ],
+        // Options for "BY PLANTERS"
+        [
+          "Ceramic Planters",
+          "Metal Planters",
+          "Glass Planters",
+          "Self Watering Planters",
+        ],
+        // Options for "BY TYPES"
+        [
+          "Money Plants",
+          "Lucky Bamboo",
+          "Snake Plants",
+          "Jade Plants",
+          "Bonsai Plants",
+          "Flowering Plants",
+        ],
+      ],
+    },
   ];
 
 
