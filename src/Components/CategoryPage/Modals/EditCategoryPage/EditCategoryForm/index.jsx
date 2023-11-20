@@ -390,6 +390,39 @@ const EditCategoryForm = ({
               )}
             </Col>
             <Col md={12} className="product-detail-design">
+              
+
+
+            <Col md={12} className="product-detail-design">
+                <div className="view-details pb-2">
+                  <strong>Category Tags</strong>
+                  <br />
+                  <Row>
+                    {categoryById?.tags?.map((tag) => {
+                      return (
+                        <Col
+                          md={3}
+                          style={{ paddingBottom: "0.7rem", paddingTop: "0.2rem" }}
+                        >
+                          <div className="fw-bold" style={{ fontSize: "0.9rem" }}>
+                            {" "}
+                            {tag?.tagType}{" "}
+                          </div>
+                          <div>
+                            {tag?.names?.map((name) => {
+                              return (
+                                <div >{name}</div>
+                              );
+                            })}
+                          </div>
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                </div>
+              </Col>
+
+
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Select Category</Form.Label>
