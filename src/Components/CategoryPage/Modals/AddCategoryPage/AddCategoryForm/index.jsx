@@ -41,7 +41,7 @@ const AddCategoryForm = ({
       name: "Cakes",
       categories: ["By Featured", "By Occasion", "By Flavours", "By Types"],
       options: [
-        // An array of options for each category.
+        // Options for "BY FEATURED"
         [
           "All Cakes",
           "Best Sellers",
@@ -54,6 +54,7 @@ const AddCategoryForm = ({
           "Cake With Plants",
           "Cakes and Guitarist",
         ],
+        // Options for "BY OCCASION"
         [
           "Birthday Cakes",
           "Kid's Birthday Cakes",
@@ -64,6 +65,7 @@ const AddCategoryForm = ({
           "Congratulations",
           "Make Small Celebrations Big",
         ],
+        // Options for "BY FLAVOURS"
         [
           "Truffle Cakes",
           "Chocolate Cakes",
@@ -76,9 +78,10 @@ const AddCategoryForm = ({
           "Fresh Fruit Cakes",
           "Pinata Cakes",
         ],
+        // Options for "BY TYPES"
         [
-          "Bento CakesNeW",
-          "Eggless Cakes",
+          "Bento Cakes",
+          "NEW Eggless Cakes",
           "Photo Cakes",
           "Designer Cakes",
           "Fondant Cakes",
@@ -88,11 +91,13 @@ const AddCategoryForm = ({
           "Jar Cakes",
         ],
       ],
+
     },
     {
       name: "Plants",
       categories: ["By Featured", "By Occasion", "By Planters", "By Types"],
       options: [
+        // Options for "BY FEATURED"
         [
           "Best Sellers",
           "Same Day Delivery",
@@ -101,13 +106,21 @@ const AddCategoryForm = ({
           "Low Maintenance Plants",
           "Indoor Plants",
         ],
-        ["Birthday", "Anniversary", "House Warming", "Good Luck"],
+        // Options for "BY OCCASION"
+        [
+          "Birthday",
+          "Anniversary",
+          "House Warming",
+          "Good Luck",
+        ],
+        // Options for "BY PLANTERS"
         [
           "Ceramic Planters",
           "Metal Planters",
           "Glass Planters",
           "Self Watering Planters",
         ],
+        // Options for "BY TYPES"
         [
           "Money Plants",
           "Lucky Bamboo",
