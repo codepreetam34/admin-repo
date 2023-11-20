@@ -36,6 +36,7 @@ const AddCategoryForm = ({
     setDefaultCategoryName(e.target.value);
   };
 
+
   const combinedOptions = [
     {
       name: "Cakes",
@@ -132,6 +133,7 @@ const AddCategoryForm = ({
       ],
     },
   ];
+
 
   const [tagType, setTagType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);

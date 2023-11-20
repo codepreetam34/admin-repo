@@ -57,12 +57,15 @@ const EditCategoryForm = ({
     setDefaultCategoryName(e.target.value);
   };
 
+
+
+
   const combinedOptions = [
     {
       name: "Cakes",
       categories: ["By Featured", "By Occasion", "By Flavours", "By Types"],
       options: [
-        // An array of options for each category.
+        // Options for "BY FEATURED"
         [
           "All Cakes",
           "Best Sellers",
@@ -75,6 +78,7 @@ const EditCategoryForm = ({
           "Cake With Plants",
           "Cakes and Guitarist",
         ],
+        // Options for "BY OCCASION"
         [
           "Birthday Cakes",
           "Kid's Birthday Cakes",
@@ -85,6 +89,7 @@ const EditCategoryForm = ({
           "Congratulations",
           "Make Small Celebrations Big",
         ],
+        // Options for "BY FLAVOURS"
         [
           "Truffle Cakes",
           "Chocolate Cakes",
@@ -97,9 +102,10 @@ const EditCategoryForm = ({
           "Fresh Fruit Cakes",
           "Pinata Cakes",
         ],
+        // Options for "BY TYPES"
         [
-          "Bento CakesNeW",
-          "Eggless Cakes",
+          "Bento Cakes",
+          "New Eggless Cakes",
           "Photo Cakes",
           "Designer Cakes",
           "Fondant Cakes",
@@ -109,11 +115,13 @@ const EditCategoryForm = ({
           "Jar Cakes",
         ],
       ],
+
     },
     {
       name: "Plants",
       categories: ["By Featured", "By Occasion", "By Planters", "By Types"],
       options: [
+        // Options for "BY FEATURED"
         [
           "Best Sellers",
           "Same Day Delivery",
@@ -122,13 +130,21 @@ const EditCategoryForm = ({
           "Low Maintenance Plants",
           "Indoor Plants",
         ],
-        ["Birthday", "Anniversary", "House Warming", "Good Luck"],
+        // Options for "BY OCCASION"
+        [
+          "Birthday",
+          "Anniversary",
+          "House Warming",
+          "Good Luck",
+        ],
+        // Options for "BY PLANTERS"
         [
           "Ceramic Planters",
           "Metal Planters",
           "Glass Planters",
           "Self Watering Planters",
         ],
+        // Options for "BY TYPES"
         [
           "Money Plants",
           "Lucky Bamboo",
@@ -140,6 +156,8 @@ const EditCategoryForm = ({
       ],
     },
   ];
+
+
 
   const renderTagCheckboxes = () => {
     if (defaultCategoryName && tagType) {
@@ -248,10 +266,10 @@ const EditCategoryForm = ({
 
   const onSubmit = (data) => {
     const formData = new FormData();
-    formData.append("name", data?.name?.toString());
-    formData.append("imageAltText", data?.imageAltText?.toString());
-    formData.append("categoryImage", categoryImage);
-    formData.append("_id", categoryById._id);
+    if (data?.name) formData.append("name", data?.name?.toString());
+    if (data?.imageAltText) formData.append("imageAltText", data?.imageAltText?.toString());
+    if (categoryImage) formData.append("categoryImage", categoryImage);
+    if (categoryById._id) formData.append("_id", categoryById._id);
 
     const tagsArray = additionalTags.map((additionalTag) => {
       return {
@@ -259,7 +277,8 @@ const EditCategoryForm = ({
         names: additionalTag.names,
       };
     });
-    formData.append("tags", JSON.stringify(tagsArray));
+    console.log("tagsArray ", tagsArray)
+    if (tagsArray && tagsArray.length > 0 && tagsArray != []) formData.append("tags", JSON.stringify(tagsArray));
 
     dispatch(editMainCategory(formData))
       .then((res) => {
@@ -460,7 +479,7 @@ const EditCategoryForm = ({
           </Row>
           <div className="pt-3">
             <Button variant="primary" type="submit">
-              Submit
+              Update Category
             </Button>
           </div>
         </Form>

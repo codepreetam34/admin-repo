@@ -145,7 +145,7 @@ const ViewProductForm = ({ productData }) => {
             </div>
           </div>
         </Col> */}
-        <Col md={12} className="product-detail-design">
+        <Col md={12} className="product-detail-design" >
           <div className="view-details pb-2">
             <strong>Product Tags</strong>
             <br />
@@ -163,7 +163,9 @@ const ViewProductForm = ({ productData }) => {
                     <div>
                       {tag?.names?.map((name) => {
                         return (
-                          <div onClick={() => handleTag(name)}>{name}</div>
+                          <div
+                          //onClick={() => handleTag(name)}
+                          >{name}</div>
                         );
                       })}
                     </div>
@@ -202,8 +204,8 @@ const ViewProductForm = ({ productData }) => {
           </div>
         </Col>
         {defaultCategoryName &&
-        (defaultCategoryName.toLowerCase() === "cake" ||
-          defaultCategoryName.toLowerCase() === "cakes") ? (
+          (defaultCategoryName.toLowerCase() === "cake" ||
+            defaultCategoryName.toLowerCase() === "cakes") ? (
           <Col md={12} className="product-detail-design">
             <h3>Price Variants</h3>
             <Row className="pt-2">

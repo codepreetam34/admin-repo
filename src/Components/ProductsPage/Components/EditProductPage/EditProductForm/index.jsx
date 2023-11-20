@@ -1,48 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { editProductSchema } from "ValidationSchema/editProductSchema";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import {
-  updateProducts,
-  getProducts,
-} from "Redux/Slices/Products/ProductsSlice";
+import { updateProducts, getProducts } from "Redux/Slices/Products/ProductsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
+import { editProductSchema } from "ValidationSchema/editProductSchema";
 
 const EditProductForm = ({
-
   setOpenEditProductPage,
-  setIsLoading,
   productData,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
   setAddShowToastMessage,
-
+  setIsLoading,
 }) => {
-  
-  const [imageAltText, setImageAltText] = useState([""]);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [pinCode, setPinCode] = useState([""]);
-  const [tags, setTags] = useState([""]);
-  const [viewProductImages, setViewProductImages] = useState([""]);
   const [defaultCategory, setDefaultCategory] = useState();
-
-  const [colors, setColors] = useState([
-    {
-      name: "",
-      productPictures: [
-        {
-          img: "",
-          colorImageAltText: "",
-          picturePreview: "",
-        },
-      ],
-    },
-  ]);
+  const [viewProductImages, setViewProductImages] = useState([""]);
+  const [defaultCategoryName, setDefaultCategoryName] = useState();
   const [bannerPicture, setBannerPicture] = useState([
     {
       img: "",
@@ -69,72 +47,6 @@ const EditProductForm = ({
       return newBannerPicture;
     });
   };
-  const handleColorNameChange = (event, index) => {
-    const newColors = [...colors];
-    newColors[index].name = event.target.value;
-    setColors(newColors);
-  };
-
-  const handleImgChange = (event, colorIndex, pictureIndex) => {
-    //    setBanner([...banner, event.target.files[0]]);
-    setColors((colors) => {
-      const newColors = [...colors];
-      newColors[colorIndex].productPictures[pictureIndex].img =
-        event.target.files[0];
-      newColors[colorIndex].productPictures[pictureIndex].picturePreview =
-        URL.createObjectURL(event.target.files[0]);
-      return newColors;
-    });
-  };
-
-  const handleColorImageAltTextChange = (event, colorIndex, pictureIndex) => {
-    setColors((colors) => {
-      const newColors = [...colors];
-      newColors[colorIndex].productPictures[pictureIndex].colorImageAltText =
-        event.target.value;
-      return newColors;
-    });
-  };
-
-  const addColor = () => {
-    console.log("on colors", colors);
-    setColors([
-      ...colors,
-      {
-        name: "",
-        productPictures: [
-          {
-            img: "",
-            colorImageAltText: "",
-            picturePreview: "",
-          },
-        ],
-      },
-    ]);
-  };
-
-  const addColorProductPicture = (colorIndex) => {
-    setColors((colors) => {
-      const newState = [...colors];
-      console.log("on newState", newState);
-      newState[colorIndex].productPictures.push([
-        {
-          img: "",
-          colorImageAltText: "",
-          picturePreview: "",
-        },
-      ]);
-      return newState;
-    });
-  };
-
-  const onRemovePicture = (colorIndex, pictureIndex) => {
-    console.log("on pictureIndex", pictureIndex, "colorIndex ", colorIndex);
-    const list = [...colors];
-    list[colorIndex].productPictures.splice(pictureIndex, 1);
-    setColors(list);
-    console.log("on remove", colors);
-  };
 
   const addProductPicture = () => {
     setViewProductImages("");
@@ -148,24 +60,6 @@ const EditProductForm = ({
     ]);
   };
 
-  const onRemoveBannerPicture = (index) => {
-    const inputList = [...bannerPicture];
-    inputList.splice(index, 1);
-    setBannerPicture(inputList);
-    const list2 = [...imageAltText];
-    list2.splice(index, 1);
-    setImageAltText(list2);
-
-    console.log("on bannerPicture", bannerPicture);
-  };
-
-  const onRemoveColor = (colorIndex) => {
-    console.log("on colors", colors);
-    const list = [...colors];
-    list.splice(colorIndex, 1);
-    setColors(list);
-  };
-
   const {
     register,
     handleSubmit,
@@ -177,179 +71,6 @@ const EditProductForm = ({
     mode: "onChange",
   });
 
-  // Import necessary libraries and components at the top
-
-  const ColorVariantSection = ({
-    colors,
-    handleColorNameChange,
-    handleImgChange,
-    onRemovePicture,
-    addColorProductPicture,
-    onRemoveColor,
-    addColor,
-  }) => {
-    return (
-      <Col
-        md={12}
-        style={{
-          border: "0.0625rem solid #1a1a1a1f",
-          borderRadius: "0.5rem",
-          marginTop: "2rem",
-          padding: "0.625rem 0.875rem",
-        }}
-      >
-        <h5>Add Up to 4 Color Variants</h5>
-
-        {colors?.map((color, colorIndex) => (
-          <div key={colorIndex}>
-            <div
-              style={{
-                border: "0.0625rem solid #1a1a1a1f",
-                borderRadius: "0.5rem",
-                margin: "10px 0",
-                padding: "0.625rem 0.875rem",
-              }}
-            >
-              <div>
-                <Form.Group controlId={`colorName-${colorIndex}`}>
-                  <Form.Label>Color Name {colorIndex + 1}</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name={`colors[${colorIndex}].name`}
-                    style={{ marginBottom: "10px" }}
-                    value={color?.name}
-                    onChange={(event) =>
-                      handleColorNameChange(event, colorIndex)
-                    }
-                  />
-                </Form.Group>
-              </div>
-
-              {color.productPictures.map((picture, pictureIndex) => (
-                <div key={pictureIndex}>
-                  {picture?.picturePreview && (
-                    <div className="m-3">
-                      <div>{`Image ${pictureIndex + 1}`}</div>
-                      <img
-                        src={picture?.picturePreview}
-                        style={{
-                          width: "200px",
-                          height: "200px",
-                        }}
-                        alt={`Color ${colorIndex + 1} - Image ${pictureIndex + 1
-                          }`}
-                      />
-                      <div>{`${picture?.imageAltText}`}</div>
-                    </div>
-                  )}
-
-                  <Row>
-                    <Col md={6}>
-                      <Form.Group>
-                        <Form.Label>{`Color Picture ${pictureIndex + 1
-                          }`}</Form.Label>
-
-                        <Form.Control
-                          type="file"
-                          accept="image/*"
-                          style={{ marginBottom: "10px" }}
-                          id={`colorPicture-${colorIndex}-${pictureIndex}`}
-                          name={`colorPicture-${colorIndex}-${pictureIndex}`}
-                          onChange={(event) =>
-                            handleImgChange(event, colorIndex, pictureIndex)
-                          }
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group
-                        controlId={`colorImageAltText-${colorIndex}-${pictureIndex}`}
-                      >
-                        <Form.Label>Image Alt Text</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name={`colors[${colorIndex}].productPictures[${pictureIndex}].colorImageAltText`}
-                          style={{ marginBottom: "10px" }}
-                          value={picture.colorImageAltText}
-                          onChange={(event) =>
-                            handleColorImageAltTextChange(
-                              event,
-                              colorIndex,
-                              pictureIndex
-                            )
-                          }
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      onClick={() => onRemovePicture(colorIndex, pictureIndex)}
-                      style={{
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      <i className="fa-solid fa-circle-xmark"></i>
-                    </Button>
-                  </div>
-                </div>
-              ))}
-
-              <div>
-                <Button
-                  variant="secondary"
-                  onClick={() => addColorProductPicture(colorIndex)}
-                  style={{
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Add Color Picture
-                </Button>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                padding: "5px 0px 20px 0px",
-              }}
-            >
-              <Button
-                variant="contained"
-                onClick={() => onRemoveColor(colorIndex)}
-                style={{
-                  textTransform: "capitalize",
-                }}
-              >
-                <i className="fa-solid fa-circle-xmark"></i>
-              </Button>
-            </div>
-          </div>
-        ))}
-
-        <div>
-          <Button
-            variant="secondary"
-            style={{
-              textTransform: "capitalize",
-              marginTop: "2rem",
-            }}
-            onClick={addColor}
-          >
-            Add Color
-          </Button>
-        </div>
-      </Col>
-    );
-  };
   const handleInputChange = async (e, index) => {
     const value = e;
     const list = [...pinCode];
@@ -359,48 +80,11 @@ const EditProductForm = ({
   const handleAddClick = () => {
     setPinCode([...pinCode, [""]]);
   };
-  const handleTagInputChange = async (e, index) => {
-    const value = e;
-    const list = [...tags];
-    list[index] = value;
-    setTags(list);
-  };
-  const handleAddTagClick = () => {
-    setTags([...tags, [""]]);
-  };
-
   const onRemovePincode = (indexToRemove) => {
     const updatedPinCode = [...pinCode];
     updatedPinCode.splice(indexToRemove, 1);
     setPinCode(updatedPinCode);
   };
-
-  const onRemoveTags = (indexToRemove) => {
-    const updatedTags = [...tags];
-    updatedTags.splice(indexToRemove, 1);
-    setTags(updatedTags);
-  };
-
-  useEffect(() => {
-    reset({
-      name: productData?.name,
-      imageAltText: productData?.imageAltText,
-      actualPrice: productData?.actualPrice,
-      deliveryDay: productData?.deliveryDay,
-      description: productData?.description,
-      specifications: productData?.specifications,
-      discountPrice: productData?.discountPrice,
-      quantity: productData?.quantity,
-      offer: productData?.offer,
-      halfkgprice: productData?.halfkgprice,
-      onekgprice: productData?.onekgprice,
-      twokgprice: productData?.twokgprice,
-    });
-    setPinCode(productData?.pincode);
-    setTags(productData?.tags);
-    setViewProductImages(productData?.productPictures);
-    setDefaultCategory(productData?.category);
-  }, [productData, reset]);
 
   const categoryList = useSelector(
     (state) => state?.CategoryList?.categoryList?.categoryList
@@ -416,7 +100,7 @@ const EditProductForm = ({
     } else {
       setIsLoading(false);
     }
-  }, [dispatch, categoryList]);
+  }, [dispatch]);
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -434,18 +118,24 @@ const EditProductForm = ({
     if (data?.onekgprice) formData.append("onekgprice", data?.onekgprice);
     if (data?.twokgprice) formData.append("twokgprice", data?.twokgprice);
     if (data?.actualPrice) formData.append("actualPrice", data?.actualPrice);
-    if (data?.specifications)
+    if (data?.specifications) {
       formData.append("specifications", data?.specifications?.toString());
+    }
     Array.from(pinCode).forEach((item) => {
       formData.append("pincode", item);
     });
-    const tagsArray = tags.map((additionalTag) => {
+    // Array.from(tags).forEach((item) => {
+    //   formData.append("tags", item);
+    // });
+
+    const tagsArray = additionalTags.map((additionalTag) => {
       return {
         tagType: additionalTag.tagType,
         names: additionalTag.names,
       };
     });
-    //  / formData.append("tags", JSON.stringify(tagsArray));
+    formData.append("tags", JSON.stringify(tagsArray));
+
     if (bannerPicture && bannerPicture?.length > 1) {
       bannerPicture?.map((file, index) => {
         return {
@@ -477,6 +167,276 @@ const EditProductForm = ({
       }
     });
   };
+
+  const handleSelectCategory = (e) => {
+    setDefaultCategory(e.target.value);
+    const categoryIdToFind = e.target.value;
+    const foundCategory = categoryList.find(
+      (item) => item._id === categoryIdToFind
+    );
+    if (foundCategory) {
+      setDefaultCategoryName(foundCategory?.name);
+    } else {
+      console.log("Category not found ", defaultCategoryName);
+    }
+    setTagType("");
+  };
+
+  const combinedOptions = [
+    {
+      name: "Cakes",
+      categories: ["By Featured", "By Occasion", "By Flavours", "By Types"],
+      options: [
+        // Options for "BY FEATURED"
+        [
+          "All Cakes",
+          "Best Sellers",
+          "Same Day Delivery",
+          "New Arrivals",
+          "Midnight Delivery",
+          "Flowers N Cakes",
+          "Cake Combos",
+          "Cake With Chocolates",
+          "Cake With Plants",
+          "Cakes and Guitarist",
+        ],
+        // Options for "BY OCCASION"
+        [
+          "Birthday Cakes",
+          "Kid's Birthday Cakes",
+          "Anniversary Cakes",
+          "1st Anniversary",
+          "25th Anniversary",
+          "Wedding Cakes",
+          "Congratulations",
+          "Make Small Celebrations Big",
+        ],
+        // Options for "BY FLAVOURS"
+        [
+          "Truffle Cakes",
+          "Chocolate Cakes",
+          "Black Forest Cakes",
+          "Butterscotch Cakes",
+          "Caramel Cakes",
+          "Coffee Cakes",
+          "Walnut Cakes",
+          "Pineapple Cakes",
+          "Fresh Fruit Cakes",
+          "Pinata Cakes",
+        ],
+        // Options for "BY TYPES"
+        [
+          "Bento Cakes",
+          "New Eggless Cakes",
+          "Photo Cakes",
+          "Designer Cakes",
+          "Fondant Cakes",
+          "Fusion Cakes",
+          "Cup Cakes",
+          "Dry Cakes",
+          "Jar Cakes",
+        ],
+      ],
+
+    },
+    {
+      name: "Plants",
+      categories: ["By Featured", "By Occasion", "By Planters", "By Types"],
+      options: [
+        // Options for "BY FEATURED"
+        [
+          "Best Sellers",
+          "Same Day Delivery",
+          "New Arrivals",
+          "Air Purifying Plants",
+          "Low Maintenance Plants",
+          "Indoor Plants",
+        ],
+        // Options for "BY OCCASION"
+        [
+          "Birthday",
+          "Anniversary",
+          "House Warming",
+          "Good Luck",
+        ],
+        // Options for "BY PLANTERS"
+        [
+          "Ceramic Planters",
+          "Metal Planters",
+          "Glass Planters",
+          "Self Watering Planters",
+        ],
+        // Options for "BY TYPES"
+        [
+          "Money Plants",
+          "Lucky Bamboo",
+          "Snake Plants",
+          "Jade Plants",
+          "Bonsai Plants",
+          "Flowering Plants",
+        ],
+      ],
+    },
+  ];
+
+  const [tagType, setTagType] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [additionalTags, setAdditionalTags] = useState([]);
+
+  const renderTagCheckboxes = () => {
+    if (defaultCategoryName && tagType) {
+      const category = combinedOptions.find(
+        (option) => option.name && option.name.toLowerCase() === defaultCategoryName.toLowerCase()
+      );
+      if (category) {
+        const tagCategory =
+          category.options[category.categories.indexOf(tagType)];
+
+        return tagCategory.map((tagName, index) => (
+          <Form.Check
+            key={index}
+            type="checkbox"
+            label={tagName}
+            checked={selectedTags.includes(tagName)}
+            onChange={(e) => {
+              if (e.target.checked) {
+                setSelectedTags((prevTags) => [...prevTags, tagName]);
+              } else {
+                setSelectedTags((prevTags) =>
+                  prevTags.filter((tag) => tag !== tagName)
+                );
+              }
+            }}
+            value={tagName}
+            style={{ width: "10rem" }}
+          />
+        ));
+      } else {
+        return null;
+      }
+    }
+
+    return null;
+  };
+
+  const handleAddTag = () => {
+    if (tagType && selectedTags.length > 0) {
+      const newTag = { tagType, names: [...selectedTags] };
+      setAdditionalTags([...additionalTags, newTag]);
+      setSelectedTags([]);
+    }
+  };
+
+  const renderAdditionalTags = () => {
+    return additionalTags.map((tag, index) => (
+      <Col md={6} key={index} className="mb-4">
+        <Form.Group controlId={`additionalTagType_${index}`}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Form.Label>Tag Type</Form.Label>
+            <Form.Group>
+              <Button
+                variant="contained"
+                onClick={() => onRemoveTags(index)}
+                style={{
+                  textTransform: "capitalize",
+                }}
+              >
+                <i className="fa-solid fa-circle-xmark"></i>
+              </Button>
+            </Form.Group>
+          </div>
+          <Form.Control
+            type="text"
+            className="mb-2"
+            name={`additionalTags[${index}].tagType`}
+            defaultValue={tag.tagType}
+            disabled
+          />
+        </Form.Group>
+
+        <Form.Group controlId={`additionalTagNames_${index}`}>
+          <Form.Label>Tag Names</Form.Label>
+          {tag ? (
+            tag?.names?.map((name, nameIndex) => (
+              <div key={nameIndex}>
+                <Form.Check
+                  type="checkbox"
+                  label={name}
+                  className="mb-2"
+                  disabled
+                  checked
+                  onChange={(e) => {
+                    const updatedNames = tag.names || [];
+                    if (e.target.checked) {
+                      updatedNames.push(name);
+                    } else {
+                      const nameIndex = updatedNames.indexOf(name);
+                      if (nameIndex !== -1) {
+                        updatedNames.splice(nameIndex, 1);
+                      }
+                    }
+                    const updatedSelectedTagNames = [...selectedTags];
+                    updatedSelectedTagNames[index] = updatedNames;
+                    setSelectedTags(updatedSelectedTagNames);
+                  }}
+                  value={name}
+                />
+              </div>
+            ))
+          ) : (
+            <></>
+          )}
+        </Form.Group>
+      </Col>
+    ));
+  };
+
+  const onRemoveTags = (index) => {
+    const updatedTags = [...additionalTags];
+    updatedTags.splice(index, 1);
+    setAdditionalTags(updatedTags);
+  };
+
+  const onRemoveBannerPicture = (index) => {
+    const inputList = [...bannerPicture];
+    inputList.splice(index, 1);
+    setBannerPicture(inputList);
+    // const list2 = [...imageAltText];
+    // list2.splice(, 1);Plan
+    // setImageAltText(list2);
+  };
+
+
+  useEffect(() => {
+    reset({
+      name: productData?.name,
+      imageAltText: productData?.imageAltText,
+      actualPrice: productData?.actualPrice,
+      deliveryDay: productData?.deliveryDay,
+      description: productData?.description,
+      specifications: productData?.specifications,
+      discountPrice: productData?.discountPrice,
+      quantity: productData?.quantity,
+      offer: productData?.offer,
+      halfkgprice: productData?.halfkgprice,
+      onekgprice: productData?.onekgprice,
+      twokgprice: productData?.twokgprice,
+    });
+    setPinCode(productData?.pincode);
+    setViewProductImages(productData?.productPictures);
+    setDefaultCategory(productData?.category);
+
+    const categoryIdToFind = productData?.category;
+    const foundCategory = categoryList.find(
+      (item) => item._id === categoryIdToFind
+    );
+    if (foundCategory) {
+      setDefaultCategoryName(foundCategory?.name);
+    } else {
+      console.log("Category not found ", defaultCategoryName);
+    }
+
+  }, [productData, reset]);
 
   return (
     <div className="container">
@@ -520,6 +480,7 @@ const EditProductForm = ({
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
+
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Select Category</Form.Label>
@@ -530,7 +491,7 @@ const EditProductForm = ({
                       id="categoryId"
                       isInvalid={!!errors?.categoryId}
                       value={defaultCategory}
-                      onChange={(e) => setDefaultCategory(e.target.value)}
+                      onChange={(e) => handleSelectCategory(e)}
                     >
                       <option disabled selected style={{ fontWeight: "600" }}>
                         Select Category
@@ -544,12 +505,12 @@ const EditProductForm = ({
                     </Form.Control>
                     <div className="select-arrow"></div>
                   </div>
-
                   <Form.Control.Feedback type="invalid">
                     {errors?.categoryId?.message}
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
+
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Delivery Day</Form.Label>
@@ -600,53 +561,104 @@ const EditProductForm = ({
           </Col>
 
           <Col md={12} className="product-detail-design">
-            <Row>
-              <Col md={6}>
-                <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>Tags</Form.Label>
-                  {tags?.map((tag, index) => (
-                    <div className="d-flex pb-3" key={index}>
-                      <Form.Control
-                        type="text"
-                        name="tag"
-                        id="tag"
-                        value={tag}
-                        onChange={(e) => {
-                          handleTagInputChange(e.target.value, index);
-                        }}
-                      />
-                      <div
-                        className="ps-1"
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        <Button
-                          variant="contained"
-                          onClick={() => onRemoveTags(index)}
-                          style={{
-                            textTransform: "capitalize",
-                          }}
+            <Row style={{ padding: "30px" }}>
+              <Col md={12} className="product-detail-design">
+                <div className="view-details pb-2">
+                  <strong>Product Tags</strong>
+                  <br />
+                  <Row>
+                    {productData?.tags?.map((tag) => {
+                      return (
+                        <Col
+                          md={3}
+                          style={{ paddingBottom: "0.7rem", paddingTop: "0.2rem" }}
                         >
-                          <i className="fa-solid fa-circle-xmark"></i>
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-
-                  <div className="d-grid justify-content-center">
-                    <Button
-                      variant="secondary"
-                      onClick={() => handleAddTagClick()}
-                    >
-                      Add +
-                    </Button>
-                  </div>
+                          <div className="fw-bold" style={{ fontSize: "0.9rem" }}>
+                            {" "}
+                            {tag?.tagType}{" "}
+                          </div>
+                          <div>
+                            {tag?.names?.map((name) => {
+                              return (
+                                <div >{name}</div>
+                              );
+                            })}
+                          </div>
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                </div>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-4" controlId="tags">
+                  <Form.Label>Select Tag Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={tagType}
+                    onChange={(e) => setTagType(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      Select Tag Type
+                    </option>
+                    {defaultCategoryName ? (
+                      combinedOptions
+                        .find(
+                          (option) =>
+                            option.name &&
+                            option.name.toLowerCase() === defaultCategoryName.toLowerCase()
+                        )
+                        ?.categories?.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        )) || <option value="">No options available</option>
+                    ) : (
+                      <option value="">No options available</option>
+                    )}
+                  </Form.Control>
                 </Form.Group>
+                <div className="pt-4 d-flex justify-content-center">
+                  <Button variant="secondary" onClick={handleAddTag}>
+                    Add Tag
+                  </Button>
+                </div>
               </Col>
 
-              <Col md={6}>
+              {tagType ? (
+                <Col md={6}>
+                  <Form.Group className="pb-3" controlId="selectedTags">
+                    <Form.Label style={{ fontWeight: "600" }}>
+                      Select Tags
+                    </Form.Label>
+                    <div
+                      className="d-flex flex-wrap gap-2 product-detail-design"
+                      style={{ margin: "0" }}
+                    >
+                      {renderTagCheckboxes()}
+                    </div>
+                  </Form.Group>
+                </Col>
+              ) : (
+                <></>
+              )}
+            </Row>
+
+            <Row className="p-4">
+              <Col md={12} className="pb-3 product-detail-design">
+                <Form.Group className="pb-3" controlId="selectedTags">
+                  <Form.Label style={{ fontWeight: "600" }}>
+                    {defaultCategoryName} Selected Tags
+                  </Form.Label>
+                  <Row>{renderAdditionalTags()}</Row>
+                </Form.Group>
+              </Col>
+            </Row>
+          </Col>
+
+          <Col className="product-detail-design">
+            <Row>
+              <Col md={12}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Pincode</Form.Label>
                   {pinCode?.map((pincode, index) => (
@@ -693,73 +705,83 @@ const EditProductForm = ({
             </Row>
           </Col>
 
+          {defaultCategoryName &&
+            (defaultCategoryName.toLowerCase() === "cake" ||
+              defaultCategoryName.toLowerCase() === "cakes") ? (
+            <Col md={12} className="product-detail-design">
+              <Row>
+                <Col md={6}>
+                  <Form.Group className="form-group-padding-bottom">
+                    <Form.Label>Discount Price</Form.Label>
+
+                    <Form.Control
+                      type="text"
+                      id="discountPrice"
+                      name="discountPrice"
+                      {...register("discountPrice")}
+                      isInvalid={!!errors.discountPrice}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.discountPrice?.message}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="form-group-padding-bottom">
+                    <Form.Label>Half Kg Price</Form.Label>
+
+                    <Form.Control
+                      type="text"
+                      id="halfkgprice"
+                      name="halfkgprice"
+                      {...register("halfkgprice")}
+                      isInvalid={!!errors.halfkgprice}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.halfkgprice?.message}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="form-group-padding-bottom">
+                    <Form.Label>One Kg Price</Form.Label>
+
+                    <Form.Control
+                      type="text"
+                      name="onekgprice"
+                      id="onekgprice"
+                      {...register("onekgprice")}
+                      isInvalid={!!errors.onekgprice}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.onekgprice?.message}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="form-group-padding-bottom">
+                    <Form.Label>Two Kg Price</Form.Label>
+
+                    <Form.Control
+                      type="text"
+                      name="twokgprice"
+                      id="twokgprice"
+                      {...register("twokgprice")}
+                      isInvalid={!!errors.twokgprice}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.twokgprice?.message}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+              </Row>
+            </Col>
+          ) : (
+            <></>
+          )}
+
           <Col md={12} className="product-detail-design">
             <Row>
-              <Col md={6}>
-                <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>Discount Price</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    id="discountPrice"
-                    name="discountPrice"
-                    {...register("discountPrice")}
-                    isInvalid={!!errors.discountPrice}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.discountPrice?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>Half Kg Price</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    id="halfkgprice"
-                    name="halfkgprice"
-                    {...register("halfkgprice")}
-                    isInvalid={!!errors.halfkgprice}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.halfkgprice?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>One Kg Price</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    name="onekgprice"
-                    id="onekgprice"
-                    {...register("onekgprice")}
-                    isInvalid={!!errors.onekgprice}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.onekgprice?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>Two Kg Price</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    name="twokgprice"
-                    id="twokgprice"
-                    {...register("twokgprice")}
-                    isInvalid={!!errors.twokgprice}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.twokgprice?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Offer</Form.Label>
@@ -845,6 +867,7 @@ const EditProductForm = ({
                       </div>
                     )}
 
+
                     <Row>
                       <Col md={6}>
                         <Form.Group>
@@ -882,7 +905,7 @@ const EditProductForm = ({
                             >
                               <Button
                                 variant="contained"
-                                onClick={() => onRemoveTags(index)}
+                                onClick={() => onRemoveBannerPicture(index)}
                                 style={{
                                   textTransform: "capitalize",
                                 }}
@@ -937,3 +960,4 @@ const EditProductForm = ({
 };
 
 export default EditProductForm;
+
