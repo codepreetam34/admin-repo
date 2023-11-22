@@ -10,7 +10,8 @@ import AddModalPage from "./Modals/AddModalPage";
 import EditModalPage from "./Modals/EditModalPage";
 import ViewModalPage from "./Modals/ViewModalPage";
 import { useNavigate } from "react-router-dom";
-const HomePageBannerList = () => {
+import { getHomePageTwoAdsBanner } from "Redux/Slices/TwoAdsBanner/TwoAdsBannerSlice";
+const HomePageCategorySlider = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(true);
@@ -33,12 +34,12 @@ const HomePageBannerList = () => {
   const dispatch = useDispatch();
 
   const banners = useSelector(
-    (state) => state?.HomePageBanner?.homePagebanners?.homePageBanners
+    (state) => state?.twoAdsBanner?.twoAdsBanners?.twoAdsBanners
   );
   useEffect(() => {
     if (banners == [] || !banners || banners.length === 0) {
       setIsLoading(true);
-      dispatch(getHomePageBanner()).then((res) => {
+      dispatch(getHomePageTwoAdsBanner()).then((res) => {
         setIsLoading(false);
       }).catch((err) => {
         setIsLoading(false);
@@ -72,9 +73,9 @@ const HomePageBannerList = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
-        setOpenEditHomepageBannerPage(true);
-        setOpenViewHomepageBannerPage(false);
-        setOpenAddHomepageBannerPage(false);
+        setOpenEditModalPage(true);
+        setOpenViewModalPage(false);
+        setOpenAddModalPage(false);
         setModalData({ data: data });
       },
     },
@@ -241,6 +242,7 @@ const HomePageBannerList = () => {
       </Col>
     );
   };
+
   return (
     <Wrapper>
       <div className="user_management_list">
@@ -339,6 +341,7 @@ const HomePageBannerList = () => {
       )}
     </Wrapper>
   );
+  
 };
 
-export default HomePageBannerList;
+export default HomePageCategorySlider;

@@ -634,7 +634,7 @@ const AddProductForm = ({
 
           <Col className="product-detail-design">
             <Row>
-              <Col md={12}>
+              <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Pincode</Form.Label>
                   {pinCode.map((pincode, index) => (
@@ -678,15 +678,7 @@ const AddProductForm = ({
                   </div>
                 </Form.Group>
               </Col>
-            </Row>
-          </Col>
-
-          {defaultCategoryName &&
-          (defaultCategoryName.toLowerCase() === "cake" ||
-            defaultCategoryName.toLowerCase() === "cakes") ? (
-            <Col md={12} className="product-detail-design">
-              <Row>
-                <Col md={6}>
+              <Col md={6}>
                   <Form.Group className="form-group-padding-bottom">
                     <Form.Label>Discount Price</Form.Label>
 
@@ -702,6 +694,15 @@ const AddProductForm = ({
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Col>
+            </Row>
+          </Col>
+
+          {defaultCategoryName &&
+          (defaultCategoryName.toLowerCase() === "cake" ||
+            defaultCategoryName.toLowerCase() === "cakes") ? (
+            <Col md={12} className="product-detail-design">
+              <Row>
+       
                 <Col md={6}>
                   <Form.Group className="form-group-padding-bottom">
                     <Form.Label>Half Kg Price</Form.Label>
