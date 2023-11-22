@@ -4,13 +4,26 @@ import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
 import DynamicModal from "Constants/DynamicModal";
-import ViewDataModal from "./Modals/ViewDataModal";
-import EditDataModal from "./Modals/EditDataModal";
 import DeleteDataModal from "./Modals/DeleteDataModal";
-import AddDataModal from "./Modals/AddDataModal";
-
-const HomePageCategorySlider = () => {
+import { ErrorToaster, SuccessToaster } from "Constants/utils";
+import AddModalPage from "./Modals/AddModalPage";
+import EditModalPage from "./Modals/EditModalPage";
+import ViewModalPage from "./Modals/ViewModalPage";
+import { useNavigate } from "react-router-dom";
+const HomePageBannerList = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate()
+  const [showModal, setShowModal] = useState(true);
+
+  const [addShowErrorToast, setAddShowErrorToast] = useState(false);
+  const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
+  const [addShowToastMessage, setAddShowToastMessage] = useState("");
+  const [addShowToast, setAddShowToast] = useState(false);
+
+  const [OpenAddModalPage, setOpenAddModalPage] = useState(false);
+  const [OpenEditModalPage, setOpenEditModalPage] = useState(false);
+  const [openViewModalPage, setOpenViewModalPage] = useState(false);
+
   const [modalData, setModalData] = useState({
     type: null,
     data: null,
@@ -23,15 +36,17 @@ const HomePageCategorySlider = () => {
     (state) => state?.HomePageBanner?.homePagebanners?.homePageBanners
   );
   useEffect(() => {
-    if (!banners || banners.length === 0) {
+    if (banners == [] || !banners || banners.length === 0) {
       setIsLoading(true);
-      dispatch(getHomePageBanner()).then(() => {
+      dispatch(getHomePageBanner()).then((res) => {
+        setIsLoading(false);
+      }).catch((err) => {
         setIsLoading(false);
       });
     } else {
       setIsLoading(false);
     }
-  }, [dispatch, banners]);
+  }, [dispatch]);
 
   const tableHeaders = [
     { title: "S.No.", class: "" },
@@ -46,12 +61,10 @@ const HomePageCategorySlider = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setModalData({
-          type: "View",
-          data: data,
-          modalContent: <ViewDataModal />,
-          modalTitle: "View Category",
-        });
+        setOpenViewModalPage(true);
+        setOpenAddModalPage(false);
+        setOpenEditModalPage(false);
+        setModalData({ data: data });
       },
     },
     {
@@ -59,12 +72,10 @@ const HomePageCategorySlider = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
-        setModalData({
-          type: "Edit",
-          data: data,
-          modalContent: <EditDataModal />,
-          modalTitle: "Edit Category",
-        });
+        setOpenEditHomepageBannerPage(true);
+        setOpenViewHomepageBannerPage(false);
+        setOpenAddHomepageBannerPage(false);
+        setModalData({ data: data });
       },
     },
     {
@@ -72,24 +83,41 @@ const HomePageCategorySlider = () => {
       class: "delete",
       icon: "far fa-trash-alt",
       onClick: (data) => {
+        setShowModal(true);
         setModalData({
           type: "Delete",
           data: data,
-          modalContent: <DeleteDataModal />,
+          modalContent: (
+            <DeleteDataModal
+              bannerId={data._id}
+              productName={data?.title}
+              setShowModal={setShowModal} // Make sure you pass setShowModal
+              setAddShowErrorToast={(err) => {
+                setAddShowErrorToast(err);
+              }} // Pass setShowErrorToast
+              setAddShowErrorToastMessage={(msg) => {
+                setAddShowErrorToastMessage(msg);
+              }}
+              setAddShowToast={(show) => {
+                setAddShowToast(show);
+              }}
+              setAddShowToastMessage={(showMessage) => {
+                setAddShowToastMessage(showMessage);
+              }}
+            />
+          ),
           modalTitle: "Delete Category",
         });
       },
     },
   ];
-
   const handleAdd = () => {
-    setModalData({
-      type: "Add",
-      data: null,
-      modalContent: <AddDataModal />,
-      modalTitle: "Add Category",
-    });
+    setOpenAddModalPage(true);
+    setOpenEditModalPage(false);
+    setOpenViewModalPage(false);
+    // setModalData({ type: "Add", data: null });
   };
+
   const DataTableHeader = () => {
     return (
       <thead>
@@ -115,7 +143,7 @@ const HomePageCategorySlider = () => {
               <td>{banner?.title}</td>
               <td>
                 <img
-                  src={banner?.banners[0]?.img}
+                  src={banner?.banner}
                   alt=""
                   width={70}
                   height={70}
@@ -145,7 +173,7 @@ const HomePageCategorySlider = () => {
           <tr>
             <td>
               <div className="d-flex justify-content-center pt-4">
-                <p className="text-red">Homepage Category Slider list is empty !!</p>
+                <p className="text-red">Homepage Two Ads Banner list is empty !!</p>
               </div>
             </td>
           </tr>
@@ -159,8 +187,8 @@ const HomePageCategorySlider = () => {
       <>
         <Col md={4}>
           <div className="user_heading">
-            <h3>HomePage Category Slider Carousels</h3>
-            <p>Welcome to HomePage Category Slider page</p>
+            <h3>HomePage Two Ads  Banners</h3>
+            <p>Welcome to HomePage Two Ads Banner page</p>
           </div>
         </Col>
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
@@ -190,8 +218,16 @@ const HomePageCategorySlider = () => {
   };
 
   const RenderTable = () => {
+
     return (
       <Col md={12}>
+        <div
+          className="text_heading pt-4"
+          style={{ cursor: "pointer" }}
+          onClick={() => { navigate(-1) }}
+        >
+          <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+        </div>
         <div className="user_table">
           <div className="nftstable">
             <div className="tablearea">
@@ -209,6 +245,7 @@ const HomePageCategorySlider = () => {
     <Wrapper>
       <div className="user_management_list">
         <Row>
+
           {isLoading && isLoading ? (
             <div
               style={{
@@ -218,12 +255,56 @@ const HomePageCategorySlider = () => {
                 minHeight: "300px",
               }}
             >
-              <Spinner animation="border" role="status"></Spinner>
+              <Spinner animation="border" role="status">
+                <span className="sr-only"></span>
+              </Spinner>
             </div>
           ) : (
             <>
               <InitialRender />
-              <RenderTable />
+              {OpenAddModalPage && OpenAddModalPage ? (
+                <AddModalPage
+                  setOpenAddModalPage={setOpenAddModalPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
+                />
+              ) : OpenEditModalPage && OpenEditModalPage ? (
+                <EditModalPage
+                  bannerById={modalData?.data}
+                  setOpenEditModalPage={setOpenEditModalPage}
+                  setIsLoading={setIsLoading}
+                  setAddShowErrorToast={(err) => {
+                    setAddShowErrorToast(err);
+                  }}
+                  setAddShowErrorToastMessage={(msg) => {
+                    setAddShowErrorToastMessage(msg);
+                  }}
+                  setAddShowToast={(show) => {
+                    setAddShowToast(show);
+                  }}
+                  setAddShowToastMessage={(showMessage) => {
+                    setAddShowToastMessage(showMessage);
+                  }}
+                />
+              ) : openViewModalPage && openViewModalPage ? (
+                <ViewModalPage
+                  bannerData={modalData?.data}
+                  setOpenViewModalPage={setOpenViewModalPage}
+                />
+              ) : (
+                <RenderTable />
+              )}
             </>
           )}
         </Row>
@@ -232,26 +313,32 @@ const HomePageCategorySlider = () => {
       {/* Render the dynamic Modal component */}
       {modalData.type && (
         <DynamicModal
-          show={true}
-          onClose={() =>
-            setModalData({
-              type: null,
-              data: null,
-              modalContent: <></>,
-              modalTitle: null,
-            })
-          }
-          type={modalData.type}
-          data={modalData.data}
+          show={showModal}
+          onClose={() => {
+            setShowModal(false);
+          }}
           modalTitle={modalData.modalTitle}
           modalContent={modalData.modalContent}
-          onSubmit={() => {
-            // Handle form submission or deletion logic here based on modal type
-          }}
+        />
+      )}
+      {addShowErrorToast && (
+        <ErrorToaster
+          showErrorToast={addShowErrorToast}
+          setShowErrorToast={setAddShowErrorToast}
+          showErrorToastMessage={addShowErrorToastMessage}
+          customErrorMessage={"Something went wrong! Please Try Again"}
+        />
+      )}
+      {addShowToast && (
+        <SuccessToaster
+          showToast={addShowToast}
+          setShowToast={setAddShowToast}
+          showToastMessage={addShowToastMessage}
+          customMessage={`Please recheck your entry once`}
         />
       )}
     </Wrapper>
   );
 };
 
-export default HomePageCategorySlider;
+export default HomePageBannerList;

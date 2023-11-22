@@ -9,7 +9,7 @@ import Orangebox from "../../../../../src/images/orangebox.png";
 import Bluebox from "../../../../../src/images/bluebox.png";
 import Wrapper from "../../../Wrapper";
 
-const HomepageDisplay = () => {
+const HomepageCategorySlider = () => {
   const navigate = useNavigate()
   const pageInfo = [
     {
@@ -21,7 +21,7 @@ const HomepageDisplay = () => {
     {
       boxHref: "/display-pages/homepage-display/homepage-category-slider",
       imgSrc: Redbox,
-      title: "Category Slider Carousel",
+      title: "Two Ads Banner",
       imgClass: "redbox",
     },
     {
@@ -50,14 +50,14 @@ const HomepageDisplay = () => {
           </Col>
 
           <Col md={12}>
-          <div
-          className="text_heading pt-4"
-          style={{ cursor: "pointer" }}
-          onClick={() => { navigate(-1) }}
-        >
-          <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
-        </div>
-      
+            <div
+              className="text_heading pt-4"
+              style={{ cursor: "pointer" }}
+              onClick={() => { navigate(-1) }}
+            >
+              <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+            </div>
+
             <div className="fourboxarea">
               <Row>
                 {pageInfo &&
@@ -92,4 +92,4 @@ const HomepageDisplay = () => {
   );
 };
 
-export default HomepageDisplay;
+export default HomepageCategorySlider;
