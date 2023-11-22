@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { homepageBannerSchema } from "ValidationSchema/homepageBanner";
-import { getHomePageBanner, addHomepageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
+import { addHomepageTwoAdsBanner, getHomePageTwoAdsBanner } from "Redux/Slices/TwoAdsBanner/TwoAdsBannerSlice";
 
 const AddModalForm = ({
   setIsLoading,
@@ -28,13 +28,12 @@ const AddModalForm = ({
   });
 
   const onSubmit = (data) => {
-    console.log("data ", data)
     const formData = new FormData();
     formData.append("title", data?.title?.toString());
     formData.append("imageAltText", data?.imageAltText?.toString());
     formData.append("banner", bannerImage);
-    
-    dispatch(addHomepageBanner(formData))
+
+    dispatch(addHomepageTwoAdsBanner(formData))
       .then((res) => {
         if (res?.payload?.error?.response?.status === 400) {
           setAddShowErrorToast(true);
@@ -50,7 +49,7 @@ const AddModalForm = ({
           setAddShowToast(true);
           setAddShowToastMessage(res?.payload?.message);
           setOpenAddModalPage(false);
-          dispatch(getHomePageBanner());
+          dispatch(getHomePageTwoAdsBanner());
         }
       })
       .catch((err) => {
@@ -116,7 +115,6 @@ const AddModalForm = ({
                 </div>
               )}
             </Col>
-
           </Row>
 
           <div className="pt-3">

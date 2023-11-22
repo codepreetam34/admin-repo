@@ -145,9 +145,9 @@ const ProductsPage = () => {
                   className="table_icons d-flex align-items-center justify-content-center"
                   key={index}
                 >
-                  {tableActions?.map((action, index) => (
+                  {tableActions && tableActions?.map((action, index) => (
                     <div
-                      className={action.class.toLowerCase()}
+                      className={action?.class?.toLowerCase()}
                       onClick={() => action.onClick(product)}
                     >
                       <Link to="#">

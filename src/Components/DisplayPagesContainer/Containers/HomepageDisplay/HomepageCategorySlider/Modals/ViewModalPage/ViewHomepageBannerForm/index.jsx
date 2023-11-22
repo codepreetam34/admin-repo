@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Container } from "react-bootstrap";
 
-const ViewHomepageBannerForm = ({ bannerData }) => {
+const ViewModalForm = ({ bannerData }) => {
   return (
     <>
       <div className="container">
         <Form className="user_form" style={{ padding: "2rem" }}>
           <Row>
             <div className="view-details-heading pb-4 text-center">
-              <strong>Homepage Banner Details</strong>
+              <strong>Homepage Page Banner Details</strong>
             </div>
 
             <Col md={6}>
@@ -46,4 +46,4 @@ const ViewHomepageBannerForm = ({ bannerData }) => {
   );
 };
 
-export default ViewHomepageBannerForm;
+export default ViewModalForm;

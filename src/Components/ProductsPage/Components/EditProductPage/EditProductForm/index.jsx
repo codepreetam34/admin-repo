@@ -604,7 +604,7 @@ const EditProductForm = ({
                     <option value="" disabled>
                       Select Tag Type
                     </option>
-                    {defaultCategoryName ? (
+                    {defaultCategoryName && defaultCategoryName ? (
                       combinedOptions
                         .find(
                           (option) =>

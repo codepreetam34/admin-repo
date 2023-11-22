@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "../../../../Wrapper";
 import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
 import DynamicModal from "Constants/DynamicModal";
 import DeleteDataModal from "./Modals/DeleteDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
@@ -34,7 +33,7 @@ const HomePageCategorySlider = () => {
   const dispatch = useDispatch();
 
   const banners = useSelector(
-    (state) => state?.twoAdsBanner?.twoAdsBanners?.twoAdsBanners
+    (state) => state?.twoAdsBanner?.twoAdsBanners?.homepageBanner
   );
   useEffect(() => {
     if (banners == [] || !banners || banners.length === 0) {
@@ -156,9 +155,9 @@ const HomePageCategorySlider = () => {
                   className="table_icons d-flex align-items-center justify-content-center"
                   key={index}
                 >
-                  {tableActions?.map((action, index) => (
+                  {tableActions && tableActions?.map((action, index) => (
                     <div
-                      className={action.class.toLowerCase()}
+                      className={action?.class?.toLowerCase()}
                       onClick={() => action.onClick(banner)}
                     >
                       <a href="#">

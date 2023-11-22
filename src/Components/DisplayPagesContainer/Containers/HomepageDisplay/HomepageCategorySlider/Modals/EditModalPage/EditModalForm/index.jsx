@@ -4,13 +4,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { homepageBannerSchema } from "ValidationSchema/homepageBanner";
-import { editHomepageBanner, getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
-const EditHomepageBannerForm = ({
+import { editHomepageTwoAdsBanner, getHomePageTwoAdsBanner } from "Redux/Slices/TwoAdsBanner/TwoAdsBannerSlice";
+
+const EditModalForm = ({
   setAddShowErrorToast,
   bannerById,
   setAddShowErrorToastMessage,
   setAddShowToast,
-  setOpenEditHomepageBannerPage,
+  setOpenEditModalPage,
   setAddShowToastMessage,
 }) => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const EditHomepageBannerForm = ({
     formData.append("banner", bannerImage);
     formData.append("_id", bannerById._id);
 
-    dispatch(editHomepageBanner(formData))
+    dispatch(editHomepageTwoAdsBanner(formData))
       .then((res) => {
         if (res?.payload?.error?.response?.status === 400) {
           setAddShowErrorToast(true);
@@ -57,8 +58,8 @@ const EditHomepageBannerForm = ({
             res?.payload?.error?.response?.data?.message
           );
         } else {
-          setOpenEditHomepageBannerPage(false);
-          dispatch(getHomePageBanner());
+          setOpenEditModalPage(false);
+          dispatch(getHomePageTwoAdsBanner());
           setAddShowToastMessage(res?.payload?.message);
           setAddShowToast(true);
           setValue("name", "");
@@ -166,4 +167,4 @@ const EditHomepageBannerForm = ({
   );
 };
 
-export default EditHomepageBannerForm;
+export default EditModalForm;

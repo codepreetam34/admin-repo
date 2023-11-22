@@ -577,12 +577,12 @@ const AddProductForm = ({
                     <option value="" disabled>
                       Select Tag Type
                     </option>
-                    {defaultCategoryName ? (
+                    {defaultCategoryName && defaultCategoryName ? (
                       combinedOptions
                         .find(
                           (option) =>
                             option.name &&
-                            option.name.toLowerCase() === defaultCategoryName.toLowerCase()
+                            option?.name?.toLowerCase() === defaultCategoryName?.toLowerCase()
                         )
                         ?.categories?.map((option) => (
                           <option key={option} value={option}>

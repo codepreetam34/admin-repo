@@ -257,10 +257,10 @@ const CategoryPage = () => {
                   className="table_icons d-flex align-items-center justify-content-center"
                   key={index}
                 >
-                  {tableActions?.map((action, index) => (
+                  {tableActions && tableActions?.map((action, index) => (
                     <div
                       key={index}
-                      className={action.class.toLowerCase()}
+                      className={action?.class?.toLowerCase()}
                       onClick={() => action.onClick(category)}
                     >
                       <a href="#">

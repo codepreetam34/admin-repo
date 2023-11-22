@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Form, Button, Modal,Container } from "react-bootstrap";
-import EditHomepageBannerForm from "./EditHomepageBannerForm";
+import EditModalForm from "./EditModalForm";
 
 
-const EditHomepageBannerPage = ({
+const EditModalPage = ({
   bannerById,
-  setOpenEditHomepageBannerPage,
+  setOpenEditModalPage,
   setIsLoading,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
@@ -21,7 +21,7 @@ const EditHomepageBannerPage = ({
         <div
           className="text_heading"
           style={{ cursor: "pointer" }}
-          onClick={() => setOpenEditHomepageBannerPage(false)}
+          onClick={() => setOpenEditModalPage(false)}
         >
           <i class="fa-solid fa-arrow-left"></i> <span>Edit Homepage Banner</span>
         </div>
@@ -34,9 +34,9 @@ const EditHomepageBannerPage = ({
               className="tablearea"
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
-              <EditHomepageBannerForm
+              <EditModalForm
                 setIsLoading={setIsLoading}
-                setOpenEditHomepageBannerPage={setOpenEditHomepageBannerPage}
+                setOpenEditModalPage={setOpenEditModalPage}
                 bannerById={bannerById}
                 setAddShowErrorToast={setAddShowErrorToast}
                 setAddShowErrorToastMessage={setAddShowErrorToastMessage}
@@ -51,4 +51,4 @@ const EditHomepageBannerPage = ({
   );
 };
 
-export default EditHomepageBannerPage;
+export default EditModalPage;

@@ -53,7 +53,7 @@ export const deleteHomepageTwoAdsBanner = createAsyncThunk(
 export const TwoAdsBannerSlice = createSlice({
   name: "TwoAdsBannerSlice",
   initialState: {
-    TwoAdsBanners: [],
+    twoAdsBanners: [],
     loading: false,
     error: null,
   },
@@ -66,7 +66,7 @@ export const TwoAdsBannerSlice = createSlice({
       })
       .addCase(getHomePageTwoAdsBanner.fulfilled, (state, action) => {
         state.loading = false;
-        state.TwoAdsBanners = action.payload;
+        state.twoAdsBanners = action.payload;
       })
       .addCase(getHomePageTwoAdsBanner.rejected, (state, action) => {
         state.loading = false;
