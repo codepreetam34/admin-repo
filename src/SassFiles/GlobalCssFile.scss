@@ -69,7 +69,7 @@ button.btn {
 }
 
 @mixin backgroundBtn {
-  background-color: #c22701;
+  background-color: #801317;
   border-radius: 100px;
   padding: 12px 50px;
   font-size: 18px;
@@ -158,7 +158,7 @@ button.btn {
         height: 40px;
         content: "";
         border-radius: 100px;
-        background-color: #c22701;
+        background-color: #801317;
         transform: translateY(-50%);
       }
     }
@@ -331,7 +331,7 @@ button.btn {
           height: 30px;
           content: "";
           border-radius: 100px;
-          background-color: #c22701;
+          background-color: #801317;
           transform: translateY(-50%);
         }
       }
@@ -452,17 +452,17 @@ button.btn {
 
       span {
         font-weight: 600;
-        color: #00ada3;
+        color: #801319;
       }
     }
   }
 
   .redbox {
-    border-top: 5px solid #c22701;
+    border-top: 5px solid #801317;
 
     h3 {
       span {
-        color: #c22701;
+        color: #801317;
       }
     }
   }
@@ -510,7 +510,7 @@ button.btn {
       height: 35px;
       content: "";
       border-radius: 100px;
-      background-color: #c22701;
+      background-color: #801317;
       transform: translateY(-50%);
     }
   }
@@ -599,7 +599,7 @@ button.btn {
       height: 35px;
       content: "";
       border-radius: 100px;
-      background-color: #c22701;
+      background-color: #801317;
       transform: translateY(-50%);
     }
   }
@@ -693,7 +693,7 @@ button.btn {
       height: 35px;
       content: "";
       border-radius: 100px;
-      background-color: #c22701;
+      background-color: #801317;
       transform: translateY(-50%);
     }
   }
@@ -767,7 +767,7 @@ button.btn {
         height: 35px;
         content: "";
         border-radius: 100px;
-        background-color: #c22701;
+        background-color: #801317;
         transform: translateY(-50%);
       }
     }
@@ -927,7 +927,7 @@ button.btn {
       height: 35px;
       content: "";
       border-radius: 100px;
-      background-color: #c22701;
+      background-color: #801317;
       transform: translateY(-50%);
     }
   }
@@ -1127,7 +1127,7 @@ button.btn {
     background-color: $white-clr;
     box-shadow: 0 2px 15px -3px rgb(0 0 0 / 7%),
       0 10px 20px -2px rgb(0 0 0 / 4%);
-    border-top: 5px solid #c22701;
+    border-top: 5px solid #801317;
     border-radius: 10px;
 
     h4 {
@@ -1234,8 +1234,8 @@ button.btn {
       .nav-link.active {
         background-color: transparent;
         border: none;
-        border-bottom: 3px solid #c22701;
-        color: #c22701;
+        border-bottom: 3px solid #801317;
+        color: #801317;
         font-weight: 700;
       }
     }

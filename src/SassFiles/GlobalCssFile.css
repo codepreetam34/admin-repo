@@ -101,7 +101,7 @@ button.btn:focus {
 }
 .sidebar .menulist a.active {
   position: relative;
-  color: #c22701;
+  color: #500d11;
 }
 .sidebar .menulist a.active::before {
   position: absolute;
@@ -111,7 +111,7 @@ button.btn:focus {
   height: 40px;
   content: "";
   border-radius: 100px;
-  background-color: #c22701;
+  background-color: #500d11;
   transform: translateY(-50%);
 }
 

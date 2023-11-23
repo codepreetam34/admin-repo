@@ -1,5 +1,5 @@
 ul {
-  list-style: none !important ;
+  list-style: none !important;
 }
 
 .link-text {
@@ -21,20 +21,24 @@ ul {
 .custom_toaster_error_zindex {
   z-index: 9999;
 }
+
 .custom_toaster_error .toast-container {
   z-index: 9999;
 }
 
 .custom_toaster_error .toast-container i {
-  color: red; /* Change the icon color to red for error */
+  color: red;
+  /* Change the icon color to red for error */
   padding: 0 8px 0 0;
   font-size: 16px;
 }
 
 .custom_toaster_error .toast-container .toast-header {
   padding: 15px 10px;
-  background-color: #f8d7da; /* Use a red background color for error */
-  color: #721c24; /* Text color for error */
+  background-color: #f8d7da;
+  /* Use a red background color for error */
+  color: #721c24;
+  /* Text color for error */
 }
 
 .custom_toaster_error .toast-container .toast-header strong {
@@ -60,8 +64,10 @@ ul {
 }
 
 .custom-select:hover {
-  background-color: #007bff; /* Background color for options on hover */
-  color: #fff; /* Text color for options on hover */
+  background-color: #007bff;
+  /* Background color for options on hover */
+  color: #fff;
+  /* Text color for options on hover */
   cursor: pointer;
 }
 
@@ -81,14 +87,17 @@ ul {
   border: 0.0625rem solid rgba(26, 26, 26, 0.12);
   border-radius: 10px;
 }
+
 .product-detail-design-new {
   padding: 10px;
   border: 0.0625rem solid rgba(26, 26, 26, 0.12);
   border-radius: 10px;
 }
+
 .view-details-heading {
   font-size: 2rem;
 }
+
 .view-details-subheading {
   font-size: 1.5rem;
 }
@@ -114,12 +123,40 @@ ul {
 .select-arrow {
   position: absolute;
   top: 50%;
-  right: 10px; /* Adjust the right position as needed */
+  right: 10px;
+  /* Adjust the right position as needed */
   transform: translateY(-50%);
   width: 0;
   height: 0;
-  border-left: 5px solid transparent; /* Adjust arrow size */
-  border-right: 5px solid transparent; /* Adjust arrow size */
-  border-top: 5px solid #000; /* Adjust arrow color */
-  pointer-events: none; /* Allow clicking through the arrow to the select input */
+  border-left: 5px solid transparent;
+  /* Adjust arrow size */
+  border-right: 5px solid transparent;
+  /* Adjust arrow size */
+  border-top: 5px solid #000;
+  /* Adjust arrow color */
+  pointer-events: none;
+  /* Allow clicking through the arrow to the select input */
+}
+
+
+
+.greenbox:hover .fa-house-circle-check {
+  transform: scale(1.2);
+  /* Increase the size on hover */
+  transition: transform 0.3s ease-in-out;
+}
+.redbox:hover .fa-clipboard-list {
+  transform: scale(1.2);
+  /* Increase the size on hover */
+  transition: transform 0.3s ease-in-out;
+}
+.orangebox:hover .fa-product-hunt {
+  transform: scale(1.2);
+  /* Increase the size on hover */
+  transition: transform 0.3s ease-in-out;
+}
+.bluebox:hover .fa-cart-plus {
+  transform: scale(1.2);
+  /* Increase the size on hover */
+  transition: transform 0.3s ease-in-out;
 }
