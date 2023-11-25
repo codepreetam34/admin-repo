@@ -158,7 +158,7 @@ const EditModalForm = ({
           </Row>
           <div className="pt-3">
             <Button variant="primary" type="submit">
-              Submit
+              Update
             </Button>
           </div>
         </Form>

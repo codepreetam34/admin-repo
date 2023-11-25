@@ -340,7 +340,7 @@ const HomePageCategorySlider = () => {
       )}
     </Wrapper>
   );
-  
+
 };
 
 export default HomePageCategorySlider;

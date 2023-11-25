@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Container } from "react-bootstrap";
 import ViewHomepageBannerForm from "./ViewHomepageBannerForm";
 
-const ViewHomepageBannerPage = ({ bannerData, setOpenViewHomepageBannerPage }) => {
+const ViewHomepageBannerPage = ({ bannerData, setOpenViewModalPage }) => {
   return (
     <Col md={12}>
       {" "}
@@ -10,9 +10,9 @@ const ViewHomepageBannerPage = ({ bannerData, setOpenViewHomepageBannerPage }) =
         <div
           className="text_heading"
           style={{ cursor: "pointer" }}
-          onClick={() => setOpenViewHomepageBannerPage(false)}
+          onClick={() => setOpenViewModalPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>View Homepage Banner</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>View Homepage Two Ads Banner</span>
         </div>
       </div>
       <Container className="">
