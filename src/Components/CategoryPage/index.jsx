@@ -194,6 +194,7 @@ const CategoryPage = () => {
                   width={70}
                   height={70}
                   loading="lazy"
+                  style={{ borderRadius: "10px" }}
                 />
               </td>
               {/* {category?.children?.length > 0 ? (

@@ -105,6 +105,7 @@ const ProductsByCategoryPage = () => {
                   width={70}
                   height={70}
                   loading="lazy"
+                  style={{ borderRadius: "10px" }}
                 />
               </td>
               <td>

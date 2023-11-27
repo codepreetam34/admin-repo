@@ -134,6 +134,7 @@ const ProductsPage = () => {
               <td>
                 <img
                   src={product?.productPictures[0].img}
+                  style={{ borderRadius: "10px" }}
                   alt=""
                   width={70}
                   height={70}

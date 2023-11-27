@@ -207,6 +207,7 @@ const CategoryChildrenPage = () => {
                   width={70}
                   height={70}
                   loading="lazy"
+                  style={{ borderRadius: "10px" }}
                 />
               </td>
               {category?.productCount > 0 ? (
