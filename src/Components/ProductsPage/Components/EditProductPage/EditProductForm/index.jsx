@@ -105,7 +105,7 @@ const EditProductForm = ({
   const onSubmit = (data) => {
     const formData = new FormData();
     if (data?.name) formData.append("name", data?.name?.toString());
-    if (productData._id) formData.append("_id", productData?._id);
+    if (productData?._id) formData.append("_id", productData?._id);
     if (data?.description)
       formData.append("description", data?.description?.toString());
     if (defaultCategory) formData.append("category", defaultCategory);
@@ -136,8 +136,9 @@ const EditProductForm = ({
         names: additionalTag.names,
       };
     });
-    if (tagsArray && tagsArray.length > 0 && tagsArray != []) formData.append("tags", JSON.stringify(tagsArray));
-
+    if (tagsArray && tagsArray.length > 0 && tagsArray != []){
+       formData.append("tags", JSON.stringify(tagsArray));
+    }
     if (bannerPicture && bannerPicture?.length > 1) {
       bannerPicture?.map((file, index) => {
         return {
@@ -171,18 +172,19 @@ const EditProductForm = ({
   };
 
   const handleSelectCategory = (e) => {
+    setDefaultCategory(e.target.value);
     const categoryIdToFind = e.target.value;
-    const foundCategory = categoryList?.find((item) => item?._id === categoryIdToFind);
-
+    const foundCategory = categoryList.find(
+      (item) => item._id === categoryIdToFind
+    );
     if (foundCategory) {
-      setDefaultCategory(e.target.value);
       setDefaultCategoryName(foundCategory?.name);
-      setTagType("");
     } else {
-      console.log("Category not found for ID:", categoryIdToFind);
-      // You might want to handle this case, such as showing an error message.
+      console.log("Category not found ", defaultCategoryName);
     }
+    setTagType("");
   };
+
 
 
   const combinedOptions = [
@@ -194,6 +196,7 @@ const EditProductForm = ({
         [
           "All Cakes",
           "Best Sellers",
+          "Top Category",
           "Same Day Delivery",
           "New Arrivals",
           "Midnight Delivery",
@@ -230,7 +233,7 @@ const EditProductForm = ({
         // Options for "BY TYPES"
         [
           "Bento Cakes",
-          "New Eggless Cakes",
+          "Eggless Cakes",
           "Photo Cakes",
           "Designer Cakes",
           "Fondant Cakes",
@@ -250,6 +253,46 @@ const EditProductForm = ({
         [
           "Best Sellers",
           "Same Day Delivery",
+          "Top Category",
+          "New Arrivals",
+          "Air Purifying Plants",
+          "Low Maintenance Plants",
+          "Indoor Plants",
+        ],
+        // Options for "BY OCCASION"
+        [
+          "Birthday",
+          "Anniversary",
+          "House Warming",
+          "Good Luck",
+        ],
+        // Options for "BY PLANTERS"
+        [
+          "Ceramic Planters",
+          "Metal Planters",
+          "Glass Planters",
+          "Self Watering Planters",
+        ],
+        // Options for "BY TYPES"
+        [
+          "Money Plants",
+          "Lucky Bamboo",
+          "Snake Plants",
+          "Jade Plants",
+          "Bonsai Plants",
+          "Flowering Plants",
+        ],
+      ],
+    },
+    {
+      name: "Testing Category",
+      categories: ["By Featured", "By Occasion", "By Planters", "By Types"],
+      options: [
+        // Options for "BY FEATURED"
+        [
+          "Best Sellers",
+          "Same Day Delivery",
+          "Top Category",
           "New Arrivals",
           "Air Purifying Plants",
           "Low Maintenance Plants",
@@ -281,6 +324,8 @@ const EditProductForm = ({
       ],
     },
   ];
+
+
 
   const [tagType, setTagType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
@@ -609,7 +654,7 @@ const EditProductForm = ({
                         .find(
                           (option) =>
                             option.name &&
-                            option.name.toLowerCase() === defaultCategoryName.toLowerCase()
+                            option?.name?.toLowerCase() === defaultCategoryName?.toLowerCase()
                         )
                         ?.categories?.map((option) => (
                           <option key={option} value={option}>
@@ -661,10 +706,10 @@ const EditProductForm = ({
 
           <Col className="product-detail-design">
             <Row>
-              <Col md={12}>
+              <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Pincode</Form.Label>
-                  {pinCode?.map((pincode, index) => (
+                  {pinCode.map((pincode, index) => (
                     <div className="d-flex pb-3" key={index}>
                       <Form.Control
                         type="text"
@@ -705,6 +750,22 @@ const EditProductForm = ({
                   </div>
                 </Form.Group>
               </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Discount Price</Form.Label>
+
+                  <Form.Control
+                    type="text"
+                    id="discountPrice"
+                    name="discountPrice"
+                    {...register("discountPrice")}
+                    isInvalid={!!errors.discountPrice}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.discountPrice?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
             </Row>
           </Col>
 
@@ -713,22 +774,7 @@ const EditProductForm = ({
               defaultCategoryName.toLowerCase() === "cakes") ? (
             <Col md={12} className="product-detail-design">
               <Row>
-                <Col md={6}>
-                  <Form.Group className="form-group-padding-bottom">
-                    <Form.Label>Discount Price</Form.Label>
 
-                    <Form.Control
-                      type="text"
-                      id="discountPrice"
-                      name="discountPrice"
-                      {...register("discountPrice")}
-                      isInvalid={!!errors.discountPrice}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.discountPrice?.message}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
                 <Col md={6}>
                   <Form.Group className="form-group-padding-bottom">
                     <Form.Label>Half Kg Price</Form.Label>
@@ -869,7 +915,6 @@ const EditProductForm = ({
                         )}
                       </div>
                     )}
-
 
                     <Row>
                       <Col md={6}>

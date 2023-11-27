@@ -82,7 +82,7 @@ const AddCategoryForm = ({
         // Options for "BY TYPES"
         [
           "Bento Cakes",
-          "NEW Eggless Cakes",
+          "Eggless Cakes",
           "Photo Cakes",
           "Designer Cakes",
           "Fondant Cakes",

@@ -163,7 +163,7 @@ const AddProductForm = ({
   };
 
   const handleSelectCategory = (e) => {
-    setDefaultCategory(e.target.value);
+    setDefaultCategory(e.target.value);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     const categoryIdToFind = e.target.value;
     const foundCategory = categoryList.find(
       (item) => item._id === categoryIdToFind
@@ -187,6 +187,7 @@ const AddProductForm = ({
         [
           "All Cakes",
           "Best Sellers",
+          "Top Category",
           "Same Day Delivery",
           "New Arrivals",
           "Midnight Delivery",
@@ -223,7 +224,7 @@ const AddProductForm = ({
         // Options for "BY TYPES"
         [
           "Bento Cakes",
-          "New Eggless Cakes",
+          "Eggless Cakes",
           "Photo Cakes",
           "Designer Cakes",
           "Fondant Cakes",
@@ -243,6 +244,7 @@ const AddProductForm = ({
         [
           "Best Sellers",
           "Same Day Delivery",
+          "Top Category",
           "New Arrivals",
           "Air Purifying Plants",
           "Low Maintenance Plants",
@@ -281,6 +283,7 @@ const AddProductForm = ({
         [
           "Best Sellers",
           "Same Day Delivery",
+          "Top Category",
           "New Arrivals",
           "Air Purifying Plants",
           "Low Maintenance Plants",
