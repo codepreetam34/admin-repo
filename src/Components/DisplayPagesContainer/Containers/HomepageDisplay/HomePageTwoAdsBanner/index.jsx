@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "../../../../Wrapper";
 import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getHomePageBanner } from "Redux/Slices/HomePageBanner/HomePageBannerSlice";
 import DynamicModal from "Constants/DynamicModal";
 import DeleteDataModal from "./Modals/DeleteDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
-import AddHomepageBannerPage from "./Modals/AddHomepageBannerPage";
-import EditHomepageBannerPage from "./Modals/EditHomepageBannerPage";
-import ViewHomepageBannerPage from "./Modals/ViewHomepageBannerPage";
+import AddModalPage from "./Modals/AddModalPage";
+import EditModalPage from "./Modals/EditModalPage";
+import ViewModalPage from "./Modals/ViewModalPage";
 import { useNavigate } from "react-router-dom";
+import { getHomePageTwoAdsBanner } from "Redux/Slices/TwoAdsBanner/TwoAdsBannerSlice";
 
-const HomePageBannerList = () => {
-
+const HomePageTwoAdsBanner = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(true);
@@ -22,9 +21,9 @@ const HomePageBannerList = () => {
   const [addShowToastMessage, setAddShowToastMessage] = useState("");
   const [addShowToast, setAddShowToast] = useState(false);
 
-  const [OpenAddHomepageBannerPage, setOpenAddHomepageBannerPage] = useState(false);
-  const [OpenEditHomepageBannerPage, setOpenEditHomepageBannerPage] = useState(false);
-  const [openViewHomepageBannerPage, setOpenViewHomepageBannerPage] = useState(false);
+  const [OpenAddModalPage, setOpenAddModalPage] = useState(false);
+  const [OpenEditModalPage, setOpenEditModalPage] = useState(false);
+  const [openViewModalPage, setOpenViewModalPage] = useState(false);
 
   const [modalData, setModalData] = useState({
     type: null,
@@ -36,13 +35,13 @@ const HomePageBannerList = () => {
   const dispatch = useDispatch();
 
   const banners = useSelector(
-    (state) => state?.HomePageBanner?.homePagebanners?.homePageBanners
+    (state) => state?.twoAdsBanner?.twoAdsBanners?.homepageBanner
   );
 
   useEffect(() => {
     if (banners == [] || !banners || banners.length === 0) {
       setIsLoading(true);
-      dispatch(getHomePageBanner()).then((res) => {
+      dispatch(getHomePageTwoAdsBanner()).then((res) => {
         setIsLoading(false);
       }).catch((err) => {
         setIsLoading(false);
@@ -53,35 +52,40 @@ const HomePageBannerList = () => {
   }, [dispatch]);
 
   const tableHeaders = [
+  
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
     { title: "Image", class: "" },
     { title: "Action", class: "text-center" },
+  
   ];
 
   const tableActions = [
+  
     {
       name: "View",
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setOpenViewHomepageBannerPage(true);
-        setOpenAddHomepageBannerPage(false);
-        setOpenEditHomepageBannerPage(false);
+        setOpenViewModalPage(true);
+        setOpenAddModalPage(false);
+        setOpenEditModalPage(false);
         setModalData({ data: data });
       },
     },
+  
     {
       name: "Edit",
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
-        setOpenEditHomepageBannerPage(true);
-        setOpenViewHomepageBannerPage(false);
-        setOpenAddHomepageBannerPage(false);
+        setOpenEditModalPage(true);
+        setOpenViewModalPage(false);
+        setOpenAddModalPage(false);
         setModalData({ data: data });
       },
     },
+  
     {
       name: "Delete",
       class: "delete",
@@ -112,14 +116,17 @@ const HomePageBannerList = () => {
           ),
           modalTitle: "Delete Category",
         });
+  
       },
+  
     },
+  
   ];
-
+  
   const handleAdd = () => {
-    setOpenAddHomepageBannerPage(true);
-    setOpenEditHomepageBannerPage(false);
-    setOpenViewHomepageBannerPage(false);
+    setOpenAddModalPage(true);
+    setOpenEditModalPage(false);
+    setOpenViewModalPage(false);
     // setModalData({ type: "Add", data: null });
   };
 
@@ -141,7 +148,7 @@ const HomePageBannerList = () => {
   const DataTableBody = () => {
     return (
       <tbody>
-        {banners && banners?.length > 0 ? (
+        {banners && banners.length > 0 ? (
           banners?.map((banner, index) => (
             <tr key={banner?._id}>
               <td>{index + 1}</td>
@@ -163,11 +170,11 @@ const HomePageBannerList = () => {
                 >
                   {tableActions && tableActions?.map((action, index) => (
                     <div
-                      className={action?.class.toLowerCase()}
-                      onClick={() => action?.onClick(banner)}
+                      className={action?.class?.toLowerCase()}
+                      onClick={() => action.onClick(banner)}
                     >
                       <a href="#">
-                        <i className={action?.icon}></i>
+                        <i className={action.icon}></i>
                       </a>
                     </div>
                   ))}
@@ -179,7 +186,7 @@ const HomePageBannerList = () => {
           <tr>
             <td>
               <div className="d-flex justify-content-center pt-4">
-                <p className="text-red">Homepage Banner list is empty !!</p>
+                <p className="text-red">Homepage Two Ads Banner list is empty !!</p>
               </div>
             </td>
           </tr>
@@ -193,8 +200,8 @@ const HomePageBannerList = () => {
       <>
         <Col md={4}>
           <div className="user_heading">
-            <h3>HomePage Carousel Banners</h3>
-            <p>Welcome to HomePage Banner page</p>
+            <h3>Homepage Two Ads  Banners</h3>
+            <p>Welcome to Homepage Two Ads Banner page</p>
           </div>
         </Col>
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
@@ -269,9 +276,9 @@ const HomePageBannerList = () => {
           ) : (
             <>
               <InitialRender />
-              {OpenAddHomepageBannerPage && OpenAddHomepageBannerPage ? (
-                <AddHomepageBannerPage
-                  setOpenAddHomepageBannerPage={setOpenAddHomepageBannerPage}
+              {OpenAddModalPage && OpenAddModalPage ? (
+                <AddModalPage
+                  setOpenAddModalPage={setOpenAddModalPage}
                   setIsLoading={setIsLoading}
                   setAddShowErrorToast={(err) => {
                     setAddShowErrorToast(err);
@@ -286,10 +293,10 @@ const HomePageBannerList = () => {
                     setAddShowToastMessage(showMessage);
                   }}
                 />
-              ) : OpenEditHomepageBannerPage && OpenEditHomepageBannerPage ? (
-                <EditHomepageBannerPage
+              ) : OpenEditModalPage && OpenEditModalPage ? (
+                <EditModalPage
                   bannerById={modalData?.data}
-                  setOpenEditHomepageBannerPage={setOpenEditHomepageBannerPage}
+                  setOpenEditModalPage={setOpenEditModalPage}
                   setIsLoading={setIsLoading}
                   setAddShowErrorToast={(err) => {
                     setAddShowErrorToast(err);
@@ -304,10 +311,10 @@ const HomePageBannerList = () => {
                     setAddShowToastMessage(showMessage);
                   }}
                 />
-              ) : openViewHomepageBannerPage && openViewHomepageBannerPage ? (
-                <ViewHomepageBannerPage
+              ) : openViewModalPage && openViewModalPage ? (
+                <ViewModalPage
                   bannerData={modalData?.data}
-                  setOpenViewHomepageBannerPage={setOpenViewHomepageBannerPage}
+                  setOpenViewModalPage={setOpenViewModalPage}
                 />
               ) : (
                 <RenderTable />
@@ -349,4 +356,4 @@ const HomePageBannerList = () => {
 
 };
 
-export default HomePageBannerList;
+export default HomePageTwoAdsBanner;

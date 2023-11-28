@@ -5,7 +5,7 @@ import LogIn from "Pages/LogIn";
 import DisplayPages from "Pages/DisplayPages";
 import HomepageDisplay from "Components/DisplayPagesContainer/Containers/HomepageDisplay";
 import HomepageBannerList from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageBannerList";
-import HomepageCategorySlider from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomepageCategorySlider";
+import HomepageTwoAdsBanner from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageTwoAdsBanner";
 import ParentCategory from "Pages/ParentCategory";
 import CategoryChildren from "Pages/ChildCategory";
 import ProductsByCategory from "Pages/ProductsByCategory";
@@ -23,7 +23,8 @@ import {
   PRODUCTS,
   ADD_PRODUCTS,
   TAGS,
-  HOMEPAGE_CATEGORY_SLIDER
+  HOMEPAGE_TWO_ADS_BANNER,
+  HOMEPAGE_SHOP_BY_OCCASION
 } from "Routes/Routes";
 import PrivateRoutes from "Routes/PrivateRoutes";
 import SetupNewPassword from "Components/LogIn/SetupNewPassword";
@@ -31,6 +32,7 @@ import ForgotPassword from "Components/LogIn/ForgotPassword";
 import Products from "Pages/Products";
 import AddProduct from "Components/ProductsPage/Components/AddProductPage";
 import TagsPage from "Components/TagsPage";
+import HomePageShopByOccasion from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageShopByOccasion";
 const Routing = () => {
   return (
     <BrowserRouter>
@@ -55,9 +57,17 @@ const Routing = () => {
           element={<PrivateRoutes Component={HomepageBannerList} />}
         />
                 <Route
-          path={HOMEPAGE_CATEGORY_SLIDER}
-          element={<PrivateRoutes Component={HomepageCategorySlider} />}
+          path={HOMEPAGE_TWO_ADS_BANNER}
+          element={<PrivateRoutes Component={HomepageTwoAdsBanner} />}
         />
+        
+
+        <Route
+          path={HOMEPAGE_SHOP_BY_OCCASION}
+          element={<PrivateRoutes Component={HomePageShopByOccasion} />}
+        />
+        
+
         <Route
           path={CATEGORY}
           element={<PrivateRoutes Component={ParentCategory} />}

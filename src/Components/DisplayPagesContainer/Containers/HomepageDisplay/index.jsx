@@ -1,17 +1,16 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import Wrapper from "../../../Wrapper";
 
 // Import the images
 // import Greenbox from "../../../../../src/images/greenbox.png";
 // import Redbox from "../../../../../src/images/redbox.png";
 // import Orangebox from "../../../../../src/images/orangebox.png";
 // import Bluebox from "../../../../../src/images/bluebox.png";
-import Wrapper from "../../../Wrapper";
 
 
-
-const HomepageCategorySlider = () => {
+const HomepageTwoAdsBanner = () => {
 
   const Greenbox = '<i class="fa-solid fa-house-circle-check fa-2xl" style="color: #00ada3;"></i>';
   const Redbox = '<i class="fa-solid fa-clipboard-list fa-2xl" style="color: #801319;"></i>';
@@ -19,6 +18,7 @@ const HomepageCategorySlider = () => {
   const Bluebox = '<i class="fa-solid fa-cart-plus fa-2xl" style="color: #31456c;"></i>'
 
   const navigate = useNavigate()
+
   const pageInfo = [
     {
       boxHref: "/display-pages/homepage-display/homepage-banner-list",
@@ -27,21 +27,21 @@ const HomepageCategorySlider = () => {
       imgClass: "greenbox",
     },
     {
-      boxHref: "/display-pages/homepage-display/homepage-category-slider",
+      boxHref: "/display-pages/homepage-display/homepage-two-ads-banner",
       imgSrc: Redbox,
       title: "Two Ads Banner",
       imgClass: "redbox",
     },
     {
-      boxHref: "/",
+      boxHref: "/display-pages/homepage-display/homepage-shop-by-occasion",
       imgSrc: Orangebox,
-      title: "Product Page",
+      title: "Shop By Occasion",
       imgClass: "orangebox",
     },
     {
-      boxHref: "/",
+      boxHref: "/display-pages/homepage-display/homepage-pamper-zone",
       imgSrc: Bluebox,
-      title: "Cart Page",
+      title: "Pamper Zone",
       imgClass: "bluebox",
     },
   ];
@@ -105,4 +105,4 @@ const HomepageCategorySlider = () => {
   );
 };
 
-export default HomepageCategorySlider;
+export default HomepageTwoAdsBanner;

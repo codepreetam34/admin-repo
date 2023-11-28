@@ -13,8 +13,12 @@ export const DISPLAY_PAGES = "/display-pages";
 export const HOMEPAGE_DISPLAY = "/display-pages/homepage-display";
 export const HOMEPAGE_BANNER_LIST =
   "/display-pages/homepage-display/homepage-banner-list";
-export const HOMEPAGE_CATEGORY_SLIDER =
-  "/display-pages/homepage-display/homepage-category-slider";
+export const HOMEPAGE_TWO_ADS_BANNER =
+  "/display-pages/homepage-display/homepage-two-ads-banner";
+export const HOMEPAGE_SHOP_BY_OCCASION =
+  "/display-pages/homepage-display/homepage-shop-by-occasion";
+
+
 export const CATEGORY = "/category";
 export const CATEGORY_CHILDREN = "/category/category-child/:id";
 export const CATEGORY_CHILD_PRODUCTS = "/category/category-child/:id/products";

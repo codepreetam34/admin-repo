@@ -1,12 +1,10 @@
 import React from "react";
 import { Col, Container } from "react-bootstrap";
-import EditProductForm from "./EditProductForm";
+import AddModalForm from "./AddModalForm";
 
-const EditProductPage = ({
-  setOpenEditProductPage,
+const AddModalPage = ({
+  setOpenAddModalPage,
   setIsLoading,
-  categoryName,
-  productData,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
@@ -14,16 +12,16 @@ const EditProductPage = ({
 }) => {
   return (
     <Col md={12}>
+      {" "}
       <div className="pt-4">
         <div
           className="text_heading"
           style={{ cursor: "pointer" }}
-          onClick={() => setOpenEditProductPage(false)}
+          onClick={() => setOpenAddModalPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>Edit Product</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>Add Homepage Shop By Occasion</span>
         </div>
       </div>
-
       <Container className="">
         <div className="user_table">
           <div className="nftstable">
@@ -31,17 +29,15 @@ const EditProductPage = ({
               className="tablearea"
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
-              <EditProductForm
+              <AddModalForm
                 setIsLoading={setIsLoading}
-                categoryName={categoryName}
-                setOpenEditProductPage={setOpenEditProductPage}
-                productData={productData}
                 setAddShowErrorToast={setAddShowErrorToast}
                 setAddShowErrorToastMessage={setAddShowErrorToastMessage}
                 setAddShowToast={setAddShowToast}
                 setAddShowToastMessage={setAddShowToastMessage}
+                setOpenAddModalPage={setOpenAddModalPage}
               />
-            </div>
+            </div>{" "}
           </div>
         </div>
       </Container>
@@ -49,4 +45,4 @@ const EditProductPage = ({
   );
 };
 
-export default EditProductPage;
+export default AddModalPage;

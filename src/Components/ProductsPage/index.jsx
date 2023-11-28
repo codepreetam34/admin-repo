@@ -12,6 +12,7 @@ import DeleteDataModal from "./Components/DeleteDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
 
 const ProductsPage = () => {
+
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const [openAddProductPage, setOpenAddProductPage] = useState(false);
@@ -30,13 +31,16 @@ const ProductsPage = () => {
   );
 
   useEffect(() => {
-    if (!productsList || productsList.length === 0) {
+
+    if (!productsList || productsList?.length === 0) {
+
       dispatch(getProducts())
         .then(() => {
           setIsLoading(false);
         })
         .catch(() => setIsLoading(false));
-    } else {
+
+      } else {
       setIsLoading(false);
     }
   }, [dispatch]);
@@ -79,7 +83,7 @@ const ProductsPage = () => {
           data: data,
           modalContent: (
             <DeleteDataModal
-              productId={data._id}
+              productId={data?._id}
               productName={data?.name}
               setShowModal={setShowModal}
               setIsLoading={setIsLoading}
@@ -125,7 +129,7 @@ const ProductsPage = () => {
   const DataTableBody = () => {
     return (
       <tbody>
-        {productsList && productsList.length > 0 ? (
+        {productsList && productsList?.length > 0 ? (
           productsList?.map((product, index) => (
             <tr key={product?._id}>
               <td>{index + 1}</td>
@@ -133,7 +137,7 @@ const ProductsPage = () => {
               <td>{product?.categoryName}</td>
               <td>
                 <img
-                  src={product?.productPictures[0].img}
+                  src={product?.productPictures[0]?.img}
                   style={{ borderRadius: "10px" }}
                   alt=""
                   width={70}
@@ -149,10 +153,10 @@ const ProductsPage = () => {
                   {tableActions && tableActions?.map((action, index) => (
                     <div
                       className={action?.class?.toLowerCase()}
-                      onClick={() => action.onClick(product)}
+                      onClick={() => action?.onClick(product)}
                     >
                       <Link to="#">
-                        <i className={action.icon}></i>
+                        <i className={action?.icon}></i>
                       </Link>
                     </div>
                   ))}

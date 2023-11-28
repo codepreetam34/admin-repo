@@ -7,6 +7,7 @@ import ProductsByCaregoryIdSlice from "Redux/Slices/Products/ProductsSlice";
 import authReducer from "Redux/Slices/Login/auth.slice";
 import TagsSlice from "Redux/Slices/Tags/TagsSlice";
 import TwoAdsBannerSlice from "Redux/Slices/TwoAdsBanner/TwoAdsBannerSlice";
+import ShopByOccasionSlice from "Redux/Slices/ShopByOccasion/ShopByOccasionSlice";
 const rootReducer = combineReducers({
   auth: authReducer,
   HomePageBanner: HomePageBannerSlice,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   ProductsByCatId: ProductsByCaregoryIdSlice,
   tagList: TagsSlice,
   twoAdsBanner: TwoAdsBannerSlice,
+  shopByOccasion: ShopByOccasionSlice,
 });
 
 const initializeStore = () =>

@@ -1,26 +1,29 @@
-import React from "react";
-import { Col, Container } from "react-bootstrap";
-import EditProductForm from "./EditProductForm";
+import React, { useEffect, useState } from "react";
+import { Row, Col, Form, Button, Modal,Container } from "react-bootstrap";
+import EditModalForm from "./EditModalForm";
 
-const EditProductPage = ({
-  setOpenEditProductPage,
+
+const EditModalPage = ({
+  bannerById,
+  setOpenEditModalPage,
   setIsLoading,
-  categoryName,
-  productData,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
   setAddShowToastMessage,
 }) => {
+
+
+
   return (
     <Col md={12}>
       <div className="pt-4">
         <div
           className="text_heading"
           style={{ cursor: "pointer" }}
-          onClick={() => setOpenEditProductPage(false)}
+          onClick={() => setOpenEditModalPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>Edit Product</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>Edit Homepage Banner</span>
         </div>
       </div>
 
@@ -31,11 +34,10 @@ const EditProductPage = ({
               className="tablearea"
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
-              <EditProductForm
+              <EditModalForm
                 setIsLoading={setIsLoading}
-                categoryName={categoryName}
-                setOpenEditProductPage={setOpenEditProductPage}
-                productData={productData}
+                setOpenEditModalPage={setOpenEditModalPage}
+                bannerById={bannerById}
                 setAddShowErrorToast={setAddShowErrorToast}
                 setAddShowErrorToastMessage={setAddShowErrorToastMessage}
                 setAddShowToast={setAddShowToast}
@@ -49,4 +51,4 @@ const EditProductPage = ({
   );
 };
 
-export default EditProductPage;
+export default EditModalPage;

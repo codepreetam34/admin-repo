@@ -9,8 +9,9 @@ import AddModalPage from "./Modals/AddModalPage";
 import EditModalPage from "./Modals/EditModalPage";
 import ViewModalPage from "./Modals/ViewModalPage";
 import { useNavigate } from "react-router-dom";
-import { getHomePageTwoAdsBanner } from "Redux/Slices/TwoAdsBanner/TwoAdsBannerSlice";
-const HomePageCategorySlider = () => {
+import { getHomePageShopByOccasion } from "Redux/Slices/ShopByOccasion/ShopByOccasionSlice";
+
+const HomePageShopByOccasion = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(true);
@@ -30,15 +31,17 @@ const HomePageCategorySlider = () => {
     modalContent: <></>,
     modalTitle: null,
   });
+
   const dispatch = useDispatch();
 
   const banners = useSelector(
-    (state) => state?.twoAdsBanner?.twoAdsBanners?.homepageBanner
+    (state) => state?.shopByOccasion?.shopByOccasions?.homepageBanner
   );
+
   useEffect(() => {
-    if (banners == [] || !banners || banners.length === 0) {
+    if (banners == [] || !banners || banners?.length === 0) {
       setIsLoading(true);
-      dispatch(getHomePageTwoAdsBanner()).then((res) => {
+      dispatch(getHomePageShopByOccasion()).then((res) => {
         setIsLoading(false);
       }).catch((err) => {
         setIsLoading(false);
@@ -49,13 +52,16 @@ const HomePageCategorySlider = () => {
   }, [dispatch]);
 
   const tableHeaders = [
+  
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
     { title: "Image", class: "" },
     { title: "Action", class: "text-center" },
+  
   ];
 
   const tableActions = [
+  
     {
       name: "View",
       class: "eye",
@@ -67,6 +73,7 @@ const HomePageCategorySlider = () => {
         setModalData({ data: data });
       },
     },
+  
     {
       name: "Edit",
       class: "edit",
@@ -78,6 +85,7 @@ const HomePageCategorySlider = () => {
         setModalData({ data: data });
       },
     },
+  
     {
       name: "Delete",
       class: "delete",
@@ -89,7 +97,7 @@ const HomePageCategorySlider = () => {
           data: data,
           modalContent: (
             <DeleteDataModal
-              bannerId={data._id}
+              bannerId={data?._id}
               productName={data?.title}
               setShowModal={setShowModal} // Make sure you pass setShowModal
               setAddShowErrorToast={(err) => {
@@ -108,9 +116,13 @@ const HomePageCategorySlider = () => {
           ),
           modalTitle: "Delete Category",
         });
+  
       },
+  
     },
+  
   ];
+  
   const handleAdd = () => {
     setOpenAddModalPage(true);
     setOpenEditModalPage(false);
@@ -159,10 +171,10 @@ const HomePageCategorySlider = () => {
                   {tableActions && tableActions?.map((action, index) => (
                     <div
                       className={action?.class?.toLowerCase()}
-                      onClick={() => action.onClick(banner)}
+                      onClick={() => action?.onClick(banner)}
                     >
                       <a href="#">
-                        <i className={action.icon}></i>
+                        <i className={action?.icon}></i>
                       </a>
                     </div>
                   ))}
@@ -174,7 +186,7 @@ const HomePageCategorySlider = () => {
           <tr>
             <td>
               <div className="d-flex justify-content-center pt-4">
-                <p className="text-red">Homepage Two Ads Banner list is empty !!</p>
+                <p className="text-red">Homepage Shop By Occasion list is empty !!</p>
               </div>
             </td>
           </tr>
@@ -188,8 +200,8 @@ const HomePageCategorySlider = () => {
       <>
         <Col md={4}>
           <div className="user_heading">
-            <h3>HomePage Two Ads  Banners</h3>
-            <p>Welcome to HomePage Two Ads Banner page</p>
+            <h3>Homepage Shop By Occasion</h3>
+            <p>Welcome to Homepage Shop By Occasion page</p>
           </div>
         </Col>
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
@@ -344,4 +356,4 @@ const HomePageCategorySlider = () => {
 
 };
 
-export default HomePageCategorySlider;
+export default HomePageShopByOccasion;
