@@ -35,7 +35,7 @@ const HomePageShopByOccasion = () => {
   const dispatch = useDispatch();
 
   const banners = useSelector(
-    (state) => state?.shopByOccasion?.shopByOccasions?.homepageBanner
+    (state) => state.shopByOccasion.shopByOccations.homepageBanner
   );
 
   useEffect(() => {
@@ -52,16 +52,16 @@ const HomePageShopByOccasion = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-  
+
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
     { title: "Image", class: "" },
     { title: "Action", class: "text-center" },
-  
+
   ];
 
   const tableActions = [
-  
+
     {
       name: "View",
       class: "eye",
@@ -73,7 +73,7 @@ const HomePageShopByOccasion = () => {
         setModalData({ data: data });
       },
     },
-  
+
     {
       name: "Edit",
       class: "edit",
@@ -85,7 +85,7 @@ const HomePageShopByOccasion = () => {
         setModalData({ data: data });
       },
     },
-  
+
     {
       name: "Delete",
       class: "delete",
@@ -116,13 +116,13 @@ const HomePageShopByOccasion = () => {
           ),
           modalTitle: "Delete Category",
         });
-  
+
       },
-  
+
     },
-  
+
   ];
-  
+
   const handleAdd = () => {
     setOpenAddModalPage(true);
     setOpenEditModalPage(false);

@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { homepageBannerSchema } from "ValidationSchema/homepageBanner";
 import { addHomepageShopByOccasion, getHomePageShopByOccasion } from "Redux/Slices/ShopByOccasion/ShopByOccasionSlice";
+
 const AddModalForm = ({
   setIsLoading,
   setAddShowErrorToast,
@@ -12,10 +13,13 @@ const AddModalForm = ({
   setAddShowToast,
   setAddShowToastMessage,
   setOpenAddModalPage,
+
 }) => {
+
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
   const [bannerImage, setBannerImage] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -27,6 +31,7 @@ const AddModalForm = ({
   });
 
   const onSubmit = (data) => {
+
     const formData = new FormData();
     formData.append("title", data?.title?.toString());
     formData.append("imageAltText", data?.imageAltText?.toString());

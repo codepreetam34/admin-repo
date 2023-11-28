@@ -61,7 +61,7 @@ const HomePageTwoAdsBanner = () => {
   ];
 
   const tableActions = [
-  
+
     {
       name: "View",
       class: "eye",
@@ -148,7 +148,7 @@ const HomePageTwoAdsBanner = () => {
   const DataTableBody = () => {
     return (
       <tbody>
-        {banners && banners.length > 0 ? (
+        {banners && banners?.length > 0 ? (
           banners?.map((banner, index) => (
             <tr key={banner?._id}>
               <td>{index + 1}</td>
@@ -171,10 +171,10 @@ const HomePageTwoAdsBanner = () => {
                   {tableActions && tableActions?.map((action, index) => (
                     <div
                       className={action?.class?.toLowerCase()}
-                      onClick={() => action.onClick(banner)}
+                      onClick={() => action?.onClick(banner)}
                     >
                       <a href="#">
-                        <i className={action.icon}></i>
+                        <i className={action?.icon}></i>
                       </a>
                     </div>
                   ))}

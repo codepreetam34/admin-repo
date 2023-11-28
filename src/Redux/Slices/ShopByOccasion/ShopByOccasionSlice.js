@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../Services/AxiosInstance";
-import { GET_HOMEPAGE_SHOP_BY_OCCASION_BANNER, ADD_HOMEPAGE_SHOP_BY_OCCASION_BANNER, DELETE_HOMEPAGE_SHOP_BY_OCCASION_BANNER,EDIT_HOMEPAGE_SHOP_BY_OCCASION_BANNER } from "./type";
+import { GET_HOMEPAGE_SHOP_BY_OCCASION_BANNER, ADD_HOMEPAGE_SHOP_BY_OCCASION_BANNER, DELETE_HOMEPAGE_SHOP_BY_OCCASION_BANNER, EDIT_HOMEPAGE_SHOP_BY_OCCASION_BANNER } from "./type";
 
 export const getHomePageShopByOccasion = createAsyncThunk(
   GET_HOMEPAGE_SHOP_BY_OCCASION_BANNER,
   async (payload, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`/bannerTwoAds/getBanners`);
+      const response = await axiosInstance.post(`/bannerShopByOccasion/getBanners`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -18,7 +18,7 @@ export const addHomepageShopByOccasion = createAsyncThunk(
   ADD_HOMEPAGE_SHOP_BY_OCCASION_BANNER,
   async (payload, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`/bannerTwoAds/create`, payload);
+      const response = await axiosInstance.post(`/bannerShopByOccasion/create`, payload);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -30,7 +30,7 @@ export const editHomepageShopByOccasion = createAsyncThunk(
   EDIT_HOMEPAGE_SHOP_BY_OCCASION_BANNER,
   async (payload, thunkAPI) => {
     try {
-      const response = await axiosInstance.patch(`/bannerTwoAds/update`, payload);
+      const response = await axiosInstance.patch(`/bannerShopByOccasion/update`, payload);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -42,7 +42,7 @@ export const deleteHomepageShopByOccasion = createAsyncThunk(
   DELETE_HOMEPAGE_SHOP_BY_OCCASION_BANNER,
   async (bannerId, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`/bannerTwoAds/delete`, bannerId);
+      const response = await axiosInstance.post(`/bannerShopByOccasion/delete`, bannerId);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });

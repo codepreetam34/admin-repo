@@ -12,7 +12,7 @@ const ViewHomepageBannerPage = ({ bannerData, setOpenViewModalPage }) => {
           style={{ cursor: "pointer" }}
           onClick={() => setOpenViewModalPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>View Homepage Two Ads Banner</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>View Homepage Shop By Occasion</span>
         </div>
       </div>
       <Container className="">

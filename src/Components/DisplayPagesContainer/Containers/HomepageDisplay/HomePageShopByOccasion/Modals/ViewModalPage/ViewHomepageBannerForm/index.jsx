@@ -8,7 +8,7 @@ const ViewModalForm = ({ bannerData }) => {
         <Form className="user_form" style={{ padding: "2rem" }}>
           <Row>
             <div className="view-details-heading pb-4 text-center">
-              <strong>Homepage Two Ads Banner Details</strong>
+              <strong>Homepage Shop By Occasion Details</strong>
             </div>
 
             <Col md={6}>
