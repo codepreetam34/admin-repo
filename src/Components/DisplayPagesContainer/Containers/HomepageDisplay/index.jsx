@@ -9,7 +9,6 @@ import Wrapper from "../../../Wrapper";
 // import Orangebox from "../../../../../src/images/orangebox.png";
 // import Bluebox from "../../../../../src/images/bluebox.png";
 
-
 const HomepageTwoAdsBanner = () => {
 
   const Greenbox = '<i class="fa-solid fa-house-circle-check fa-2xl" style="color: #00ada3;"></i>';
@@ -17,8 +16,8 @@ const HomepageTwoAdsBanner = () => {
   const Orangebox = '<i class="fa-brands fa-product-hunt fa-2xl" style="color: #ff9f5e;"></i>';
   const Bluebox = '<i class="fa-solid fa-cart-plus fa-2xl" style="color: #31456c;"></i>'
 
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  
   const pageInfo = [
     {
       boxHref: "/display-pages/homepage-display/homepage-banner-list",
@@ -56,7 +55,6 @@ const HomepageTwoAdsBanner = () => {
               <p>Welcome to all display screen page</p>
             </div>
           </Col>
-
           <Col md={12}>
             <div
               className="text_heading pt-4"
@@ -65,13 +63,12 @@ const HomepageTwoAdsBanner = () => {
             >
               <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
             </div>
-
             <div className="fourboxarea">
               <Row>
                 {pageInfo &&
                   pageInfo?.map((info, index) => (
                     <Col md={6} xl={6} xxl={3} key={index} style={{ paddingBottom: "2rem" }}>
-                      <Link to={info?.boxHref} className="link-text">
+                      <Link href={info?.boxHref} className="link-text">
                         <div className={`fourbox ${info?.imgClass} d-flex justify-content-center flex-column align-items-center`}>
                           <div class="">
                             <div className="pb-1">
@@ -82,7 +79,6 @@ const HomepageTwoAdsBanner = () => {
                                 loading="lazy"
                               /> */}
                               <span dangerouslySetInnerHTML={{ __html: info.imgSrc }} />
-
                             </div>
                           </div>
                           <h4 style={{

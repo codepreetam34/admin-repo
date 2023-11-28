@@ -24,7 +24,8 @@ import {
   ADD_PRODUCTS,
   TAGS,
   HOMEPAGE_TWO_ADS_BANNER,
-  HOMEPAGE_SHOP_BY_OCCASION
+  HOMEPAGE_SHOP_BY_OCCASION,
+  HOMEPAGE_PAMPER_ZONE
 } from "Routes/Routes";
 import PrivateRoutes from "Routes/PrivateRoutes";
 import SetupNewPassword from "Components/LogIn/SetupNewPassword";
@@ -33,6 +34,8 @@ import Products from "Pages/Products";
 import AddProduct from "Components/ProductsPage/Components/AddProductPage";
 import TagsPage from "Components/TagsPage";
 import HomePageShopByOccasion from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageShopByOccasion";
+import HomePagePamperZone from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePagePamperZone";
+
 const Routing = () => {
   return (
     <BrowserRouter>
@@ -56,17 +59,22 @@ const Routing = () => {
           path={HOMEPAGE_BANNER_LIST}
           element={<PrivateRoutes Component={HomepageBannerList} />}
         />
-                <Route
+        <Route
           path={HOMEPAGE_TWO_ADS_BANNER}
           element={<PrivateRoutes Component={HomepageTwoAdsBanner} />}
         />
-        
+
 
         <Route
           path={HOMEPAGE_SHOP_BY_OCCASION}
           element={<PrivateRoutes Component={HomePageShopByOccasion} />}
         />
-        
+
+        <Route
+          path={HOMEPAGE_PAMPER_ZONE}
+          element={<PrivateRoutes Component={HomePagePamperZone} />}
+        />
+
 
         <Route
           path={CATEGORY}

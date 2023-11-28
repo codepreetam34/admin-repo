@@ -18,6 +18,8 @@ export const HOMEPAGE_TWO_ADS_BANNER =
 export const HOMEPAGE_SHOP_BY_OCCASION =
   "/display-pages/homepage-display/homepage-shop-by-occasion";
 
+export const HOMEPAGE_PAMPER_ZONE =
+  "/display-pages/homepage-display/homepage-pamper-zone";
 
 export const CATEGORY = "/category";
 export const CATEGORY_CHILDREN = "/category/category-child/:id";

@@ -8,6 +8,7 @@ import authReducer from "Redux/Slices/Login/auth.slice";
 import TagsSlice from "Redux/Slices/Tags/TagsSlice";
 import TwoAdsBannerSlice from "Redux/Slices/TwoAdsBanner/TwoAdsBannerSlice";
 import ShopByOccasionSlice from "Redux/Slices/ShopByOccasion/ShopByOccasionSlice";
+import PamperZoneSlice from "Redux/Slices/PamperZone/PamperZoneSlice";
 
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   tagList: TagsSlice,
   twoAdsBanner: TwoAdsBannerSlice,
   shopByOccasion: ShopByOccasionSlice,
+  pamperZone: PamperZoneSlice,
 });
 
 const initializeStore = () =>
