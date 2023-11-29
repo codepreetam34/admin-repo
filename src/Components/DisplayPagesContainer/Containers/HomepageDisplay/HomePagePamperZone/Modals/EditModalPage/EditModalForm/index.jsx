@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { homepageBannerSchema } from "ValidationSchema/homepageBanner";
 import { editHomepagePamperZone, getHomePagePamperZone } from "Redux/Slices/PamperZone/PamperZoneSlice";
+
 const EditModalForm = ({
   setAddShowErrorToast,
   bannerById,
@@ -13,11 +14,13 @@ const EditModalForm = ({
   setOpenEditModalPage,
   setAddShowToastMessage,
 }) => {
+
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
   const [viewBannerImage, setViewBannerImage] = useState("");
   const [bannerImage, setBannerImage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
   const {
     register,
     handleSubmit,
@@ -38,6 +41,7 @@ const EditModalForm = ({
   }, [bannerById, reset]);
 
   const onSubmit = (data) => {
+
     const formData = new FormData();
     formData.append("title", data?.title?.toString());
     formData.append("imageAltText", data?.imageAltText?.toString());

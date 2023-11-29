@@ -4,20 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import Wrapper from "../../../Wrapper";
 
 // Import the images
-// import Greenbox from "../../../../../src/images/greenbox.png";
+import Redbox from "../../../../../src/images/twoBannerAdsIcon.svg";
 // import Redbox from "../../../../../src/images/redbox.png";
 // import Orangebox from "../../../../../src/images/orangebox.png";
 // import Bluebox from "../../../../../src/images/bluebox.png";
 
 const HomepageTwoAdsBanner = () => {
 
-  const Greenbox = '<i class="fa-solid fa-house-circle-check fa-2xl" style="color: #00ada3;"></i>';
-  const Redbox = '<i class="fa-solid fa-clipboard-list fa-2xl" style="color: #801319;"></i>';
-  const Orangebox = '<i class="fa-brands fa-product-hunt fa-2xl" style="color: #ff9f5e;"></i>';
-  const Bluebox = '<i class="fa-solid fa-cart-plus fa-2xl" style="color: #31456c;"></i>'
+  const Greenbox = '<i class="fa-solid fa-landmark fa-2xl" style="color: #00ada3;"></i>';
+  // const Redbox = '<i class="fa-solid fa-clipboard-list fa-2xl" style="color: #801319;"></i>';
+  const Orangebox = '<i class="fa-solid fa-gift fa-2xl" style="color: #ff9f4b;"></i>';
+  const Bluebox = '<i class="fa-solid fa-pager fa-2xl" style="color: #31456c;"></i>'
 
   const navigate = useNavigate();
-  
+
   const pageInfo = [
     {
       boxHref: "/display-pages/homepage-display/homepage-banner-list",
@@ -68,17 +68,18 @@ const HomepageTwoAdsBanner = () => {
                 {pageInfo &&
                   pageInfo?.map((info, index) => (
                     <Col md={6} xl={6} xxl={3} key={index} style={{ paddingBottom: "2rem" }}>
-                      <Link href={info?.boxHref} className="link-text">
+                      <Link to={info?.boxHref} className="link-text">
                         <div className={`fourbox ${info?.imgClass} d-flex justify-content-center flex-column align-items-center`}>
                           <div class="">
                             <div className="pb-1">
-                              {/* <img
-                                src={info?.imgSrc}
-                                className="img-fluid"
-                                alt=""
-                                loading="lazy"
-                              /> */}
-                              <span dangerouslySetInnerHTML={{ __html: info.imgSrc }} />
+                              {
+                                info.imgClass == "redbox" ? <img
+                                  src={info?.imgSrc}
+                                  className="img-fluid"
+                                  alt=""
+                                  loading="lazy"
+                                /> : <span dangerouslySetInnerHTML={{ __html: info.imgSrc }} />
+                              }
                             </div>
                           </div>
                           <h4 style={{
