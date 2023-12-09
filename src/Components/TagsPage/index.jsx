@@ -6,14 +6,15 @@ import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import { Link } from "react-router-dom";
 import DeleteDataModal from "./DeleteDataModal";
 import DynamicModal from "Constants/DynamicModal";
-import AddTags from "./AddTags";
 import EditTags from "./EditTags";
 import ViewTags from "./ViewTags";
+import AddTagsPage from "./AddTagsPage";
+import { getTags } from "Redux/Slices/Tags/TagsSlice";
 
 const TagsPage = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [openAddProductPage, setOpenAddProductPage] = useState(false);
+  const [openAddTagsPage, setOpenAddTagsPage] = useState(false);
   const [openEditProductPage, setOpenEditProductPage] = useState(false);
   const [openViewProductPage, setOpenViewProductPage] = useState(false);
   const [addShowErrorToast, setAddShowErrorToast] = useState(false);
@@ -22,7 +23,11 @@ const TagsPage = () => {
   const [addShowToast, setAddShowToast] = useState(false);
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [showModal, setShowModal] = useState(false);
-  const tagList = useSelector((state) => state?.tagList?.tags);
+  useEffect(() => {
+    dispatch(getTags())
+  }, [dispatch])
+  const tagList = useSelector((state) => state?.tagList?.tagsList?.tags);
+  console.log("tagList ", tagList)
   const InitialRender = () => {
     return (
       <>
@@ -95,24 +100,38 @@ const TagsPage = () => {
           tagList?.map((tag, index) => (
             <tr key={tag?._id}>
               <td>{index + 1}</td>
-              <td>{tag?.name}</td>
-              <td>{tag?.categoryName}</td>
+              <td>{tag?.tagName}</td>
+              <td>
+                <Row>
+                  {tag?.categories.map((category, categoryIndex) => (
 
+                    <Col md={6} key={categoryIndex}>
+                      <strong>{category.name}</strong>
+                      <ul>
+                        {category.options.map((option, optionIndex) => (
+                          <li key={optionIndex}>{option}</li>
+                        ))}
+                      </ul>
+                    </Col>
+                  ))}
+                </Row>
+              </td>
               <td>
                 <div
                   className="table_icons d-flex align-items-center justify-content-center"
                   key={index}
                 >
-                  {tableActions && tableActions?.map((action, index) => (
-                    <div
-                      className={action?.class?.toLowerCase()}
-                      onClick={() => action.onClick(tag)}
-                    >
-                      <Link to="#">
-                        <i className={action.icon}></i>
-                      </Link>
-                    </div>
-                  ))}
+                  {tableActions &&
+                    tableActions?.map((action, index) => (
+                      <div
+                        className={action?.class?.toLowerCase()}
+                        onClick={() => action.onClick(tag)}
+                      >
+                        <Link to="#">
+                          <i className={action.icon}></i>
+                        </Link>
+                      </div>
+                    ))}
                 </div>
               </td>
             </tr>
@@ -129,10 +148,11 @@ const TagsPage = () => {
       </tbody>
     );
   };
+
   const tableHeaders = [
     { title: "S.No.", class: "" },
-    { title: "Title", class: "" },
-    { title: "Category", class: "" },
+    { title: "Tag Type", class: "" },
+    { title: "Tag Category", class: "" },
     { title: "Action", class: "text-center" },
   ];
 
@@ -141,13 +161,13 @@ const TagsPage = () => {
       name: "View",
       class: "eye",
       icon: "fa-solid fa-eye",
-      onClick: (data) => {},
+      onClick: (data) => { },
     },
     {
       name: "Edit",
       class: "edit",
       icon: "far fa-edit",
-      onClick: (data) => {},
+      onClick: (data) => { },
     },
     {
       name: "Delete",
@@ -184,7 +204,10 @@ const TagsPage = () => {
     },
   ];
 
-  const handleAdd = () => {};
+  const handleAdd = () => {
+    setOpenAddTagsPage(true);
+    // setModalData({ type: "Add", data: null });
+  };
   return (
     <Wrapper>
       <div className="user_management_list">
@@ -203,9 +226,9 @@ const TagsPage = () => {
           ) : (
             <>
               <InitialRender />{" "}
-              {openAddProductPage && openAddProductPage ? (
-                <AddTags
-                  setOpenAddProductPage={setOpenAddProductPage}
+              {openAddTagsPage && openAddTagsPage ? (
+                <AddTagsPage
+                  setOpenAddTagsPage={setOpenAddTagsPage}
                   setIsLoading={setIsLoading}
                   setAddShowErrorToast={(err) => {
                     setAddShowErrorToast(err);

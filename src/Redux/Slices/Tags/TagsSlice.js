@@ -13,7 +13,7 @@ export const editTags = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log("payload ", payload);
-      const response = await axiosInstance.patch(`category/update`, payload);
+      const response = await axiosInstance.patch(`tags/update`, payload);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -25,7 +25,7 @@ export const getTagsById = createAsyncThunk(
   TAGS_BY_ID,
   async (id, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(`category/${id}`);
+      const response = await axiosInstance.get(`tags/${id}`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -37,7 +37,7 @@ export const deleteTags = createAsyncThunk(
   DELETE_TAGS,
   async (idPayload, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`category/delete`, {
+      const response = await axiosInstance.post(`tags/delete`, {
         payload: idPayload,
       });
 
@@ -59,7 +59,7 @@ export const addTags = createAsyncThunk(ADD_TAGS, async (payload, thunkAPI) => {
 
 export const getTags = createAsyncThunk(GET_TAGS, async (payload, thunkAPI) => {
   try {
-    const response = await axiosInstance.get(`/category/tags/get`);
+    const response = await axiosInstance.get(`/tags/getTags`);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue({ error: error });
