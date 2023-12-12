@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "Components/Wrapper";
-import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
+import { Row, Col, Form, Table, InputGroup, Spinner, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Constants/DynamicModal";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import EditProductPage from "./Components/EditProductPage";
 import ViewProductPage from "./Components/ViewProductPage";
 import DeleteDataModal from "./Components/DeleteDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
+import { getCategory } from "Redux/Slices/Category/CategorySlice";
 
 const ProductsPage = () => {
 
@@ -23,6 +24,9 @@ const ProductsPage = () => {
   const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
   const [addShowToastMessage, setAddShowToastMessage] = useState("");
   const [addShowToast, setAddShowToast] = useState(false);
+  const [defaultCategory, setDefaultCategory] = useState();
+  const [defaultCategoryName, setDefaultCategoryName] = useState();
+  const [searchInput, setSearchInput] = useState("");
 
   const dispatch = useDispatch();
 
@@ -40,10 +44,19 @@ const ProductsPage = () => {
         })
         .catch(() => setIsLoading(false));
 
-      } else {
+    } else {
       setIsLoading(false);
     }
   }, [dispatch]);
+
+  const handleAdd = () => {
+    setOpenAddProductPage(true);
+    // setModalData({ type: "Add", data: null });
+  };
+  const handleInputChange = (e) => {
+    console.log("Input changed:", e.target.value);
+    setSearchInput(e.target.value);
+  };
 
   const tableHeaders = [
     { title: "S.No.", class: "" },
@@ -107,120 +120,111 @@ const ProductsPage = () => {
     },
   ];
 
-  const handleAdd = () => {
-    setOpenAddProductPage(true);
-    // setModalData({ type: "Add", data: null });
-  };
-  const DataTableHeader = () => {
-    return (
-      <thead>
-        <tr>
-          {tableHeaders &&
-            tableHeaders?.map((header, index) => (
-              <th className={header?.class} key={index}>
-                {header?.title}
-              </th>
-            ))}
-        </tr>
-      </thead>
-    );
+  const getFilteredProducts = () => {
+    if (defaultCategory) {
+      if (defaultCategory == "All") {
+        return productsList;
+      }
+      return productsList?.filter((product) => product?.category === defaultCategory);
+    }
+    return productsList;
   };
 
-  const DataTableBody = () => {
-    return (
-      <tbody>
-        {productsList && productsList?.length > 0 ? (
-          productsList?.map((product, index) => (
-            <tr key={product?._id}>
-              <td>{index + 1}</td>
-              <td>{product?.name}</td>
-              <td>{product?.categoryName}</td>
-              <td>
-                <img
-                  src={product?.productPictures[0]?.img}
-                  style={{ borderRadius: "10px" }}
-                  alt=""
-                  width={70}
-                  height={70}
-                  loading="lazy"
-                />
-              </td>
-              <td>
-                <div
-                  className="table_icons d-flex align-items-center justify-content-center"
-                  key={index}
-                >
-                  {tableActions && tableActions?.map((action, index) => (
-                    <div
-                      className={action?.class?.toLowerCase()}
-                      onClick={() => action?.onClick(product)}
-                    >
-                      <Link to="#">
-                        <i className={action?.icon}></i>
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td>
-              <div className="d-flex justify-content-center pt-4">
-                <p className="text-red">Product list is empty !!</p>
-              </div>
-            </td>
-          </tr>
-        )}
-      </tbody>
-    );
-  };
+  const getSearchedAndFilteredProducts = () => {
+    if (searchInput) {
+      const searchQuery = searchInput.toLowerCase();
+      const searchedProducts = productsList?.filter((product) =>
+        product?.name.toLowerCase().includes(searchQuery)
+      );
 
-  const InitialRender = () => {
-    return (
-      <>
-        <Col md={4}>
-          <div className="user_heading">
-            <h3 style={{ textTransform: "capitalize" }}>{"All Products"}</h3>
-            <p>Welcome to All Products page</p>
-          </div>
-        </Col>
-        <Col md={4} style={{ paddingTop: "1.875rem" }}>
-          <div className="manage_searchbar">
-            <InputGroup className="">
-              <InputGroup.Text id="basic-addon1" className="">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </InputGroup.Text>
-              <Form.Control
-                placeholder="Search NFT's"
-                className=""
-                aria-label="Search NFT's"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-          </div>
-        </Col>
-        <Col md={4}>
-          <div className="add_filter_btn d-flex justify-content-end">
-            <div className="bgbtnred" onClick={handleAdd}>
-              Add New Product
-            </div>
-          </div>
-        </Col>
-      </>
-    );
+      if (defaultCategory && defaultCategory !== "All") {
+        // Filter by category if a specific category is selected
+        return searchedProducts?.filter(
+          (product) => product?.category === defaultCategory
+        );
+      }
+
+      return searchedProducts;
+    }
+
+    // If no search query, return products filtered by category or all products
+    if (defaultCategory && defaultCategory !== "All") {
+      return productsList?.filter((product) => product?.category === defaultCategory);
+    }
+
+    return productsList; // If defaultCategory is "All" or not specified, return all products
   };
 
   const RenderTable = () => {
+    const filteredProducts = getFilteredProducts();
+    const searchedProducts = getSearchedAndFilteredProducts();
+
+    const displayProducts = searchInput ? searchedProducts : defaultCategory ? filteredProducts : searchedProducts;
+
     return (
       <Col md={12}>
         <div className="user_table">
           <div className="nftstable">
             <div className="tablearea">
               <Table responsive className="m-0">
-                <DataTableHeader />
-                <DataTableBody />
+                <thead>
+                  <tr>
+                    {tableHeaders &&
+                      tableHeaders?.map((header, index) => (
+                        <th className={header?.class} key={index}>
+                          {header?.title}
+                        </th>
+                      ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {displayProducts && displayProducts?.length > 0 ? (
+                    displayProducts?.map((product, index) => {
+                      return (
+                        <tr key={product?._id}>
+                          <td>{index + 1}</td>
+                          <td>{product?.name}</td>
+                          <td>{product?.categoryName}</td>
+                          <td>
+                            <img
+                              src={product?.productPictures[0]?.img}
+                              style={{ borderRadius: "10px" }}
+                              alt=""
+                              width={70}
+                              height={70}
+                              loading="lazy"
+                            />
+                          </td>
+                          <td>
+                            <div
+                              className="table_icons d-flex align-items-center justify-content-center"
+                              key={index}
+                            >
+                              {tableActions && tableActions?.map((action, index) => (
+                                <div
+                                  className={action?.class?.toLowerCase()}
+                                  onClick={() => action?.onClick(product)}
+                                >
+                                  <Link to="#">
+                                    <i className={action?.icon}></i>
+                                  </Link>
+                                </div>
+                              ))}
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })
+                  ) : (
+                    <tr>
+                      <td>
+                        <div className="d-flex justify-content-center pt-4">
+                          <p className="text-red">Product list is empty !!</p>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
               </Table>
             </div>
           </div>
@@ -228,6 +232,36 @@ const ProductsPage = () => {
       </Col>
     );
   };
+
+  const handleSelectCategory = (e) => {
+    setDefaultCategory(e.target.value);
+    const categoryIdToFind = e.target.value;
+    const foundCategory = categoryList.find(
+      (item) => item._id === categoryIdToFind
+    );
+    if (foundCategory) {
+      setDefaultCategoryName(foundCategory?.name);
+    } else {
+      console.log("Category not found ", defaultCategoryName);
+    }
+  };
+
+  const categoryList = useSelector(
+    (state) => state?.CategoryList?.categoryList?.categoryList
+  );
+
+  useEffect(() => {
+    if (!categoryList || categoryList.length === 0) {
+      dispatch(getCategory())
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch]);
+
 
   return (
     <Wrapper>
@@ -246,7 +280,75 @@ const ProductsPage = () => {
             </div>
           ) : (
             <>
-              <InitialRender />
+              <Container>
+                <Col md={12}>
+
+                  <Row>
+
+                    <Col md={4}>
+                      <div className="user_heading">
+                        <h3 style={{ textTransform: "capitalize" }}>{"All Products"}</h3>
+                        <p>Welcome to All Products page</p>
+                      </div>
+                    </Col>
+                    <Col md={4} style={{ paddingTop: "1rem" }}>
+                      <div className="manage_searchbar">
+                        <InputGroup className="">
+                          <InputGroup.Text id="basic-addon1" className="">
+                            <i className="fa-solid fa-magnifying-glass"></i>
+                          </InputGroup.Text>
+
+                          <Form.Control
+                            placeholder="Search NFT's"
+                            value={searchInput}
+                            onChange={handleInputChange}
+                          />
+                        </InputGroup>
+                      </div>
+                    </Col>
+                    <Col md={4} className="d-flex justify-content-end">
+                      <div className="add_filter_btn">
+                        <div className="bgbtnred" onClick={handleAdd}>
+                          Add New Product
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+
+                  {/* <Row>
+                    <div style={{ paddingTop: "1.875rem" }}><i class="fa-solid fa-filter"></i> Filter Products By Category</div>
+                    <Col md={6} style={{ paddingTop: "0.5rem" }}>
+                      <Form.Group className="form-group-padding-bottom">
+                        <div className="select-wrapper">
+                          <Form.Control
+                            as="select"
+                            name="categoryId"
+                            placeholder="Filter by Category"
+                            id="categoryId"
+                            value={defaultCategory}
+                            onChange={(e) => handleSelectCategory(e)}
+                          >
+                            <option selected style={{ fontWeight: "600" }}>
+                              {"All"}
+                            </option>
+                            {categoryList &&
+                              categoryList?.map((option) => (
+                                <option key={option._id} value={option?._id}>
+                                  {option?.name}
+                                </option>
+                              ))}
+                          </Form.Control>
+                          <div className="select-arrow">
+
+                          </div>
+                        </div>
+                      </Form.Group>
+
+                    </Col>
+
+                  </Row> */}
+                </Col>
+              </Container>
               {openAddProductPage && openAddProductPage ? (
                 <AddProductPage
                   setOpenAddProductPage={setOpenAddProductPage}
