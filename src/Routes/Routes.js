@@ -28,3 +28,4 @@ export const PRODUCTS = "/products";
 export const ADD_PRODUCTS = "/products/add-product";
 
 export const TAGS = "/tags";
+export const REGISTER_VENDOR = "/register-vendor";

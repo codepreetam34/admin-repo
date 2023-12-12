@@ -212,9 +212,9 @@ const HomePagePamperZone = () => {
                 <i className="fa-solid fa-magnifying-glass"></i>
               </InputGroup.Text>
               <Form.Control
-                placeholder="Search NFT's"
+                placeholder="Search Pamper Zone"
                 className=""
-                aria-label="Search NFT's"
+                aria-label="Search Pamper Zone"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>

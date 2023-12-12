@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "Redux/Slices/Login/auth.slice";
 import { ErrorToaster } from "Constants/utils";
+import { REGISTER_VENDOR } from "Routes/Routes";
 
 const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const [showErrorToast, setShowErrorToast] = useState(false);
   const [showErrorToastMessage, setShowErrorToastMessage] = useState();
   const [sideBarLink, setSideBarLink] = useState(false);
+  const [openAddProductPage, setOpenAddProductPage] = useState(false);
   const handleLogOut = () => {
     dispatch(logout())
       .then((response) => {
@@ -35,12 +37,16 @@ const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
         setShowErrorToastMessage(err?.error?.response?.data?.message);
       });
   };
-
+  const handleRegisterVendor = () => {
+    setOpenAddProductPage(true);
+    navigate(REGISTER_VENDOR)
+    // setModalData({ type: "Add", data: null });
+  };
   return (
     <>
       <div className="topbar">
         <Row className="align-items-center">
-          <Col xs={7} md={6}>
+          <Col md={4}>
             <div className="d-flex align-items-center">
               <div
                 className="toggle_button me-3 d-none d-xl-block"
@@ -59,7 +65,7 @@ const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
                 <i className="fa-solid fa-bars"></i>
               </div>
               <div className="searchbar">
-                <InputGroup className="">
+                <InputGroup className="" style={{ flexWrap: 'nowrap' }}>
                   <InputGroup.Text id="basic-addon1" className="">
                     <i className="fa-solid fa-magnifying-glass"></i>
                   </InputGroup.Text>
@@ -73,29 +79,61 @@ const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               </div>
             </div>
           </Col>
-          <Col xs={5} md={6}>
-            <div className="userprofile text-end">
-              <Dropdown>
-                <Dropdown.Toggle
-                  variant=""
-                  className="p-0"
-                  id="dropdown-basic"
-                  style={{ textTransform: "capitalize" }}
-                >
-                  <img src={User} className="img-fluid" alt="" loading="lazy" />{" "}
-                  {authData && authData?.fullName}
-                </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  {/* <Dropdown.Item href="#" onClick={() => setShowToast(true)}>
+          <Col md={8}>
+            <Row className="justify-content-end align-items-center ">
+              <Col md={4} className="justify-content-end d-flex">
+                <div style={{
+                  backgroundColor: "#801317",
+                  borderRadius: "100px",
+                  padding: "12px 50px",
+                  fontSize: "18px",
+                  fontWeight: "400",
+                  color: "#ffffff",
+                  marginTop: "8px",
+                  marginRight: "30px",
+                  display: "inline-block",
+                  textDecoration: "none",
+                  transition: "0.3s",
+                  padding: "6px 15px",
+                  borderRadius: "4px",
+                  margin: "0",
+                  marginLeft: "15px",
+                  boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.1)",
+                  fontSize: "14px",
+                  cursor: "pointer"
+                }}>
+                  <div className="bgbtnred" onClick={handleRegisterVendor}>
+                    Register Vendor
+                  </div>
+                </div>
+              </Col>
+              <Col md={4}>
+                <div className="userprofile text-end">
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant=""
+                      className="p-0"
+                      id="dropdown-basic"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      <img src={User} className="img-fluid" alt="" loading="lazy" />{" "}
+                      {authData && authData?.fullName}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {/* <Dropdown.Item href="#" onClick={() => setShowToast(true)}>
                     Profile
                   </Dropdown.Item> */}
-                  <Dropdown.Item href="#" onClick={handleLogOut}>
-                    Logout
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+                      <Dropdown.Item href="#" onClick={handleLogOut}>
+                        Logout
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              </Col>
+            </Row>
+
           </Col>
         </Row>
         <ErrorToaster

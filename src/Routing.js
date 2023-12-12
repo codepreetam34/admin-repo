@@ -25,7 +25,8 @@ import {
   TAGS,
   HOMEPAGE_TWO_ADS_BANNER,
   HOMEPAGE_SHOP_BY_OCCASION,
-  HOMEPAGE_PAMPER_ZONE
+  HOMEPAGE_PAMPER_ZONE,
+  REGISTER_VENDOR
 } from "Routes/Routes";
 import PrivateRoutes from "Routes/PrivateRoutes";
 import SetupNewPassword from "Components/LogIn/SetupNewPassword";
@@ -35,6 +36,7 @@ import AddProduct from "Components/ProductsPage/Components/AddProductPage";
 import TagsPage from "Components/TagsPage";
 import HomePageShopByOccasion from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePageShopByOccasion";
 import HomePagePamperZone from "Components/DisplayPagesContainer/Containers/HomepageDisplay/HomePagePamperZone";
+import RegisterVendor from "Components/RegisterVendorPage";
 
 const Routing = () => {
   return (
@@ -48,6 +50,11 @@ const Routing = () => {
         <Route
           path={DISPLAY_PAGES}
           element={<PrivateRoutes Component={DisplayPages} />}
+        />
+
+        <Route
+          path={REGISTER_VENDOR}
+          element={<PrivateRoutes Component={RegisterVendor} />}
         />
 
         <Route

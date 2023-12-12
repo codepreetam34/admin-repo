@@ -162,9 +162,9 @@ const ProductsByCategoryPage = () => {
                 <i className="fa-solid fa-magnifying-glass"></i>
               </InputGroup.Text>
               <Form.Control
-                placeholder="Search NFT's"
+                placeholder="Search Product"
                 className=""
-                aria-label="Search NFT's"
+                aria-label="Search Product"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>

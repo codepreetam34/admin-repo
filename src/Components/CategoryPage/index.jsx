@@ -302,9 +302,9 @@ const CategoryPage = () => {
                 <i className="fa-solid fa-magnifying-glass"></i>
               </InputGroup.Text>
               <Form.Control
-                placeholder="Search NFT's"
+                placeholder="Search Category"
                 className=""
-                aria-label="Search NFT's"
+                aria-label="Search Category"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>

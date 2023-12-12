@@ -299,7 +299,7 @@ const ProductsPage = () => {
                           </InputGroup.Text>
 
                           <Form.Control
-                            placeholder="Search NFT's"
+                            placeholder="Search Product"
                             value={searchInput}
                             onChange={handleInputChange}
                           />

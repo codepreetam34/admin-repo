@@ -211,9 +211,9 @@ const HomePageShopByOccasion = () => {
                 <i className="fa-solid fa-magnifying-glass"></i>
               </InputGroup.Text>
               <Form.Control
-                placeholder="Search NFT's"
+                placeholder="Search Occasion"
                 className=""
-                aria-label="Search NFT's"
+                aria-label="Search Occasion"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>

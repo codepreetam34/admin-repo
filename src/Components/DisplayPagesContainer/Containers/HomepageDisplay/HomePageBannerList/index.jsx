@@ -204,9 +204,9 @@ const HomePageBannerList = () => {
                 <i className="fa-solid fa-magnifying-glass"></i>
               </InputGroup.Text>
               <Form.Control
-                placeholder="Search NFT's"
+                placeholder="Search Banner"
                 className=""
-                aria-label="Search NFT's"
+                aria-label="Search Banner"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
