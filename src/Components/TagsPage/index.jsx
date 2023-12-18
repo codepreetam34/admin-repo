@@ -6,7 +6,7 @@ import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import { Link } from "react-router-dom";
 import DeleteDataModal from "./DeleteDataModal";
 import DynamicModal from "Constants/DynamicModal";
-import EditTags from "./EditTags";
+import EditTags from "./EditTagsPage";
 import ViewTags from "./ViewTags";
 import AddTagsPage from "./AddTagsPage";
 import { getTags } from "Redux/Slices/Tags/TagsSlice";
@@ -24,10 +24,10 @@ const TagsPage = () => {
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
-    dispatch(getTags())
-  }, [dispatch])
+    dispatch(getTags());
+  }, [dispatch]);
   const tagList = useSelector((state) => state?.tagList?.tagsList?.tags);
-  console.log("tagList ", tagList)
+  console.log("tagList ", tagList);
   const InitialRender = () => {
     return (
       <>
@@ -104,7 +104,6 @@ const TagsPage = () => {
               <td>
                 <Row>
                   {tag?.categories.map((category, categoryIndex) => (
-
                     <Col md={6} key={categoryIndex}>
                       <strong>{category.name}</strong>
                       <ul>
@@ -161,13 +160,23 @@ const TagsPage = () => {
       name: "View",
       class: "eye",
       icon: "fa-solid fa-eye",
-      onClick: (data) => { },
+      onClick: (data) => {
+        setOpenViewProductPage(true);
+        setOpenAddTagsPage(false);
+        setOpenEditProductPage(false);
+        setModalData({ data: data });
+      },
     },
     {
       name: "Edit",
       class: "edit",
       icon: "far fa-edit",
-      onClick: (data) => { },
+      onClick: (data) => {
+        setOpenEditProductPage(true);
+        setOpenViewProductPage(false);
+        setOpenAddTagsPage(false);
+        setModalData({ data: data });
+      },
     },
     {
       name: "Delete",
@@ -206,6 +215,8 @@ const TagsPage = () => {
 
   const handleAdd = () => {
     setOpenAddTagsPage(true);
+    setOpenEditProductPage(false);
+    setOpenViewProductPage(false);
     // setModalData({ type: "Add", data: null });
   };
   return (

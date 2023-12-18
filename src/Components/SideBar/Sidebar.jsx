@@ -85,7 +85,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               <i class="fa-solid fa-layer-group"></i> Display Pages
             </Nav.Link>
 
-            {/* <Nav.Link
+            <Nav.Link
               onClick={() => onhidesidebar()}
               as={NavLink}
               exact=""
@@ -97,7 +97,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
             >
               <i class="fa-solid fa-tag"></i>
               <div>Tags</div>
-            </Nav.Link> */}
+            </Nav.Link>
 
             <Nav.Link
               onClick={() => onhidesidebar()}
