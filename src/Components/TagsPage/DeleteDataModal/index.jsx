@@ -34,7 +34,7 @@ const DeleteDataModal = ({
       <Row>
         <Col md={12}>
           <div className="delete-para">
-            <p>Are you sure you want to delete "{tagName}" item?</p>
+            <p>Are you sure you want to delete "{tagName}" tag item?</p>
           </div>
         </Col>
       </Row>

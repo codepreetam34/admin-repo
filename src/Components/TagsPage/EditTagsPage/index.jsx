@@ -5,6 +5,8 @@ import EditTagsForm from "./EditTagsForm";
 const EditTagsPage = ({
   setOpenEditProductPage,
   setIsLoading,
+  productData,
+  tagId,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
@@ -30,6 +32,8 @@ const EditTagsPage = ({
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
               <EditTagsForm
+                tagId={tagId}
+                productData={productData}
                 setOpenEditProductPage={setOpenEditProductPage}
                 setIsLoading={setIsLoading}
                 setAddShowErrorToast={setAddShowErrorToast}

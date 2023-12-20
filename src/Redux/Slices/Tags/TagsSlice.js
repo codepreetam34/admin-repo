@@ -12,7 +12,7 @@ export const editTags = createAsyncThunk(
   UPDATE_TAGS,
   async (payload, thunkAPI) => {
     try {
-      console.log("payload ", payload);
+      console.log("payload " ,payload);
       const response = await axiosInstance.patch(`tags/update`, payload);
       return response.data;
     } catch (error) {

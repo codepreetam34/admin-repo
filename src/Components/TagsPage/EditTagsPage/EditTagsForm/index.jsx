@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
-import { addTags, getTags } from "Redux/Slices/Tags/TagsSlice";
+import { editTags, getTags } from "Redux/Slices/Tags/TagsSlice";
 
 const EditTagsForm = ({
   setOpenEditProductPage,
+  tagId,
+  productData,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
@@ -16,16 +18,31 @@ const EditTagsForm = ({
   const [tagType, setTagType] = useState("");
   const [categories, setCategories] = useState([{ name: "", options: [""] }]);
 
+  useEffect(() => {
+    setTagType(productData?.tagType);
+    setCategories(productData?.categories);
+  }, [productData]);
   const handleCategoryNameChange = (index, value) => {
     const updatedCategories = [...categories];
+    // Create a deep copy of the nested object
+    updatedCategories[index] = JSON.parse(
+      JSON.stringify(updatedCategories[index])
+    );
     updatedCategories[index].name = value;
     setCategories(updatedCategories);
   };
 
   const handleOptionChange = (categoryIndex, optionIndex, value) => {
-    const updatedCategories = [...categories];
-    updatedCategories[categoryIndex].options[optionIndex] = value;
-    setCategories(updatedCategories);
+    setCategories((prevCategories) => {
+      const updatedCategories = [...prevCategories];
+      updatedCategories[categoryIndex] = {
+        ...updatedCategories[categoryIndex],
+        options: updatedCategories[categoryIndex].options.map((o, i) =>
+          i === optionIndex ? value : o
+        ),
+      };
+      return updatedCategories;
+    });
   };
 
   const handleAddCategory = () => {
@@ -45,23 +62,29 @@ const EditTagsForm = ({
   };
 
   const handleRemoveOption = (categoryIndex, optionIndex) => {
-    const updatedOptions = [...categories[categoryIndex].options];
-    updatedOptions.splice(optionIndex, 1);
-
     const updatedCategories = [...categories];
-    updatedCategories[categoryIndex].options = updatedOptions;
-
+    
+    // Create a deep copy of the options array
+    const updatedOptions = [...updatedCategories[categoryIndex].options];
+    updatedOptions.splice(optionIndex, 1);
+  
+    updatedCategories[categoryIndex] = {
+      ...updatedCategories[categoryIndex],
+      options: updatedOptions,
+    };
+  
     setCategories(updatedCategories);
   };
+  
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = { tagType, categories };
-    console.log("Form Data:", formData);
-
+    const formData = { tagType, categories, tagId };
     try {
-      dispatch(addTags(formData)).then((res) => {
+      dispatch(editTags(formData)).then((res) => {
         setIsLoading(true);
+        console.log("res ", res);
         if (
           res?.paylaod?.error?.response?.status === 400 ||
           res?.paylaod?.error?.response?.status === 500
@@ -107,6 +130,7 @@ const EditTagsForm = ({
               <div className="select-wrapper">
                 <Form.Control
                   as="select"
+                  disabled
                   name="tagType"
                   id="tagType"
                   type="text"
@@ -149,7 +173,7 @@ const EditTagsForm = ({
                   >
                     <Form.Label>Options</Form.Label>
                     {category.options.map((option, optionIndex) => (
-                      <div className="d-flex justify-content-between align-items-center">
+                      <div className="d-flex justify-content-between align-items-center mb-3">
                         <Form.Control
                           key={optionIndex}
                           type="text"
@@ -178,7 +202,7 @@ const EditTagsForm = ({
                     ))}
 
                     <Button
-                      className="mt-3"
+                      className=""
                       variant="secondary"
                       size="sm"
                       onClick={() => handleAddOption(categoryIndex)}

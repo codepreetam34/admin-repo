@@ -7,9 +7,11 @@ import { Link } from "react-router-dom";
 import DeleteDataModal from "./DeleteDataModal";
 import DynamicModal from "Constants/DynamicModal";
 import EditTags from "./EditTagsPage";
-import ViewTags from "./ViewTags";
+import ViewTags from "./ViewTagsPage";
 import AddTagsPage from "./AddTagsPage";
 import { getTags } from "Redux/Slices/Tags/TagsSlice";
+import EditTagsPage from "./EditTagsPage";
+import ViewTagsPage from "./ViewTagsPage";
 
 const TagsPage = () => {
   const dispatch = useDispatch();
@@ -190,7 +192,7 @@ const TagsPage = () => {
           modalContent: (
             <DeleteDataModal
               tagId={data._id}
-              tagName={data?.name}
+              tagName={data?.tagName}
               setShowModal={setShowModal}
               setIsLoading={setIsLoading}
               setAddShowErrorToast={(err) => {
@@ -255,8 +257,9 @@ const TagsPage = () => {
                   }}
                 />
               ) : openEditProductPage && openEditProductPage ? (
-                <EditTags
+                <EditTagsPage
                   productData={modalData?.data}
+                  tagId={modalData?.data?._id}
                   setOpenEditProductPage={setOpenEditProductPage}
                   setIsLoading={setIsLoading}
                   setAddShowErrorToast={(err) => {
@@ -273,7 +276,7 @@ const TagsPage = () => {
                   }}
                 />
               ) : openViewProductPage && openViewProductPage ? (
-                <ViewTags
+                <ViewTagsPage
                   productData={modalData?.data}
                   setOpenViewProductPage={setOpenViewProductPage}
                 />
