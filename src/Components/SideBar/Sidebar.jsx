@@ -138,7 +138,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               }}
             >
               <i class="fa-solid fa-tag"></i>
-              <div>All Orders</div>
+              {/* <div>All Orders</div> */}
             </Nav.Link>
             <Nav.Link as={NavLink} exact="" to={LOGIN} onClick={handleLogOut}>
               <i className="fa-solid fa-arrow-right-from-bracket"></i> Log Out
