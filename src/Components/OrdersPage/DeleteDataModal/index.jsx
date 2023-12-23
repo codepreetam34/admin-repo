@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { deleteTags, getTags } from "Redux/Slices/Tags/TagsSlice";
 
 const DeleteDataModal = ({
-  tagId,
+  dataId,
   tagName,
   setShowModal,
   setAddShowErrorToast,
@@ -13,8 +13,8 @@ const DeleteDataModal = ({
   setAddShowToastMessage,
 }) => {
   const dispatch = useDispatch();
-  const onSubmit = (tagId) => {
-    dispatch(deleteTags(tagId)).then((res) => {
+  const onSubmit = (dataId) => {
+    dispatch(deleteTags(dataId)).then((res) => {
       if (res?.payload?.error?.response?.status === 400) {
         setAddShowErrorToast(true);
         setAddShowErrorToastMessage(res?.payload?.error?.response?.data?.error);
@@ -50,7 +50,7 @@ const DeleteDataModal = ({
         <Button
           variant="primary"
           onClick={() => {
-            onSubmit(tagId);
+            onSubmit(dataId);
           }}
         >
           Delete

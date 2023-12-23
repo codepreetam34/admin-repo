@@ -6,16 +6,16 @@ import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import { Link } from "react-router-dom";
 import DeleteDataModal from "./DeleteDataModal";
 import DynamicModal from "Constants/DynamicModal";
-import EditTags from "./EditModalPage";
-import ViewTags from "./ViewModalPage";
-import AddModalPage from "./AddModalPage";
-import { getTags } from "Redux/Slices/Tags/TagsSlice";
 import EditModalPage from "./EditModalPage";
 import ViewModalPage from "./ViewModalPage";
+import AddModalPage from "./AddModalPage";
+import { getTags } from "Redux/Slices/Tags/TagsSlice";
 
 const OrdersPage = () => {
+  
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  
   const [openAddModalPage, setOpenAddModalPage] = useState(false);
   const [openEditModalPage, setOpenEditModalPage] = useState(false);
   const [openViewModalPage, setOpenViewModalPage] = useState(false);
@@ -25,20 +25,27 @@ const OrdersPage = () => {
   const [addShowToast, setAddShowToast] = useState(false);
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [showModal, setShowModal] = useState(false);
+  
   useEffect(() => {
     dispatch(getTags());
   }, [dispatch]);
+  
   const tagList = useSelector((state) => state?.tagList?.tagsList?.tags);
-  console.log("tagList ", tagList);
+
+
   const InitialRender = () => {
+  
     return (
-      <>
+  
+  <>
+  
         <Col md={4}>
           <div className="user_heading">
             <h3 style={{ textTransform: "capitalize" }}>{"All Orders"}</h3>
             <p>Welcome to Orders page</p>
           </div>
         </Col>
+  
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
           <div className="manage_searchbar">
             <InputGroup className="">
@@ -46,14 +53,15 @@ const OrdersPage = () => {
                 <i className="fa-solid fa-magnifying-glass"></i>
               </InputGroup.Text>
               <Form.Control
-                placeholder="Search Tags"
+                placeholder="Search Orders"
                 className=""
-                aria-label="Search Tags"
+                aria-label="Search Orders"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
           </div>
         </Col>
+  
         {/* <Col md={4}>
           <div className="add_filter_btn d-flex justify-content-end">
             <div className="bgbtnred" onClick={handleAdd}>
@@ -61,10 +69,14 @@ const OrdersPage = () => {
             </div>
           </div>
         </Col> */}
+  
       </>
-    );
-  };
-  const RenderTable = () => {
+  
+  );
+  
+};
+
+const RenderTable = () => {
     return (
       <Col md={12}>
         <div className="user_table">
@@ -79,6 +91,7 @@ const OrdersPage = () => {
         </div>
       </Col>
     );
+
   };
   const DataTableHeader = () => {
     return (
@@ -191,7 +204,7 @@ const OrdersPage = () => {
           data: data,
           modalContent: (
             <DeleteDataModal
-              tagId={data._id}
+              dataId={data._id}
               tagName={data?.tagName}
               setShowModal={setShowModal}
               setIsLoading={setIsLoading}
@@ -221,6 +234,7 @@ const OrdersPage = () => {
   //   setOpenViewModalPage(false);
   //   // setModalData({ type: "Add", data: null });
   // };
+  
   return (
     <Wrapper>
       <div className="user_management_list">
@@ -277,7 +291,7 @@ const OrdersPage = () => {
                 />
               ) : openViewModalPage && openViewModalPage ? (
                 <ViewModalPage
-                  ModalData={modalData?.data}
+                  modalData={modalData?.data}
                   setOpenViewModalPage={setOpenViewModalPage}
                 />
               ) : (
