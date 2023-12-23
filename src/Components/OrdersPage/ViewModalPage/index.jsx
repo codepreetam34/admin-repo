@@ -1,8 +1,8 @@
 import React from "react";
 import { Col, Container } from "react-bootstrap";
-import ViewTagsForm from "./ViewTagsForm";
+import ViewModalForm from "./ViewModalForm";
 
-const ViewTagsPage = ({ productData, setOpenViewProductPage }) => {
+const ViewModalPage = ({ modalData, setOpenViewModalPage }) => {
   return (
     <Col md={12}>
       {" "}
@@ -10,9 +10,9 @@ const ViewTagsPage = ({ productData, setOpenViewProductPage }) => {
         <div
           className="text_heading"
           style={{ cursor: "pointer" }}
-          onClick={() => setOpenViewProductPage(false)}
+          onClick={() => setOpenViewModalPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>View Tags</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>View Orders</span>
         </div>
       </div>
       <Container className="">
@@ -22,7 +22,7 @@ const ViewTagsPage = ({ productData, setOpenViewProductPage }) => {
               className="tablearea"
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
-              <ViewTagsForm productData={productData} />
+              <ViewModalForm modalData={modalData} />
             </div>{" "}
           </div>
         </div>
@@ -31,4 +31,4 @@ const ViewTagsPage = ({ productData, setOpenViewProductPage }) => {
   );
 };
 
-export default ViewTagsPage;
+export default ViewModalPage;

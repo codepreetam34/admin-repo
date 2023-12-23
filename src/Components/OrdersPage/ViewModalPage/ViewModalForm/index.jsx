@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Container } from "react-bootstrap";
 
-const ViewModalForm = ({ productData }) => {
+const ViewModalForm = ({ modalData }) => {
   return (
     <>
       <div className="container product-detail-design-new">
@@ -14,11 +14,11 @@ const ViewModalForm = ({ productData }) => {
               <Col md={6} >
                 <div className="view-details p-3">
                   <strong>Tag Category Name</strong> <br />{" "}
-                  {productData?.tagName}
+                  {modalData?.tagName}
                 </div>
               </Col>
               <Row className="m-0 p-0">
-                {productData?.categories?.map((category, categoryIndex) => (
+                {modalData?.categories?.map((category, categoryIndex) => (
                   <Col md={5} className="product-detail-design-new m-3">
                     <Form.Group controlId={`categoryName-${categoryIndex}`}>
                       <Form.Label>Tag Category Type</Form.Label>

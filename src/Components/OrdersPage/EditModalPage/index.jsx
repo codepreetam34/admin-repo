@@ -1,10 +1,12 @@
 import React from "react";
 import { Col, Container } from "react-bootstrap";
-import AddTagsForm from "./AddTagsForm";
+import EditModalForm from "./EditModalForm";
 
-const AddTagsPage = ({
-  setOpenAddTagsPage,
+const EditModalPage = ({
+  setOpenEditModalPage,
   setIsLoading,
+  modalData,
+  dataId,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
@@ -17,9 +19,9 @@ const AddTagsPage = ({
         <div
           className="text_heading"
           style={{ cursor: "pointer" }}
-          onClick={() => setOpenAddTagsPage(false)}
+          onClick={() => setOpenEditModalPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>Add Tags</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>Edit Orders</span>
         </div>
       </div>
       <Container className="">
@@ -29,8 +31,10 @@ const AddTagsPage = ({
               className="tablearea"
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
-              <AddTagsForm
-                setOpenAddTagsPage={setOpenAddTagsPage}
+              <EditModalForm
+                dataId={dataId}
+                productData={modalData}
+                setOpenEditProductPage={setOpenEditModalPage}
                 setIsLoading={setIsLoading}
                 setAddShowErrorToast={setAddShowErrorToast}
                 setAddShowErrorToastMessage={setAddShowErrorToastMessage}
@@ -45,4 +49,4 @@ const AddTagsPage = ({
   );
 };
 
-export default AddTagsPage;
+export default EditModalPage;

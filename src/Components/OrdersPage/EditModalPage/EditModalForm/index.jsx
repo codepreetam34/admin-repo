@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { editTags, getTags } from "Redux/Slices/Tags/TagsSlice";
 
-const EditTagsForm = ({
-  setOpenEditProductPage,
-  tagId,
-  productData,
+const EditModalForm = ({
+  setOpenEditModalPage,
+  dataId,
+  modalData,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
@@ -19,9 +19,9 @@ const EditTagsForm = ({
   const [categories, setCategories] = useState([{ name: "", options: [""] }]);
 
   useEffect(() => {
-    setTagType(productData?.tagType);
-    setCategories(productData?.categories);
-  }, [productData]);
+    setTagType(modalData?.tagType);
+    setCategories(modalData?.categories);
+  }, [modalData]);
   const handleCategoryNameChange = (index, value) => {
     const updatedCategories = [...categories];
     // Create a deep copy of the nested object
@@ -80,7 +80,7 @@ const EditTagsForm = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = { tagType, categories, tagId };
+    const formData = { tagType, categories, dataId };
     try {
       dispatch(editTags(formData)).then((res) => {
         setIsLoading(true);
@@ -242,4 +242,4 @@ const EditTagsForm = ({
   );
 };
 
-export default EditTagsForm;
+export default EditModalForm;

@@ -6,19 +6,19 @@ import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import { Link } from "react-router-dom";
 import DeleteDataModal from "./DeleteDataModal";
 import DynamicModal from "Constants/DynamicModal";
-import EditTags from "./EditTagsPage";
-import ViewTags from "./ViewTagsPage";
-import AddTagsPage from "./AddTagsPage";
+import EditTags from "./EditModalPage";
+import ViewTags from "./ViewModalPage";
+import AddModalPage from "./AddModalPage";
 import { getTags } from "Redux/Slices/Tags/TagsSlice";
-import EditTagsPage from "./EditTagsPage";
-import ViewTagsPage from "./ViewTagsPage";
+import EditModalPage from "./EditModalPage";
+import ViewModalPage from "./ViewModalPage";
 
-const TagsPage = () => {
+const OrdersPage = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [openAddTagsPage, setOpenAddTagsPage] = useState(false);
-  const [openEditProductPage, setOpenEditProductPage] = useState(false);
-  const [openViewProductPage, setOpenViewProductPage] = useState(false);
+  const [openAddModalPage, setOpenAddModalPage] = useState(false);
+  const [openEditModalPage, setOpenEditModalPage] = useState(false);
+  const [openViewModalPage, setOpenViewModalPage] = useState(false);
   const [addShowErrorToast, setAddShowErrorToast] = useState(false);
   const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
   const [addShowToastMessage, setAddShowToastMessage] = useState("");
@@ -35,8 +35,8 @@ const TagsPage = () => {
       <>
         <Col md={4}>
           <div className="user_heading">
-            <h3 style={{ textTransform: "capitalize" }}>{"All Tags"}</h3>
-            <p>Welcome to Tags page</p>
+            <h3 style={{ textTransform: "capitalize" }}>{"All Orders"}</h3>
+            <p>Welcome to Orders page</p>
           </div>
         </Col>
         <Col md={4} style={{ paddingTop: "1.875rem" }}>
@@ -54,13 +54,13 @@ const TagsPage = () => {
             </InputGroup>
           </div>
         </Col>
-        <Col md={4}>
+        {/* <Col md={4}>
           <div className="add_filter_btn d-flex justify-content-end">
             <div className="bgbtnred" onClick={handleAdd}>
-              Add New Tag
+              Add New Order
             </div>
           </div>
-        </Col>
+        </Col> */}
       </>
     );
   };
@@ -141,7 +141,7 @@ const TagsPage = () => {
           <tr>
             <td>
               <div className="d-flex justify-content-center pt-4">
-                <p className="text-red">Tag list is empty !!</p>
+                <p className="text-red">Orders list is empty !!</p>
               </div>
             </td>
           </tr>
@@ -163,9 +163,9 @@ const TagsPage = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setOpenViewProductPage(true);
-        setOpenAddTagsPage(false);
-        setOpenEditProductPage(false);
+        setOpenViewModalPage(true);
+        setOpenAddModalPage(false);
+        setOpenEditModalPage(false);
         setModalData({ data: data });
       },
     },
@@ -174,9 +174,9 @@ const TagsPage = () => {
       class: "edit",
       icon: "far fa-edit",
       onClick: (data) => {
-        setOpenEditProductPage(true);
-        setOpenViewProductPage(false);
-        setOpenAddTagsPage(false);
+        setOpenEditModalPage(true);
+        setOpenViewModalPage(false);
+        setOpenAddModalPage(false);
         setModalData({ data: data });
       },
     },
@@ -209,18 +209,18 @@ const TagsPage = () => {
               }}
             />
           ),
-          modalTitle: "Delete Product",
+          modalTitle: "Delete Modal",
         });
       },
     },
   ];
 
-  const handleAdd = () => {
-    setOpenAddTagsPage(true);
-    setOpenEditProductPage(false);
-    setOpenViewProductPage(false);
-    // setModalData({ type: "Add", data: null });
-  };
+  // const handleAdd = () => {
+  //   setOpenAddModalPage(true);
+  //   setOpenEditModalPage(false);
+  //   setOpenViewModalPage(false);
+  //   // setModalData({ type: "Add", data: null });
+  // };
   return (
     <Wrapper>
       <div className="user_management_list">
@@ -239,9 +239,9 @@ const TagsPage = () => {
           ) : (
             <>
               <InitialRender />{" "}
-              {openAddTagsPage && openAddTagsPage ? (
-                <AddTagsPage
-                  setOpenAddTagsPage={setOpenAddTagsPage}
+              {openAddModalPage && openAddModalPage ? (
+                <AddModalPage
+                  setOpenAddModalPage={setOpenAddModalPage}
                   setIsLoading={setIsLoading}
                   setAddShowErrorToast={(err) => {
                     setAddShowErrorToast(err);
@@ -256,11 +256,11 @@ const TagsPage = () => {
                     setAddShowToastMessage(showMessage);
                   }}
                 />
-              ) : openEditProductPage && openEditProductPage ? (
-                <EditTagsPage
-                  productData={modalData?.data}
-                  tagId={modalData?.data?._id}
-                  setOpenEditProductPage={setOpenEditProductPage}
+              ) : openEditModalPage && openEditModalPage ? (
+                <EditModalPage
+                  modalData={modalData?.data}
+                  dataId={modalData?.data?._id}
+                  setOpenEditModalPage={setOpenEditModalPage}
                   setIsLoading={setIsLoading}
                   setAddShowErrorToast={(err) => {
                     setAddShowErrorToast(err);
@@ -275,10 +275,10 @@ const TagsPage = () => {
                     setAddShowToastMessage(showMessage);
                   }}
                 />
-              ) : openViewProductPage && openViewProductPage ? (
-                <ViewTagsPage
-                  productData={modalData?.data}
-                  setOpenViewProductPage={setOpenViewProductPage}
+              ) : openViewModalPage && openViewModalPage ? (
+                <ViewModalPage
+                  ModalData={modalData?.data}
+                  setOpenViewModalPage={setOpenViewModalPage}
                 />
               ) : (
                 <RenderTable />
@@ -317,4 +317,4 @@ const TagsPage = () => {
   );
 };
 
-export default TagsPage;
+export default OrdersPage;
