@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { addTags, getTags } from "Redux/Slices/Tags/TagsSlice";
 
-const AddTagsForm = ({
-  setOpenAddTagsPage,
+const AddModalForm = ({
+  setOpenAddModalPage,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
