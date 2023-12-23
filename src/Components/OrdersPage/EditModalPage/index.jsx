@@ -8,7 +8,7 @@ const EditModalPage = ({
   modalData,
   dataId,
   setAddShowErrorToast,
-  setAddShowErrorToastMessage,
+  setAddShowErrorToastMessage,                     
   setAddShowToast,
   setAddShowToastMessage,
 }) => {

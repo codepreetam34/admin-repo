@@ -205,4 +205,4 @@ const AddModalForm = ({
   );
 };
 
-export default AddTagsForm;
+export default AddModalForm;

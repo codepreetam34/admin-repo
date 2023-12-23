@@ -12,11 +12,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = JSON.parse(localStorage.getItem("Sidebar_Module_Assigned"));
-  console.log("user Info ", userInfo?.role);
-  console.log(
-    "user Info role ",
-    localStorage.getItem("Sidebar_Module_Assigned").role
-  );
+
   function onhidesidebar() {
     setSideBarLink(!sideBarLink);
     document.body.classList.remove("togglesidebar");
@@ -90,7 +86,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
             >
               <i class="fa-solid fa-layer-group"></i> Display Pages
             </Nav.Link>
-            {userInfo?.role === "super-admin" && (
+            {userInfo && userInfo?.role === "super-admin" && (
               <Nav.Link
                 onClick={() => onhidesidebar()}
                 as={NavLink}
