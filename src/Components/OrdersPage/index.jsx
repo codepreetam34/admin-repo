@@ -77,7 +77,7 @@ const OrdersPage = () => {
           <div className="nftstable">
             <div className="tablearea">
               <Table responsive className="m-0">
-                <DataTableHeader />
+                {/* <DataTableHeader /> */}
                 <DataTableBody />
               </Table>
             </div>
@@ -103,43 +103,59 @@ const OrdersPage = () => {
 
   const DataTableBody = () => {
     return (
-      <tbody>
+      <>
         {orderData && orderData?.length > 0 ? (
           orderData?.map((userOrder, userIndex) => (
             <React.Fragment key={userIndex}>
-              <tr>
-                <td colSpan="7">
-                  <strong>User: {userOrder?.user?.fullName}</strong>
-                </td>
-              </tr>
-              {userOrder.orders.map((order, orderIndex) => (
-                <tr key={orderIndex}>
-                  <td>{orderIndex + 1}</td>
-                  <td>{order?._id}</td>
-                  <td>{order?.address?.name}</td>
-                  <td>{order?.paymentStatus}</td>
-                  <td>
-                    {order?.orderStatus.find((ele) => ele.isCompleted)?.type ||
-                      "N/A"}
-                  </td>
-                  <td>
-                    <div className="table_icons d-flex align-items-center justify-content-center">
-                      {tableActions &&
-                        tableActions?.map((action, index) => (
-                          <div
-                            className={action?.class?.toLowerCase()}
-                            onClick={() => action.onClick(order)}
-                            key={index}
-                          >
-                            <Link to="#">
-                              <i className={action.icon}></i>
-                            </Link>
-                          </div>
-                        ))}
-                    </div>
+              <thead>
+                <tr>
+                  <td colSpan="7" style={{ textAlign: "center" }}>
+                    <strong>
+                      <span style={{ fontSize: "2rem" }}>
+                        {userIndex + 1}. {userOrder?.user?.fullName}
+                      </span>
+                    </strong>
                   </td>
                 </tr>
-              ))}
+                <tr>
+                  {tableHeaders &&
+                    tableHeaders?.map((header, index) => (
+                      <th className={header?.class} key={index}>
+                        {header?.title}
+                      </th>
+                    ))}
+                </tr>
+              </thead>
+              <tbody>
+                {userOrder.orders.map((order, orderIndex) => (
+                  <tr key={orderIndex}>
+                    <td>{orderIndex + 1}</td>
+                    <td>{order?._id}</td>
+                    <td>{order?.address?.name}</td>
+                    <td>{order?.paymentStatus}</td>
+                    <td>
+                      {order?.orderStatus.find((ele) => ele.isCompleted)
+                        ?.type || "N/A"}
+                    </td>
+                    <td>
+                      <div className="table_icons d-flex align-items-center justify-content-center">
+                        {tableActions &&
+                          tableActions?.map((action, index) => (
+                            <div
+                              className={action?.class?.toLowerCase()}
+                              onClick={() => action.onClick(order)}
+                              key={index}
+                            >
+                              <Link to="#">
+                                <i className={action.icon}></i>
+                              </Link>
+                            </div>
+                          ))}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </React.Fragment>
           ))
         ) : (
@@ -151,7 +167,7 @@ const OrdersPage = () => {
             </td>
           </tr>
         )}
-      </tbody>
+      </>
     );
   };
 

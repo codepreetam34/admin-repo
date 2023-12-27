@@ -58,7 +58,7 @@ const ViewModalForm = ({ modalData, setOpenViewModalPage }) => {
               {modalData && modalData?.items?.length > 0 ? (
                 modalData?.items.map((item, index) => (
                   <Col key={index}>
-                    <Card style={{ width: "400px", borderRadius: "20px" }}>
+                    <Card style={{ width: "100%", borderRadius: "20px" }}>
                       <Card.Img
                         variant="top"
                         src={
@@ -66,8 +66,14 @@ const ViewModalForm = ({ modalData, setOpenViewModalPage }) => {
                           "default_image_url"
                         }
                         alt="product"
-                        height="283"
-                        width="283"
+                        style={{
+                          borderTopLeftRadius: "20px",
+                          borderTopRightRadius: "20px",
+                          borderBottomLeftRadius: "0",
+                          borderBottomRightRadius: "0",
+                        }}
+                        height="300"
+                        width="100%"
                       />
                       <Card.Body>
                         <Card.Title
