@@ -5,7 +5,14 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "images/vibezterLogo.png";
 import { logout } from "Redux/Slices/Login/auth.slice";
 import { useDispatch } from "react-redux";
-import { CATEGORY, DISPLAY_PAGES, LOGIN, ORDER_PAGE, PRODUCTS, TAGS } from "Routes/Routes";
+import {
+  CATEGORY,
+  DISPLAY_PAGES,
+  LOGIN,
+  ORDER_PAGE,
+  PRODUCTS,
+  TAGS,
+} from "Routes/Routes";
 
 const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const [sideBarLink, setSideBarLink] = useState(false);
@@ -124,7 +131,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
                 alignItems: "center",
               }}
             >
-              <i class="fa-solid fa-tag"></i>
+              <i class="fa-solid fa-store"></i>
               <div>Products</div>
             </Nav.Link>
             <Nav.Link
@@ -137,8 +144,8 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
                 alignItems: "center",
               }}
             >
-              <i class="fa-solid fa-tag"></i>
-              {/* <div>All Orders</div> */}
+              <i class="fa-solid fa-bag-shopping"></i>
+              <div>All Orders</div>
             </Nav.Link>
             <Nav.Link as={NavLink} exact="" to={LOGIN} onClick={handleLogOut}>
               <i className="fa-solid fa-arrow-right-from-bracket"></i> Log Out

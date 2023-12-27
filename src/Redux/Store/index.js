@@ -9,7 +9,7 @@ import TagsSlice from "Redux/Slices/Tags/TagsSlice";
 import TwoAdsBannerSlice from "Redux/Slices/TwoAdsBanner/TwoAdsBannerSlice";
 import ShopByOccasionSlice from "Redux/Slices/ShopByOccasion/ShopByOccasionSlice";
 import PamperZoneSlice from "Redux/Slices/PamperZone/PamperZoneSlice";
-
+import AllOrderSlice from "Redux/Slices/Order/Order";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
   twoAdsBanner: TwoAdsBannerSlice,
   shopByOccasion: ShopByOccasionSlice,
   pamperZone: PamperZoneSlice,
+  myOrders: AllOrderSlice,
 });
 
 const initializeStore = () =>
