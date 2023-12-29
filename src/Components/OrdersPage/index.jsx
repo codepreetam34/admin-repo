@@ -4,26 +4,28 @@ import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import { Link } from "react-router-dom";
-import DeleteDataModal from "./DeleteDataModal";
-import DynamicModal from "Constants/DynamicModal";
-import EditModalPage from "./EditModalPage";
-import ViewModalPage from "./ViewModalPage";
-import AddModalPage from "./AddModalPage";
 import { getAllOrders } from "Redux/Slices/Order/Order";
+import DynamicModal from "Constants/DynamicModal";
+import ViewModalPage from "./ViewModalPage";
+
+import DeleteDataModal from "./DeleteDataModal";
+import EditModalPage from "./EditModalPage";
+import AddModalPage from "./AddModalPage";
 
 const OrdersPage = () => {
+
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-
-  const [openAddModalPage, setOpenAddModalPage] = useState(false);
-  const [openEditModalPage, setOpenEditModalPage] = useState(false);
   const [openViewModalPage, setOpenViewModalPage] = useState(false);
   const [addShowErrorToast, setAddShowErrorToast] = useState(false);
-  const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
-  const [addShowToastMessage, setAddShowToastMessage] = useState("");
   const [addShowToast, setAddShowToast] = useState(false);
   const [modalData, setModalData] = useState({ type: null, data: null });
   const [showModal, setShowModal] = useState(false);
+  const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
+  const [addShowToastMessage, setAddShowToastMessage] = useState("");
+
+  const [openAddModalPage, setOpenAddModalPage] = useState(false);
+  const [openEditModalPage, setOpenEditModalPage] = useState(false);
 
   useEffect(() => {
     dispatch(getAllOrders());
@@ -32,7 +34,7 @@ const OrdersPage = () => {
   const orderData = useSelector(
     (state) => state?.myOrders?.getAllOrderDetails?.allOrders
   );
-  console.log("orderData ", orderData);
+
   const InitialRender = () => {
     return (
       <>
@@ -86,20 +88,21 @@ const OrdersPage = () => {
       </Col>
     );
   };
-  const DataTableHeader = () => {
-    return (
-      <thead>
-        <tr>
-          {tableHeaders &&
-            tableHeaders?.map((header, index) => (
-              <th className={header?.class} key={index}>
-                {header?.title}
-              </th>
-            ))}
-        </tr>
-      </thead>
-    );
-  };
+  
+  // const DataTableHeader = () => {
+  //   return (
+  //     <thead>
+  //       <tr>
+  //         {tableHeaders &&
+  //           tableHeaders?.map((header, index) => (
+  //             <th className={header?.class} key={index}>
+  //               {header?.title}
+  //             </th>
+  //           ))}
+  //       </tr>
+  //     </thead>
+  //   );
+  // };
 
   const DataTableBody = () => {
     return (
@@ -109,9 +112,12 @@ const OrdersPage = () => {
             <React.Fragment key={userIndex}>
               <thead>
                 <tr>
-                  <td colSpan="7" style={{ textAlign: "center" }}>
+                  <td
+                    colSpan="7"
+                    style={{ textAlign: "center", color: "#801317" }}
+                  >
                     <strong>
-                      <span style={{ fontSize: "2rem" }}>
+                      <span style={{ fontSize: "1.5rem" }}>
                         {userIndex + 1}. {userOrder?.user?.fullName}
                       </span>
                     </strong>
@@ -186,10 +192,8 @@ const OrdersPage = () => {
       class: "eye",
       icon: "fa-solid fa-eye",
       onClick: (data) => {
-        setOpenViewModalPage(true);
-        setOpenAddModalPage(false);
-        setOpenEditModalPage(false);
-        setModalData({ data: data });
+        //setOpenViewModalPage(true)
+        // setModalData({ data: data });
       },
     },
     // {
