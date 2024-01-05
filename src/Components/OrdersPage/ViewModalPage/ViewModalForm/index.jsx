@@ -2,7 +2,6 @@ import React from "react";
 import { Container, Row, Col, Form, Card, Button } from "react-bootstrap";
 
 const ViewModalForm = ({ modalData, setOpenViewModalPage }) => {
-  console.log("modal data : ", modalData);
   const getFullAddress = (address) => {
     const {
       name,
@@ -353,8 +352,8 @@ const ViewModalForm = ({ modalData, setOpenViewModalPage }) => {
                             >
                               Return Order
                             </Button>
-                          </Col
-                        </div>> */}
+                          </Col>
+                        </div> */}
                       </Card.Body>
                     </Card>
                   </Col>
