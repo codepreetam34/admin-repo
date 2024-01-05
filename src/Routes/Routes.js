@@ -29,4 +29,5 @@ export const ADD_PRODUCTS = "/products/add-product";
 
 export const TAGS = "/tags";
 export const ORDER_PAGE = "/orders";
+export const USER_PAGE = "/users";
 export const REGISTER_VENDOR = "/register-vendor";

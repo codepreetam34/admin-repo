@@ -8,16 +8,16 @@ const ViewModalForm = ({ modalData, setOpenViewModalPage }) => {
       name,
       mobileNumber,
       pinCode,
-      state,
-      alternatePhone,
-      addressType,
       locality,
       address: streetAddress,
       cityDistrictTown,
+      state,
       landmark,
+      alternatePhone,
+      addressType,
     } = address;
 
-    return `${streetAddress}, ${locality}, ${cityDistrictTown}, ${landmark}`;
+    return `${streetAddress}, ${locality}, ${cityDistrictTown}, near ${landmark}`;
   };
   return (
     <>
@@ -57,7 +57,7 @@ const ViewModalForm = ({ modalData, setOpenViewModalPage }) => {
             <Row className="justify-content-around gap-4">
               {modalData && modalData?.items?.length > 0 ? (
                 modalData?.items.map((item, index) => (
-                  <Col md={6} key={index}>
+                  <Col key={index}>
                     <Card style={{ width: "100%", borderRadius: "20px" }}>
                       <Card.Img
                         variant="top"
