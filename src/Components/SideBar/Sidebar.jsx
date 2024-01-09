@@ -12,6 +12,7 @@ import {
   ORDER_PAGE,
   PRODUCTS,
   TAGS,
+  USER_PAGE,
 } from "Routes/Routes";
 
 const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
@@ -146,6 +147,19 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
             >
               <i class="fa-solid fa-bag-shopping"></i>
               <div>All Orders</div>
+            </Nav.Link>
+            <Nav.Link
+              onClick={() => onhidesidebar()}
+              as={NavLink}
+              exact=""
+              to={USER_PAGE}
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+           <i class="fa-solid fa-user"></i>
+              <div>All Users</div>
             </Nav.Link>
             <Nav.Link as={NavLink} exact="" to={LOGIN} onClick={handleLogOut}>
               <i className="fa-solid fa-arrow-right-from-bracket"></i> Log Out

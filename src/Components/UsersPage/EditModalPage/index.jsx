@@ -21,7 +21,7 @@ const EditModalPage = ({
           style={{ cursor: "pointer" }}
           onClick={() => setOpenEditModalPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>Edit Orders</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>Edit User</span>
         </div>
       </div>
       <Container className="">
@@ -33,8 +33,8 @@ const EditModalPage = ({
             >
               <EditModalForm
                 dataId={dataId}
-                productData={modalData}
-                setOpenEditProductPage={setOpenEditModalPage}
+                modalData={modalData}
+                setOpenEditModalPage={setOpenEditModalPage}
                 setIsLoading={setIsLoading}
                 setAddShowErrorToast={setAddShowErrorToast}
                 setAddShowErrorToastMessage={setAddShowErrorToastMessage}

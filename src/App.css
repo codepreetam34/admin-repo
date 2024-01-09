@@ -160,3 +160,26 @@ ul {
   /* Increase the size on hover */
   transition: transform 0.3s ease-in-out;
 }
+
+
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.verified {
+  background-color: #4CAF50;
+}
+
+.not-verified {
+  background-color: #f44336;
+}
+
+
+/* CSS */
+
+input#verified {
+  background: #f44336;
+}

@@ -11,7 +11,7 @@ export const getAllUsers = createAsyncThunk(
   GET_ALL_USERS,
   async (payload, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(`api/user/getAll`);
+      const response = await axiosInstance.get(`/user/getAll`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -51,9 +51,8 @@ export const editUserById = createAsyncThunk(
   EDIT_USER_BY_ID,
   async (payload, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`api/user/update`, {
-        id: payload,
-      });
+      console.log("Request Payload: ", payload);
+      const response = await axiosInstance.patch("/user/update", payload);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -87,7 +86,6 @@ const AllUserSlice = createSlice({
       state.isFetching = false;
       state.isError = true;
     });
-
     builder.addCase(getUsersById.pending, (state) => {
       state.getUserDetailsById = {};
       state.isFetching = true;

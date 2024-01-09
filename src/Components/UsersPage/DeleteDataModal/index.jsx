@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { deleteTags, getTags } from "Redux/Slices/Tags/TagsSlice";
+import { deleteUserById, getAllUsers } from "Redux/Slices/Users/Users";
 
 const DeleteDataModal = ({
   dataId,
@@ -14,7 +14,7 @@ const DeleteDataModal = ({
 }) => {
   const dispatch = useDispatch();
   const onSubmit = (dataId) => {
-    dispatch(deleteTags(dataId)).then((res) => {
+    dispatch(deleteUserById(dataId)).then((res) => {
       if (res?.payload?.error?.response?.status === 400) {
         setAddShowErrorToast(true);
         setAddShowErrorToastMessage(res?.payload?.error?.response?.data?.error);
@@ -22,7 +22,7 @@ const DeleteDataModal = ({
         setAddShowErrorToast(true);
         setAddShowErrorToastMessage(res?.payload?.error?.response?.data?.error);
       } else {
-        dispatch(getTags());
+        dispatch(getAllUsers());
         setAddShowToastMessage(res?.payload?.message);
         setAddShowToast(true);
         setShowModal(false);
@@ -34,7 +34,7 @@ const DeleteDataModal = ({
       <Row>
         <Col md={12}>
           <div className="delete-para">
-            <p>Are you sure you want to delete "{tagName}" tag item?</p>
+            <p>Are you sure you want to delete "{tagName}" user?</p>
           </div>
         </Col>
       </Row>

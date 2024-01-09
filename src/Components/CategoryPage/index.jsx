@@ -226,7 +226,6 @@ const CategoryPage = () => {
                 </td>
               )} */}
 
-
               {/* {category?.productCount > 0 ? (
                 <td
                   style={{
@@ -258,17 +257,18 @@ const CategoryPage = () => {
                   className="table_icons d-flex align-items-center justify-content-center"
                   key={index}
                 >
-                  {tableActions && tableActions?.map((action, index) => (
-                    <div
-                      key={index}
-                      className={action?.class?.toLowerCase()}
-                      onClick={() => action.onClick(category)}
-                    >
-                      <a href="#">
-                        <i className={action.icon}></i>
-                      </a>
-                    </div>
-                  ))}
+                  {tableActions &&
+                    tableActions?.map((action, index) => (
+                      <div
+                        key={index}
+                        className={action?.class?.toLowerCase()}
+                        onClick={() => action.onClick(category)}
+                      >
+                        <a href="#">
+                          <i className={action.icon}></i>
+                        </a>
+                      </div>
+                    ))}
                 </div>
               </td>
             </tr>
@@ -341,7 +341,6 @@ const CategoryPage = () => {
   const ViewParticularUserHandler = (id) => {
     navigate(`/category/category-child/${id}`);
   };
-
 
   const ViewParticularUserProductsHandler = (id) => {
     navigate(`/category/category-child/${id}/products`);

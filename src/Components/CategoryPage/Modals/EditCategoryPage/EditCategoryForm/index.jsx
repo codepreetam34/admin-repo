@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import { useForm } from "react-hook-form";
 import {
   editMainCategory,
   getCategory,
 } from "Redux/Slices/Category/CategorySlice";
 import { categorySchema } from "ValidationSchema/categorySchema";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 const EditCategoryForm = ({
   setAddShowErrorToast,
   categoryById,
@@ -277,7 +277,7 @@ const EditCategoryForm = ({
         names: additionalTag.names,
       };
     });
-    console.log("tagsArray ", tagsArray)
+
     if (tagsArray && tagsArray.length > 0 && tagsArray != []) formData.append("tags", JSON.stringify(tagsArray));
 
     dispatch(editMainCategory(formData))

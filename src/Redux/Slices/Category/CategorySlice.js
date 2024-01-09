@@ -38,7 +38,6 @@ export const addMainCategory = createAsyncThunk(
   ADD_MAIN_CATEGORY,
   async (payload, thunkAPI) => {
     try {
-      console.log("payload ", payload.values());
       const response = await axiosInstance.post(`category/create`, payload);
       return response.data;
     } catch (error) {
@@ -51,7 +50,6 @@ export const editMainCategory = createAsyncThunk(
   ADD_MAIN_CATEGORY,
   async (payload, thunkAPI) => {
     try {
-      console.log("payload ", payload);
       const response = await axiosInstance.patch(`category/update`, payload);
       return response.data;
     } catch (error) {

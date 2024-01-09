@@ -28,9 +28,7 @@ const UsersPage = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const userData = useSelector(
-    (state) => state?.usersStore?.getAllUserDetails?.allUsers
-  );
+  const userData = useSelector((state) => state?.usersStore?.getAllUserDetails);
 
   const InitialRender = () => {
     return (
@@ -102,10 +100,21 @@ const UsersPage = () => {
               userData?.map((user, userIndex) => (
                 <tr key={userIndex}>
                   <td>{userIndex + 1}</td>
-                  <td>{user?.firstName}</td>
-                  <td>{user?.lastName}</td>
+                  <td>{`${user?.firstName} ${user?.lastName}`}</td>
                   <td>{user?.email}</td>
-                  <td>{user?.createdAt}</td>
+                  <td>
+                    {new Date(user?.createdAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}
+                  </td>
+                  <td>
+                    <span className={`badge ${user?.verified ? 'verified' : 'not-verified'}`}>
+                      {user?.verified ? "Verified" : "Not Verified"}
+                    </span>
+                  </td>
+
                   <td>
                     <div className="table_icons d-flex align-items-center justify-content-center">
                       {tableActions &&
@@ -141,10 +150,10 @@ const UsersPage = () => {
 
   const tableHeaders = [
     { title: "S.No.", class: "" },
-    { title: "First Name", class: "" },
-    { title: "Last Name", class: "" },
+    { title: "Full Name", class: "" },
     { title: "Email", class: "" },
     { title: "Join Date", class: "" },
+    { title: "Verified", class: "" },
     { title: "Action", class: "text-center" },
   ];
 
@@ -181,7 +190,7 @@ const UsersPage = () => {
           modalContent: (
             <DeleteDataModal
               dataId={data._id}
-              tagName={data?.tagName}
+              tagName={data?.email}
               setShowModal={setShowModal}
               setIsLoading={setIsLoading}
               setAddShowErrorToast={(err) => {
@@ -279,7 +288,7 @@ const UsersPage = () => {
           modalTitle={modalData.modalTitle}
           modalContent={modalData.modalContent}
         />
-      )}{" "}
+      )}
       {addShowErrorToast && (
         <ErrorToaster
           showErrorToast={addShowErrorToast}
