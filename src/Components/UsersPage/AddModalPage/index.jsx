@@ -5,8 +5,10 @@ import AddModalForm from "./AddModalForm";
 const AddModalPage = ({
   setOpenAddModalPage,
   setIsLoading,
+  modalData,
+  dataId,
   setAddShowErrorToast,
-  setAddShowErrorToastMessage,
+  setAddShowErrorToastMessage,                     
   setAddShowToast,
   setAddShowToastMessage,
 }) => {
@@ -19,7 +21,7 @@ const AddModalPage = ({
           style={{ cursor: "pointer" }}
           onClick={() => setOpenAddModalPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>Add Orders</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>Add New User</span>
         </div>
       </div>
       <Container className="">
@@ -30,6 +32,8 @@ const AddModalPage = ({
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
               <AddModalForm
+                dataId={dataId}
+                modalData={modalData}
                 setOpenAddModalPage={setOpenAddModalPage}
                 setIsLoading={setIsLoading}
                 setAddShowErrorToast={setAddShowErrorToast}

@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import React, { useState, useEffect, useCallback } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategory } from "Redux/Slices/Category/CategorySlice";
-import { addTags, getTags } from "Redux/Slices/Tags/TagsSlice";
+import { editUserById, getAllUsers } from "Redux/Slices/Users/Users";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { profileSchema } from "ValidationSchema/profileSchema";
+import { format, parseISO } from "date-fns";
 
-const AddModalForm = ({
-  setOpenAddModalPage,
+const EditModalForm = ({
+  dataId,
+  modalData,
+  setOpenEditModalPage,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
@@ -13,188 +18,246 @@ const AddModalForm = ({
   setIsLoading,
 }) => {
   const dispatch = useDispatch();
-  const [tagType, setTagType] = useState("");
-  const [categories, setCategories] = useState([{ name: "", options: [""] }]);
+  const [imagePreview, setImagePreview] = useState(null);
+    const [profileImage, setProfileImage] = useState("");
 
-  const handleCategoryNameChange = (index, value) => {
-    const updatedCategories = [...categories];
-    updatedCategories[index].name = value;
-    setCategories(updatedCategories);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    reset,
+  } = useForm({
+    resolver: yupResolver(profileSchema),
+    mode: "onChange",
+  });
+
+  const parsedDob = modalData?.dob ? parseISO(modalData.dob) : null;
+  const formattedDob = parsedDob ? format(parsedDob, "dd/MM/yyyy") : "";
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setProfileImage(file);
+    setImagePreview(URL.createObjectURL(file));
   };
 
-  const handleOptionChange = (categoryIndex, optionIndex, value) => {
-    const updatedCategories = [...categories];
-    updatedCategories[categoryIndex].options[optionIndex] = value;
-    setCategories(updatedCategories);
-  };
+  const loadUserFromServer = useCallback(async () => {
+    dispatch(getAllUsers())
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch(() => setIsLoading(false));
+  }, [dispatch, dataId]);
 
-  const handleAddCategory = () => {
-    setCategories([...categories, { name: "", options: [""] }]);
-  };
-
-  const handleAddOption = (categoryIndex) => {
-    const updatedCategories = [...categories];
-    updatedCategories[categoryIndex].options.push("");
-    setCategories(updatedCategories);
-  };
-
-  const handleRemoveCategory = (categoryIndex) => {
-    const updatedCategories = [...categories];
-    updatedCategories.splice(categoryIndex, 1);
-    setCategories(updatedCategories);
-  };
-
-  const handleRemoveOption = (categoryIndex, optionIndex) => {
-    const updatedOptions = [...categories[categoryIndex].options];
-    updatedOptions.splice(optionIndex, 1);
-
-    const updatedCategories = [...categories];
-    updatedCategories[categoryIndex].options = updatedOptions;
-
-    setCategories(updatedCategories);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = { tagType, categories };
-
+  useEffect(() => {
+    loadUserFromServer();
+  }, [loadUserFromServer]);
+  const onSubmit = async (data) => {
     try {
-      dispatch(addTags(formData)).then((res) => {
+      const formData = new FormData();
+
+      // Append other fields
+      formData.append("firstName", data?.firstName?.toString());
+      formData.append("lastName", data?.lastName?.toString());
+      formData.append("email", data?.email?.toString());
+      formData.append("contactNumber", data?.contactNumber?.toString());
+      formData.append("dob", data?.dob?.toString());
+      formData.append("role", data?.role?.toString());
+      formData.append("gender", data?.gender?.toString());
+
+      // Append profile image if available
+      if (profileImage) {
+        formData.append("profilePicture", profileImage);
+      }
+
+      dispatch(editUserById(formData)).then((res) => {
         setIsLoading(true);
         if (
-          res?.paylaod?.error?.response?.status === 400 ||
-          res?.paylaod?.error?.response?.status === 500
+          res?.payload?.error?.response?.status === 400 ||
+          res?.payload?.error?.response?.status === 404 ||
+          res?.payload?.error?.response?.status === 500
         ) {
           setIsLoading(false);
           setAddShowErrorToast(true);
-          setAddShowErrorToastMessage(res.paylaod.error.message);
+          setAddShowErrorToastMessage(
+            res.payload?.error?.response?.data?.message
+          );
+          dispatch(getAllUsers());
         } else {
           setIsLoading(false);
           setAddShowToast(true);
           setAddShowToastMessage(res.payload.message);
-          dispatch(getTags());
+          setOpenEditModalPage(false);
+          dispatch(getAllUsers());
         }
       });
     } catch (error) {
-      console.error("Error submitting data: ", error);
+      setIsLoading(false);
+      setAddShowErrorToast(true);
+      setAddShowErrorToastMessage("Internal Server Error! Please try again");
+      setOpenEditModalPage(false);
+      dispatch(getAllUsers());
     }
   };
 
-  const categoryList = useSelector(
-    (state) => state?.CategoryList?.categoryList?.categoryList
-  );
-
-  useEffect(() => {
-    if (!categoryList || categoryList.length === 0) {
-      dispatch(getCategory())
-        .then(() => {
-          setIsLoading(false);
-        })
-        .catch(() => setIsLoading(false));
-    } else {
-      setIsLoading(false);
-    }
-  }, [dispatch]);
-
   return (
     <div className="container">
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <div className="product-detail-design">
-          <div>
-            <Form.Group className="form-group-padding-bottom">
-              <Form.Label>Select Tag Type</Form.Label>
-              <div className="select-wrapper">
+          <Row className="m-0 p-0">
+            <Col md={6} className="">
+              <Form.Group className="form-group-padding-bottom">
+                <Form.Label>First Name</Form.Label>
                 <Form.Control
-                  as="select"
-                  name="tagType"
-                  id="tagType"
+                  name="firstName"
+                  id="firstName"
                   type="text"
-                  placeholder="Enter Tag Type"
-                  value={tagType}
-                  onChange={(e) => setTagType(e.target.value)}
-                >
-                  <option selected style={{ fontWeight: "600" }}>
-                    Select Category
-                  </option>
-                  {categoryList &&
-                    categoryList?.map((option) => (
-                      <option key={option._id} value={option?._id}>
-                        {option?.name}
-                      </option>
-                    ))}
-                </Form.Control>
-                <div className="select-arrow"></div>
-              </div>
-            </Form.Group>
-
-            <Row className="m-0 p-0">
-              {categories.map((category, categoryIndex) => (
-                <Col md={5} className="product-detail-design-new m-3">
-                  <Form.Group controlId={`categoryName-${categoryIndex}`}>
-                    <Form.Label>Tag Category Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Category Name"
-                      value={category.name}
-                      onChange={(e) =>
-                        handleCategoryNameChange(categoryIndex, e.target.value)
-                      }
+                  placeholder="Enter First Name"
+                  {...register("firstName")}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="">
+              <Form.Group className="form-group-padding-bottom">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  name="lastName"
+                  id="lastName"
+                  type="text"
+                  placeholder="Enter Last Name"
+                  {...register("lastName")}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="">
+              <Form.Group className="form-group-padding-bottom">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  name="email"
+                  id="email"
+                  type="text"
+                  placeholder="Enter Email"
+                  {...register("email")}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="">
+              <Form.Group className="form-group-padding-bottom">
+                <Form.Label>Contact Number</Form.Label>
+                <Form.Control
+                  name="contactNumber"
+                  id="contactNumber"
+                  type="text"
+                  placeholder="Enter Contact Number"
+                  {...register("contactNumber")}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="">
+              <Form.Group className="form-group-padding-bottom">
+                <Form.Label>Gender</Form.Label>
+                <div>
+                  <Form.Check
+                    inline
+                    label="Male"
+                    type="radio"
+                    id="male"
+                    name="gender"
+                    value="Male"
+                    {...register("gender")}
+                  />
+                  <Form.Check
+                    inline
+                    label="Female"
+                    type="radio"
+                    id="female"
+                    name="gender"
+                    value="Female"
+                    {...register("gender")}
+                  />
+                  <Form.Check
+                    inline
+                    label="Prefer not to say"
+                    type="radio"
+                    id="preferNotToSay"
+                    name="gender"
+                    value="Prefer Not To Say"
+                    {...register("gender")}
+                  />
+                </div>
+              </Form.Group>
+            </Col>
+            <Col md={6} className="">
+              <Form.Group className="form-group-padding-bottom">
+                <Form.Label>D.O.B</Form.Label>
+                <Form.Control
+                  name="dob"
+                  id="dob"
+                  type="date"
+                  defaultValue={formattedDob}
+                  placeholder="Enter Date of Birth"
+                  {...register("dob")}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6} className="">
+              <Form.Group className="form-group-padding-bottom">
+                <Form.Label>Role</Form.Label>
+                <Form.Control
+                  name="role"
+                  id="role"
+                  type="text"
+                  placeholder="Enter Role"
+                  {...register("role")}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={3}>
+              <Form.Group className="mb-4">
+                <Form.Label>Verified</Form.Label>
+                <Form.Control
+                  type="text"
+                  id="verified"
+                  name="verified"
+                  value={modalData?.verified ? "Verified" : "Not Verified"}
+                  disabled
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-4">
+                <Form.Label>Profile Image</Form.Label>
+                <Form.Control
+                  type="file"
+                  accept="image/*"
+                  name="profilePicture"
+                  id="profilePicture"
+                  onChange={handleImageChange}
+                />
+              </Form.Group>
+            </Col>{" "}
+            <Col md={12} className="mb-4">
+              {imagePreview && imagePreview ? (
+                <div className="">
+                  <div className="mb-2">{`Image Preview`} </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                    }}
+                  >
+                    <img
+                      src={imagePreview}
+                      alt="categoryImage"
+                      style={{ maxWidth: "100%", height: "300px" }}
                     />
-                  </Form.Group>
-
-                  <Form.Group className="pt-2" controlId={`options-${categoryIndex}`}>
-                    <Form.Label>Options</Form.Label>
-                    {category.options.map((option, optionIndex) => (
-                      <div className="d-flex justify-content-between align-items-center">
-                        <Form.Control
-                          key={optionIndex}
-                          type="text"
-                          placeholder="Enter Option"
-                          value={option}
-                          onChange={(e) =>
-                            handleOptionChange(categoryIndex, optionIndex, e.target.value)
-                          }
-                        />
-                        <Button
-                          variant="contained"
-                          onClick={() => handleRemoveOption(categoryIndex, optionIndex)}
-                          style={{
-                            textTransform: "capitalize",
-                          }}
-                        >
-                          <i className="fa-solid fa-circle-xmark"></i>
-                        </Button>
-                      </div>
-                    ))}
-
-                    <Button
-                      className="mt-3"
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => handleAddOption(categoryIndex)}
-                    >
-                      Add Option +
-                    </Button>
-                  </Form.Group>
-
-                  <div className="text-end">
-                    <Button
-                      variant="contained"
-                      onClick={() => handleRemoveCategory(categoryIndex)}
-                      style={{
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      <i className="fa-solid fa-circle-xmark"></i>
-                    </Button>
                   </div>
-                </Col>
-              ))}
-            </Row>
-            <Button className="mt-3" variant="primary" onClick={handleAddCategory}>
-              Add Tags Category +
-            </Button>
-          </div>
+                </div>
+              ) : (
+                <></>
+              )}
+            </Col>
+          </Row>
         </div>
         <div className="pt-4">
           <Button type="submit">Submit</Button>
@@ -204,4 +267,4 @@ const AddModalForm = ({
   );
 };
 
-export default AddModalForm;
+export default EditModalForm;

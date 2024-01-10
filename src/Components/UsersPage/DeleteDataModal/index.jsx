@@ -14,7 +14,7 @@ const DeleteDataModal = ({
 }) => {
   const dispatch = useDispatch();
   const onSubmit = (dataId) => {
-    dispatch(deleteUserById(dataId)).then((res) => {
+    dispatch(deleteUserById({ id: dataId })).then((res) => {
       if (res?.payload?.error?.response?.status === 400) {
         setAddShowErrorToast(true);
         setAddShowErrorToastMessage(res?.payload?.error?.response?.data?.error);

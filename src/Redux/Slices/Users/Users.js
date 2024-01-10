@@ -23,7 +23,7 @@ export const getUsersById = createAsyncThunk(
   GET_USER_BY_ID,
   async (payload, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`api/user/getUserById`, {
+      const response = await axiosInstance.post(`/user/getUserById`, {
         id: payload,
       });
       return response.data;
@@ -35,11 +35,9 @@ export const getUsersById = createAsyncThunk(
 
 export const deleteUserById = createAsyncThunk(
   DELETE_USER_BY_ID,
-  async (payload, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      const response = await axiosInstance.post(`/user/delete`, {
-        id: payload,
-      });
+      const response = await axiosInstance.post(`/user/delete`, id);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -51,7 +49,6 @@ export const editUserById = createAsyncThunk(
   EDIT_USER_BY_ID,
   async (payload, thunkAPI) => {
     try {
-      console.log("Request Payload: ", payload);
       const response = await axiosInstance.patch("/user/update", payload);
       return response.data;
     } catch (error) {
