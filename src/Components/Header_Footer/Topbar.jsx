@@ -10,7 +10,7 @@ import { REGISTER_VENDOR } from "Routes/Routes";
 const Topbar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const authData = JSON.parse(localStorage.getItem("Sidebar_Module_Assigned"));
+  const authData = JSON.parse(localStorage.getItem("Sidebar_Module_Assigned_Admin"));
   const [showErrorToast, setShowErrorToast] = useState(false);
   const [showErrorToastMessage, setShowErrorToastMessage] = useState();
   const [sideBarLink, setSideBarLink] = useState(false);

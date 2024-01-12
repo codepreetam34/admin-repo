@@ -6,7 +6,8 @@ import { addProducts, getProducts } from "Redux/Slices/Products/ProductsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { addProductSchema } from "ValidationSchema/addProductSchema";
-
+import Editor from "Components/ReactQuill/Editor";
+import GenericEditor from "Components/ReactQuillSpecification/GenericEditor";
 const AddProductForm = ({
   setOpenAddProductPage,
   setAddShowErrorToast,
@@ -100,8 +101,7 @@ const AddProductForm = ({
   const onSubmit = (data) => {
     const formData = new FormData();
     if (data?.name) formData.append("name", data?.name?.toString());
-    if (data?.description)
-      formData.append("description", data?.description?.toString());
+    if (descriptionData) formData.append("description", descriptionData);
     if (defaultCategory) formData.append("category", defaultCategory);
     if (data?.deliveryDay) formData.append("deliveryDay", data?.deliveryDay);
     if (data?.discountPrice)
@@ -163,7 +163,7 @@ const AddProductForm = ({
   };
 
   const handleSelectCategory = (e) => {
-    setDefaultCategory(e.target.value);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    setDefaultCategory(e.target.value);
     const categoryIdToFind = e.target.value;
     const foundCategory = categoryList.find(
       (item) => item._id === categoryIdToFind
@@ -175,8 +175,6 @@ const AddProductForm = ({
     }
     setTagType("");
   };
-
-
 
   const combinedOptions = [
     {
@@ -234,7 +232,6 @@ const AddProductForm = ({
           "Jar Cakes",
         ],
       ],
-
     },
     {
       name: "Plants",
@@ -251,12 +248,7 @@ const AddProductForm = ({
           "Indoor Plants",
         ],
         // Options for "BY OCCASION"
-        [
-          "Birthday",
-          "Anniversary",
-          "House Warming",
-          "Good Luck",
-        ],
+        ["Birthday", "Anniversary", "House Warming", "Good Luck"],
         // Options for "BY PLANTERS"
         [
           "Ceramic Planters",
@@ -290,12 +282,7 @@ const AddProductForm = ({
           "Indoor Plants",
         ],
         // Options for "BY OCCASION"
-        [
-          "Birthday",
-          "Anniversary",
-          "House Warming",
-          "Good Luck",
-        ],
+        ["Birthday", "Anniversary", "House Warming", "Good Luck"],
         // Options for "BY PLANTERS"
         [
           "Ceramic Planters",
@@ -316,8 +303,6 @@ const AddProductForm = ({
     },
   ];
 
-
-
   const [tagType, setTagType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [additionalTags, setAdditionalTags] = useState([]);
@@ -325,7 +310,9 @@ const AddProductForm = ({
   const renderTagCheckboxes = () => {
     if (defaultCategoryName && tagType) {
       const category = combinedOptions.find(
-        (option) => option.name && option.name.toLowerCase() === defaultCategoryName.toLowerCase()
+        (option) =>
+          option.name &&
+          option.name.toLowerCase() === defaultCategoryName.toLowerCase()
       );
       if (category) {
         const tagCategory =
@@ -444,6 +431,15 @@ const AddProductForm = ({
     // list2.splice(, 1);Plan
     // setImageAltText(list2);
   };
+  const [descriptionData, setDescriptionData] = useState("");
+  const [specificationData, setSpecificationData] = useState("");
+
+  const handleDescriptionData = (descriptionData) => {
+    setDescriptionData(descriptionData);
+  };
+  const handleSpecificationData = (specificationData) => {
+    setSpecificationData(specificationData);
+  };
 
   return (
     <div className="container">
@@ -539,31 +535,22 @@ const AddProductForm = ({
           <Col md={12} className="product-detail-design">
             <Form.Group className="form-group-padding-bottom">
               <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="description"
-                id="description"
-                {...register("description")}
-                isInvalid={!!errors.description}
+              <Editor
+                onData={handleDescriptionData}
+                dataText={descriptionData}
+                editorId="descriptionEditor"
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.description?.message}
-              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={12} className="product-detail-design">
             <Form.Group className="form-group-padding-bottom">
               <Form.Label>Specifications</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="specifications"
-                id="specifications"
-                {...register("specifications")}
-                isInvalid={!!errors.specifications}
+              <GenericEditor
+                onData={handleSpecificationData}
+                dataText={specificationData}
+                editorId="uniqueEditorId" // Provide a unique ID
+                placeholder="Write something amazing..."
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.specifications?.message}
-              </Form.Control.Feedback>
             </Form.Group>
           </Col>
 
@@ -585,7 +572,8 @@ const AddProductForm = ({
                         .find(
                           (option) =>
                             option.name &&
-                            option?.name?.toLowerCase() === defaultCategoryName?.toLowerCase()
+                            option?.name?.toLowerCase() ===
+                              defaultCategoryName?.toLowerCase()
                         )
                         ?.categories?.map((option) => (
                           <option key={option} value={option}>
@@ -682,21 +670,21 @@ const AddProductForm = ({
                 </Form.Group>
               </Col>
               <Col md={6}>
-                  <Form.Group className="form-group-padding-bottom">
-                    <Form.Label>Discount Price</Form.Label>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Discount Price</Form.Label>
 
-                    <Form.Control
-                      type="text"
-                      id="discountPrice"
-                      name="discountPrice"
-                      {...register("discountPrice")}
-                      isInvalid={!!errors.discountPrice}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.discountPrice?.message}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                </Col>
+                  <Form.Control
+                    type="text"
+                    id="discountPrice"
+                    name="discountPrice"
+                    {...register("discountPrice")}
+                    isInvalid={!!errors.discountPrice}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.discountPrice?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
             </Row>
           </Col>
 
@@ -705,7 +693,6 @@ const AddProductForm = ({
             defaultCategoryName.toLowerCase() === "cakes") ? (
             <Col md={12} className="product-detail-design">
               <Row>
-       
                 <Col md={6}>
                   <Form.Group className="form-group-padding-bottom">
                     <Form.Label>Half Kg Price</Form.Label>
@@ -815,6 +802,7 @@ const AddProductForm = ({
                         <div>{`Image Preview ${index + 1}`} </div>
                         <img
                           src={picture?.picturePreview}
+                          alt=""
                           style={{
                             width: "200px",
                             height: "200px",
@@ -917,4 +905,3 @@ const AddProductForm = ({
 };
 
 export default AddProductForm;
-

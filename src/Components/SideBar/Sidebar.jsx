@@ -19,7 +19,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
   const [sideBarLink, setSideBarLink] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userInfo = JSON.parse(localStorage.getItem("Sidebar_Module_Assigned"));
+  const userInfo = JSON.parse(localStorage.getItem("Sidebar_Module_Assigned_Admin"));
 
   function onhidesidebar() {
     setSideBarLink(!sideBarLink);

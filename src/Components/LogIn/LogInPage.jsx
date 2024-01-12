@@ -77,7 +77,7 @@ const LogInPage = () => {
   };
 
   useEffect(() => {
-    const auth = localStorage.getItem("AUTH_ACCESS_TOKEN");
+    const auth = localStorage.getItem("AUTH_ACCESS_TOKEN_ADMIN");
     if (auth) {
       setIsLoggedIn(true);
     }

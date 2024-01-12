@@ -40,11 +40,11 @@ const slice = createSlice({
       state.isLoggedIn = true;
       state.isFetching = false;
       localStorage.setItem(
-        "Sidebar_Module_Assigned",
+        "Sidebar_Module_Assigned_Admin",
         JSON.stringify(action.payload.user)
       );
       localStorage.setItem(
-        "AUTH_ACCESS_TOKEN",
+        "AUTH_ACCESS_TOKEN_ADMIN",
         JSON.stringify(action.payload.token)
       );
     });

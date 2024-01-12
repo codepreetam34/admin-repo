@@ -1,5 +1,5 @@
+import React from "react";
 import { format, parseISO } from "date-fns";
-import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 
 const ViewModalForm = ({ modalData }) => {

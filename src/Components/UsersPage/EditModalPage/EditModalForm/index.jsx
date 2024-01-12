@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editUserById, getAllUsers } from "Redux/Slices/Users/Users";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,6 +21,11 @@ const EditModalForm = ({
   const [imagePreview, setImagePreview] = useState(null);
   const [viewProfileImage, setViewProfileImage] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const [isRoleSectionDisabled, setIsRoleSectionDisabled] = useState(true);
+  const auth = localStorage.getItem("Sidebar_Module_Assigned_Admin");
+  const enableRoleSection = () => {
+    setIsRoleSectionDisabled(!isRoleSectionDisabled);
+  };
 
   const {
     register,
@@ -37,8 +42,6 @@ const EditModalForm = ({
   const formattedDob = parsedDob ? format(parsedDob, "dd/MM/yyyy") : "";
 
   useEffect(() => {
-    console.log("formattedDob:", formattedDob);
-
     reset({
       firstName: modalData?.firstName || "",
       lastName: modalData?.lastName || "",
@@ -69,6 +72,7 @@ const EditModalForm = ({
   useEffect(() => {
     loadUserFromServer();
   }, [loadUserFromServer]);
+
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
@@ -224,13 +228,39 @@ const EditModalForm = ({
             <Col md={6} className="">
               <Form.Group className="form-group-padding-bottom">
                 <Form.Label>Role</Form.Label>
-                <Form.Control
-                  name="role"
-                  id="role"
-                  type="text"
-                  placeholder="Enter Role"
-                  {...register("role")}
-                />
+                <div>
+                  <Form.Check
+                    inline
+                    label="User"
+                    type="radio"
+                    id="user"
+                    name="role"
+                    value="user"
+                    disabled={isRoleSectionDisabled}
+                    {...register("role")}
+                  />
+                  <Form.Check
+                    inline
+                    label="Admin"
+                    type="radio"
+                    id="admin"
+                    name="role"
+                    value="admin"
+                    disabled={isRoleSectionDisabled}
+                    {...register("role")}
+                  />
+                </div>
+                {auth.role === "super-admin" ? (
+                  <Button
+                    type="button"
+                    className="mt-3"
+                    onClick={enableRoleSection}
+                  >
+                    {isRoleSectionDisabled ? "Change Role" : "Disable"}
+                  </Button>
+                ) : (
+                  <></>
+                )}
               </Form.Group>
             </Col>
             <Col md={3}>

@@ -1,0 +1,226 @@
+/* Dashboard.css */
+
+/* Rest of your CSS styles */
+
+.row-cards-one {
+  margin-top: 30px;
+}
+
+.row-cards-one .mycard {
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3) !important;
+  padding: 25px 40px 30px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in;
+}
+
+.row-cards-one .mycard .left {
+  position: inherit;
+  z-index: 9;
+}
+
+.row-cards-one .mycard .left .title {
+  font-size: 19px;
+  color: #fff;
+  line-height: 32px;
+  margin-bottom: 2px;
+  text-wrap: nowrap;
+}
+
+.row-cards-one .mycard .left .number {
+  font-size: 42px;
+  line-height: 52px;
+  font-weight: 600;
+  display: block;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.row-cards-one .mycard .left .link {
+  width: 80px;
+  height: 30px;
+  background: #fff;
+  border-radius: 50px;
+  line-height: 30px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #143250;
+  display: block;
+  text-align: center;
+  transition: all 0.3s ease-in;
+}
+
+.row-cards-one .mycard .right .icon {
+  font-size: 80px;
+  color: #fff;
+  position: inherit;
+  z-index: 9;
+}
+
+.row-cards-one .mycard.bg1 {
+  background-image: linear-gradient(to right, #f85108, #f4ad3c);
+}
+
+.row-cards-one .mycard.bg2 {
+  background-image: linear-gradient(to right, #047edf, #0bb9fa);
+}
+
+.row-cards-one .mycard.bg3 {
+  background-image: linear-gradient(to right, #0fa49b, #03dbce);
+}
+
+.row-cards-one .mycard.bg4 {
+  background-image: linear-gradient(to right, #5a49e9, #7a6cf0);
+}
+
+.row-cards-one .mycard.bg5 {
+  background-image: linear-gradient(to right, #cf0633, #f96079);
+}
+
+.row-cards-one .mycard.bg6 {
+  background-image: linear-gradient(to right, #129021, #1ed41e);
+}
+
+/* Add these styles to Dashboard.css */
+
+.row-cards-one .mycard.bg1::after {
+  background: #f85108;
+}
+.row-cards-one .mycard.bg2::after {
+  background: #047edf;
+}
+.row-cards-one .mycard.bg3::after {
+  background: #0fa49b;
+}
+.row-cards-one .mycard.bg4::after {
+  background: #352d7b;
+}
+.row-cards-one .mycard.bg5::after {
+  background: #cf0633;
+}
+.row-cards-one .mycard.bg6::after {
+  background: #129021;
+}
+
+@media (max-width: 991px) {
+  .row-cards-one .mycard::after {
+    right: -40px;
+    transform: rotate(20deg);
+  }
+}
+
+@media (max-width: 1199px) {
+  .row-cards-one .mycard::after {
+    right: -130px;
+    transform: rotate(20deg);
+  }
+}
+
+@media (max-width: 1300px) {
+  .row-cards-one .mycard::after {
+    right: -180px;
+    transform: rotate(20deg);
+  }
+}
+
+@media (max-width: 1400px) {
+  .row-cards-one .mycard::after {
+    right: -145px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .row-cards-one .mycard::after {
+    right: -100px;
+  }
+}
+
+.row-cards-one .mycard::after {
+  position: absolute;
+  content: " ";
+  width: 180px;
+  height: 500px;
+  top: -100px;
+  right: -50px;
+  transform: rotate(26deg);
+}
+
+/* Add these styles to Dashboard.css */
+
+/* Dashboard.css */
+
+.icofont-dollar:before {
+  content: "\e9d8";
+}
+
+.icofont-truck-alt:before {
+  content: "\e9a2";
+}
+
+.icofont-check-circled:before {
+  content: "\ea10";
+}
+
+.icofont-cart-alt:before {
+  content: "\e98b";
+}
+
+.icofont-users-alt-5:before {
+  content: "\e9cb";
+}
+
+.icofont-newspaper:before {
+  content: "\e9d2";
+}
+
+[class*="icofont-"],
+[class^="icofont-"] {
+  font-family: IcoFont !important;
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  line-height: 1;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Media queries for icon size based on screen width */
+@media (max-width: 991px) {
+  .row-cards-one .mycard .right .icon {
+    font-size: 70px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .row-cards-one .mycard .right .icon {
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .row-cards-one .mycard .right .icon {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .row-cards-one .mycard .right .icon {
+    font-size: 50px;
+  }
+}
+
+.row-cards-one .mycard .right .icon {
+  font-size: 80px;
+  color: #fff;
+  position: inherit;
+  z-index: 9;
+}

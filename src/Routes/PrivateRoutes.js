@@ -6,7 +6,7 @@ const PrivateRoutes = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let login = localStorage.getItem("AUTH_ACCESS_TOKEN");
+    let login = localStorage.getItem("AUTH_ACCESS_TOKEN_ADMIN");
     if (!login) {
       navigate("/login");
     }
