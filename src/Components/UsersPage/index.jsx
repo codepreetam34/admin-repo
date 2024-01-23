@@ -23,6 +23,7 @@ const UsersPage = () => {
   const [addShowToastMessage, setAddShowToastMessage] = useState("");
   const [openAddModalPage, setOpenAddModalPage] = useState(false);
   const [openEditModalPage, setOpenEditModalPage] = useState(false);
+  const auth = localStorage.getItem("Sidebar_Module_Assigned_Admin");
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -90,7 +91,10 @@ const UsersPage = () => {
       </thead>
     );
   };
-
+  const onViewDetail = (data) => {
+    setOpenViewModalPage(true);
+    setModalData({ data: data });
+  };
   const DataTableBody = () => {
     return (
       <>
@@ -110,14 +114,19 @@ const UsersPage = () => {
                     })}
                   </td>
                   <td>
-                    <span className={`badge ${user?.verified ? 'verified' : 'not-verified'}`}>
+                    <span
+                      className={`badge ${
+                        user?.verified ? "verified" : "not-verified"
+                      }`}
+                    >
                       {user?.verified ? "Verified" : "Not Verified"}
                     </span>
                   </td>
 
                   <td>
                     <div className="table_icons d-flex align-items-center justify-content-center">
-                      {tableActions &&
+                      {auth && auth.role === "super-admin" ? (
+                        tableActions &&
                         tableActions?.map((action, index) => (
                           <div
                             className={action?.class?.toLowerCase()}
@@ -128,7 +137,19 @@ const UsersPage = () => {
                               <i className={action.icon}></i>
                             </Link>
                           </div>
-                        ))}
+                        ))
+                      ) : (
+                        <>
+                          <div
+                            className="eye"
+                            onClick={() => onViewDetail(user)}
+                          >
+                            <Link to="#">
+                              <i className="fa-solid fa-eye"></i>
+                            </Link>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -178,6 +199,7 @@ const UsersPage = () => {
         setModalData({ data: data });
       },
     },
+
     {
       name: "Delete",
       class: "delete",
