@@ -46,7 +46,7 @@ const Dashboard = () => {
           <div className="left">
             <h5 className="title">{title}</h5>
             <span className="number">{number}</span>
-            <a href="" className="link">
+            <a href="/#" className="link">
               View All
             </a>
           </div>
