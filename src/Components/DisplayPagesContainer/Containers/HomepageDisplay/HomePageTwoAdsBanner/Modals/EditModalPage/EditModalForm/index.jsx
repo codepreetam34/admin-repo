@@ -33,6 +33,7 @@ const EditModalForm = ({
   useEffect(() => {
     reset({
       title: bannerById?.title,
+      subTitle: bannerById?.subTitle,
       imageAltText: bannerById?.imageAltText,
     });
     setViewBannerImage(bannerById?.banner);
@@ -41,6 +42,7 @@ const EditModalForm = ({
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("title", data?.title?.toString());
+    formData.append("subTitle", data?.subTitle?.toString());
     formData.append("imageAltText", data?.imageAltText?.toString());
     formData.append("banner", bannerImage);
     formData.append("_id", bannerById._id);
@@ -89,10 +91,16 @@ const EditModalForm = ({
           style={{ padding: "2rem" }}
         >
           <Row>
-            <Col md={12}>
+            <Col md={6}>
               <Form.Group className="mb-4" controlId="title">
                 <Form.Label>Title</Form.Label>
                 <Form.Control type="text" name="title" {...register("title")} />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-4" controlId="subTitle">
+                <Form.Label>Sub Title</Form.Label>
+                <Form.Control type="text" name="subTitle" {...register("subTitle")} />
               </Form.Group>
             </Col>
             <Col md={6}>

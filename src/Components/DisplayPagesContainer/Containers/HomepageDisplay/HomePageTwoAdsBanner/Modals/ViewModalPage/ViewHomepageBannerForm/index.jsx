@@ -18,6 +18,11 @@ const ViewModalForm = ({ bannerData }) => {
             </Col>
             <Col md={6}>
               <div className="view-details pb-2">
+                <strong>Sub Title</strong> <br /> {bannerData?.subTitle}
+              </div>
+            </Col>
+            <Col md={6}>
+              <div className="view-details pb-2">
                 <strong>Image Alt Text</strong>
                 <br />
                 {bannerData?.imageAltText}
