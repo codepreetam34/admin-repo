@@ -2,10 +2,9 @@ import React from "react";
 import { Col, Container } from "react-bootstrap";
 import EditRegisterVendorForm from "./EditRegisterVendorForm";
 
-const EditRegisterVendorPage = ({
+const AddRegiterVendorPage = ({
   setOpenEditRegisterVendorPage,
   setIsLoading,
-  productData,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
@@ -13,16 +12,16 @@ const EditRegisterVendorPage = ({
 }) => {
   return (
     <Col md={12}>
+      {" "}
       <div className="pt-4">
         <div
           className="text_heading"
           style={{ cursor: "pointer" }}
           onClick={() => setOpenEditRegisterVendorPage(false)}
         >
-          <i class="fa-solid fa-arrow-left"></i> <span>Edit Vender</span>
+          <i class="fa-solid fa-arrow-left"></i> <span>Edit Vendor</span>
         </div>
       </div>
-
       <Container className="">
         <div className="user_table">
           <div className="nftstable">
@@ -31,15 +30,14 @@ const EditRegisterVendorPage = ({
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
               <EditRegisterVendorForm
-                setIsLoading={setIsLoading}
                 setOpenEditRegisterVendorPage={setOpenEditRegisterVendorPage}
-                productData={productData}
+                setIsLoading={setIsLoading}
                 setAddShowErrorToast={setAddShowErrorToast}
                 setAddShowErrorToastMessage={setAddShowErrorToastMessage}
                 setAddShowToast={setAddShowToast}
                 setAddShowToastMessage={setAddShowToastMessage}
               />
-            </div>
+            </div>{" "}
           </div>
         </div>
       </Container>
@@ -47,4 +45,4 @@ const EditRegisterVendorPage = ({
   );
 };
 
-export default EditRegisterVendorPage;
+export default AddRegiterVendorPage;

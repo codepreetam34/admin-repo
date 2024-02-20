@@ -11,6 +11,8 @@ import ShopByOccasionSlice from "Redux/Slices/ShopByOccasion/ShopByOccasionSlice
 import PamperZoneSlice from "Redux/Slices/PamperZone/PamperZoneSlice";
 import AllOrderSlice from "Redux/Slices/Order/Order";
 import UsersSlice from "Redux/Slices/Users/Users";
+import VendorSlice from "Redux/Slices/RegisterAVendor/RegisterAVendorSlice";
+
 const rootReducer = combineReducers({
   auth: authReducer,
   HomePageBanner: HomePageBannerSlice,
@@ -22,6 +24,7 @@ const rootReducer = combineReducers({
   pamperZone: PamperZoneSlice,
   myOrders: AllOrderSlice,
   usersStore: UsersSlice,
+  vendorStore: VendorSlice,
 });
 
 const initializeStore = () =>

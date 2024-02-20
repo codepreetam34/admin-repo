@@ -6,11 +6,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { profileSchema } from "ValidationSchema/profileSchema";
 import { format, parseISO } from "date-fns";
+import { editAVendor, getAVendor } from "Redux/Slices/RegisterAVendor/RegisterAVendorSlice";
 
 const EditModalForm = ({
   dataId,
   modalData,
-  setOpenEditModalPage,
+  setOpenAddRegisterVendorPage,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
@@ -73,56 +74,26 @@ const EditModalForm = ({
     loadUserFromServer();
   }, [loadUserFromServer]);
 
-  const onSubmit = async (data) => {
-    try {
-      const formData = new FormData();
+  const onSubmit = (data) => {
+    const formData = new FormData();
 
-      if (dataId) {
-        formData.append("_id", dataId.toString());
+    dispatch(editAVendor(formData)).then((res) => {
+      setIsLoading(true);
+      if (
+        res?.paylaod?.error?.response?.status === 400 ||
+        res?.paylaod?.error?.response?.status === 500
+      ) {
+        setIsLoading(false);
+        setAddShowErrorToast(true);
+        setAddShowErrorToastMessage(res.paylaod.error.message);
+      } else {
+        setIsLoading(false);
+        setAddShowToast(true);
+        setAddShowToastMessage(res.payload.message);
+        setOpenAddRegisterVendorPage(false);
+        dispatch(getAVendor());
       }
-
-      // Append other fields
-      formData.append("firstName", data?.firstName?.toString());
-      formData.append("lastName", data?.lastName?.toString());
-      formData.append("email", data?.email?.toString());
-      formData.append("contactNumber", data?.contactNumber?.toString());
-      formData.append("dob", data?.dob?.toString());
-      formData.append("role", data?.role?.toString());
-      formData.append("gender", data?.gender?.toString());
-
-      // Append profile image if available
-      if (profileImage) {
-        formData.append("profilePicture", profileImage);
-      }
-
-      dispatch(editUserById(formData)).then((res) => {
-        setIsLoading(true);
-        if (
-          res?.payload?.error?.response?.status === 400 ||
-          res?.payload?.error?.response?.status === 404 ||
-          res?.payload?.error?.response?.status === 500
-        ) {
-          setIsLoading(false);
-          setAddShowErrorToast(true);
-          setAddShowErrorToastMessage(
-            res.payload?.error?.response?.data?.message
-          );
-          dispatch(getAllUsers());
-        } else {
-          setIsLoading(false);
-          setAddShowToast(true);
-          setAddShowToastMessage(res.payload.message);
-          setOpenEditModalPage(false);
-          dispatch(getAllUsers());
-        }
-      });
-    } catch (error) {
-      setIsLoading(false);
-      setAddShowErrorToast(true);
-      setAddShowErrorToastMessage("Internal Server Error! Please try again");
-      setOpenEditModalPage(false);
-      dispatch(getAllUsers());
-    }
+    });
   };
 
   return (

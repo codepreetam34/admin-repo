@@ -11,6 +11,7 @@ import ViewRegisterVendorPage from "./Components/ViewRegisterVendorPage";
 import DeleteDataModal from "./Components/DeleteDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
+import { getAVendor } from "Redux/Slices/RegisterAVendor/RegisterAVendorSlice";
 
 const RegisterVendorPage = () => {
 
@@ -29,7 +30,26 @@ const RegisterVendorPage = () => {
 
     const dispatch = useDispatch();
 
-    const productsList = [];
+    const productsList = useSelector(
+        (state) => state?.vendorStore?.vendorData
+    );
+
+    console.log("productsList ",productsList)
+
+    useEffect(() => {
+
+        if (!productsList || productsList?.length === 0) {
+
+            dispatch(getAVendor())
+                .then(() => {
+                    setIsLoading(false);
+                })
+                .catch(() => setIsLoading(false));
+
+        } else {
+            setIsLoading(false);
+        }
+    }, [dispatch]);
 
     const handleAdd = () => {
         setOpenAddRegisterVendorPage(true);
@@ -42,9 +62,9 @@ const RegisterVendorPage = () => {
 
     const tableHeaders = [
         { title: "S.No.", class: "" },
-        { title: "Title", class: "" },
-        { title: "Category", class: "" },
-        { title: "Image", class: "" },
+        { title: "Shop Name", class: "" },
+        { title: "Vendor Name", class: "" },
+        { title: "Gst Number", class: "" },
         { title: "Action", class: "text-center" },
     ];
 
@@ -111,13 +131,13 @@ const RegisterVendorPage = () => {
             );
             return searchedProducts;
         }
-        return productsList; // If defaultCategory is "All" or not specified, return all products
+        return productsList;
     };
 
     const RenderTable = () => {
         const searchedProducts = getSearchedAndFilteredProducts();
-
         const displayProducts = searchedProducts;
+        console.log("Searched Products ", displayProducts)
 
         return (
             <Col md={12}>
@@ -141,18 +161,9 @@ const RegisterVendorPage = () => {
                                             return (
                                                 <tr key={product?._id}>
                                                     <td>{index + 1}</td>
-                                                    <td>{product?.name}</td>
-                                                    <td>{product?.categoryName}</td>
-                                                    <td>
-                                                        <img
-                                                            src={product?.productPictures[0]?.img}
-                                                            style={{ borderRadius: "10px" }}
-                                                            alt=""
-                                                            width={70}
-                                                            height={70}
-                                                            loading="lazy"
-                                                        />
-                                                    </td>
+                                                    <td>{product?.shopName}</td>
+                                                    <td>{product?.vendorName}</td>
+                                                    <td>{product?.gstNumber}</td>
                                                     <td>
                                                         <div
                                                             className="table_icons d-flex align-items-center justify-content-center"
@@ -190,9 +201,6 @@ const RegisterVendorPage = () => {
             </Col>
         );
     };
-
-
-
 
     return (
         <Wrapper>

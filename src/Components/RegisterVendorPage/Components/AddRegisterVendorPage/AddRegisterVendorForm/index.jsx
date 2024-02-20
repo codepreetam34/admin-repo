@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { addProducts, getProducts } from "Redux/Slices/Products/ProductsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductSchema } from "ValidationSchema/addProductSchema";
+import { addAVendor, getAVendor } from "Redux/Slices/RegisterAVendor/RegisterAVendorSlice";
+import { vendorSchema } from "ValidationSchema/vendorSchema";
 
 const AddRegisterVendorForm = ({
   setOpenAddRegisterVendorPage,
@@ -22,15 +23,13 @@ const AddRegisterVendorForm = ({
     formState: { errors },
     setValue,
   } = useForm({
-    resolver: yupResolver(addProductSchema),
+    resolver: yupResolver(vendorSchema),
     mode: "onChange",
   });
 
 
   const onSubmit = (data) => {
-    const formData = new FormData();
-
-    dispatch(addProducts(formData)).then((res) => {
+    dispatch(addAVendor(data)).then((res) => {
       setIsLoading(true);
       if (
         res?.paylaod?.error?.response?.status === 400 ||
@@ -43,13 +42,11 @@ const AddRegisterVendorForm = ({
         setIsLoading(false);
         setAddShowToast(true);
         setAddShowToastMessage(res.payload.message);
-        setOpenAddRegisterVendorPage(false);
-        dispatch(getProducts());
+          setOpenAddRegisterVendorPage(false);
+            dispatch(getAVendor());
       }
     });
   };
-
-
 
   return (
     <div className="container">
@@ -60,16 +57,292 @@ const AddRegisterVendorForm = ({
       >
         <Row>
           <Col md={12} className="product-detail-design">
+
             <Row>
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>Shop Name of the Vendor</Form.Label>
 
                   <Form.Control
                     id="name"
                     type="text"
                     name="name"
-                    {...register("name")}
+                    {...register("shopName")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Name of the Vendor</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("vendorName")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>PAN No. of the Vendor</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("panNumber")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>GST No.</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("gstNumber")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Form.Label style={{ fontSize: "1.25rem", fontWeight: "500" }}>Address of Registerd Office</Form.Label>
+              <Col md={12}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Enter Address 1</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("officeAddress1")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Enter Address 2</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("officeAddress2")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>City</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("officeCity")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>State</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("officeState")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Pincode</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("officePincode")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Phone No.</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("officePhone")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Email Address</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("officeEmail")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+
+              <Form.Label style={{ fontSize: "1.25rem", fontWeight: "500" }}>Address of Home</Form.Label>
+              <Col md={12}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Enter Address 1</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("homeAddress1")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Enter Address 2</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("homeAddress1")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>City</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("homeCity")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>State</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("homeState")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Pincode</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("homePincode")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Phone No.</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("homePhone")}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="form-group-padding-bottom">
+                  <Form.Label>Email Address</Form.Label>
+
+                  <Form.Control
+                    id="name"
+                    type="text"
+                    name="name"
+                    {...register("localOfficeEmail")}
                     isInvalid={!!errors.name}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -80,6 +353,7 @@ const AddRegisterVendorForm = ({
 
 
             </Row>
+
           </Col>
 
           <div style={{ display: "flex", justifyContent: "center" }}>
