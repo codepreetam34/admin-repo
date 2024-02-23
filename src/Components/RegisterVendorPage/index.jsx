@@ -4,13 +4,11 @@ import { Row, Col, Form, Table, InputGroup, Spinner, Container } from "react-boo
 import { useDispatch, useSelector } from "react-redux";
 import DynamicModal from "Constants/DynamicModal";
 import { Link } from "react-router-dom";
-import { getProducts } from "Redux/Slices/Products/ProductsSlice";
 import AddRegisterVendorPage from "./Components/AddRegisterVendorPage";
 import EditRegisterVendorPage from "./Components/EditRegisterVendorPage";
 import ViewRegisterVendorPage from "./Components/ViewRegisterVendorPage";
 import DeleteDataModal from "./Components/DeleteDataModal";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
-import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { getAVendor } from "Redux/Slices/RegisterAVendor/RegisterAVendorSlice";
 
 const RegisterVendorPage = () => {
@@ -34,7 +32,7 @@ const RegisterVendorPage = () => {
         (state) => state?.vendorStore?.vendorData
     );
 
-    console.log("productsList ",productsList)
+    console.log("productsList ", productsList)
 
     useEffect(() => {
 
@@ -275,7 +273,7 @@ const RegisterVendorPage = () => {
                                 />
                             ) : openEditRegisterVendorPage && openEditRegisterVendorPage ? (
                                 <EditRegisterVendorPage
-                                    productData={modalData?.data}
+                                    vendorData={modalData?.data}
                                     setOpenEditRegisterVendorPage={setOpenEditRegisterVendorPage}
                                     setIsLoading={setIsLoading}
                                     setAddShowErrorToast={(err) => {
@@ -293,8 +291,11 @@ const RegisterVendorPage = () => {
                                 />
                             ) : openViewRegisterVendorPage && openViewRegisterVendorPage ? (
                                 <ViewRegisterVendorPage
-                                    productData={modalData?.data}
+                                    vendorData={modalData?.data}
                                     setOpenViewRegisterVendorPage={setOpenViewRegisterVendorPage}
+
+                                    setIsLoading={setIsLoading}
+
                                 />
                             ) : (
                                 <RenderTable />

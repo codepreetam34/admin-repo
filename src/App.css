@@ -145,7 +145,7 @@ ul {
 }
 
 .verified {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .not-verified {
@@ -155,4 +155,17 @@ ul {
 /* CSS */
 input#verified {
   background: #f44336;
+}
+
+.sidebar-background {
+  width: 100%;
+  margin-top: 1rem;
+  background-color: #fff;
+  box-shadow: 0 4px 12px 0 rgb(0 0 0 / 7%), 0 2px 4px rgb(0 0 0 / 5%);
+  height: auto;
+  transition: 0.3s;
+
+  border: 0.0625rem solid rgba(26, 26, 26, 0.12);
+  border-radius: 10px;
+
 }

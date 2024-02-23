@@ -2,9 +2,10 @@ import React from "react";
 import { Col, Container } from "react-bootstrap";
 import EditRegisterVendorForm from "./EditRegisterVendorForm";
 
-const AddRegiterVendorPage = ({
+const EditRegiterVendorPage = ({
   setOpenEditRegisterVendorPage,
   setIsLoading,
+  vendorData,
   setAddShowErrorToast,
   setAddShowErrorToastMessage,
   setAddShowToast,
@@ -31,6 +32,7 @@ const AddRegiterVendorPage = ({
             >
               <EditRegisterVendorForm
                 setOpenEditRegisterVendorPage={setOpenEditRegisterVendorPage}
+                vendorData={vendorData}
                 setIsLoading={setIsLoading}
                 setAddShowErrorToast={setAddShowErrorToast}
                 setAddShowErrorToastMessage={setAddShowErrorToastMessage}
@@ -45,4 +47,4 @@ const AddRegiterVendorPage = ({
   );
 };
 
-export default AddRegiterVendorPage;
+export default EditRegiterVendorPage;

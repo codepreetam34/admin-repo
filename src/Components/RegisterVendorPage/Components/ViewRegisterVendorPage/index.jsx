@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Container } from "react-bootstrap";
 import ViewRegisterVendorForm from "./ViewRegisterVendorForm";
 
-const ViewRegisterVendorPage = ({ setOpenViewRegisterVendorPage, productData }) => {
+const ViewRegisterVendorPage = ({ setOpenViewRegisterVendorPage, vendorData }) => {
   return (
     <Col md={12}>
       <div className="pt-4">
@@ -21,7 +21,7 @@ const ViewRegisterVendorPage = ({ setOpenViewRegisterVendorPage, productData }) 
               className="tablearea"
               style={{ margin: "0 auto", maxWidth: "62.375rem", padding: "0" }}
             >
-              <ViewRegisterVendorForm productData={productData} />
+              <ViewRegisterVendorForm vendorData={vendorData} />
             </div>
           </div>
         </div>
