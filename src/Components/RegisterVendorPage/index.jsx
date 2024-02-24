@@ -96,8 +96,8 @@ const RegisterVendorPage = () => {
                     data: data,
                     modalContent: (
                         <DeleteDataModal
-                            productId={data?._id}
-                            productName={data?.name}
+                            vendorId={data?._id}
+                            shopName={data?.shopName}
                             setShowModal={setShowModal}
                             setIsLoading={setIsLoading}
                             setAddShowErrorToast={(err) => {
@@ -135,7 +135,6 @@ const RegisterVendorPage = () => {
     const RenderTable = () => {
         const searchedProducts = getSearchedAndFilteredProducts();
         const displayProducts = searchedProducts;
-        console.log("Searched Products ", displayProducts)
 
         return (
             <Col md={12}>

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../Services/AxiosInstance";
-import { ADD_A_VENDOR,GET_ALL_VENDOR,EDIT_A_VENDOR} from "./type";
+import { ADD_A_VENDOR,GET_ALL_VENDOR,EDIT_A_VENDOR, DELETE_A_VENDOR} from "./type";
 
 export const addAVendor = createAsyncThunk(
   ADD_A_VENDOR,
@@ -25,11 +25,24 @@ export const getAVendor = createAsyncThunk(
     }
   }
 );
+
 export const editAVendor = createAsyncThunk(
   EDIT_A_VENDOR,
   async (payload, thunkAPI) => {
     try {
       const response = await axiosInstance.post(`/vendor/update`,payload);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error });
+    }
+  }
+);
+
+export const deleteAVendor = createAsyncThunk(
+  DELETE_A_VENDOR,
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(`/vendor/delete`,{_id:payload});
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
