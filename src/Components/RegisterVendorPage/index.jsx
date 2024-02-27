@@ -14,7 +14,7 @@ import { getAVendor } from "Redux/Slices/RegisterAVendor/RegisterAVendorSlice";
 const RegisterVendorPage = () => {
 
     const [modalData, setModalData] = useState({ type: null, data: null });
-    const [isLoading, setIsLoading] = useState(false); // Add loading state
+    const [isLoading, setIsLoading] = useState(false); 
     const [openAddRegisterVendorPage, setOpenAddRegisterVendorPage] = useState(false);
     const [openEditRegisterVendorPage, setOpenEditRegisterVendorPage] = useState(false);
     const [openViewRegisterVendorPage, setOpenViewRegisterVendorPage] = useState(false);
@@ -23,16 +23,12 @@ const RegisterVendorPage = () => {
     const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
     const [addShowToastMessage, setAddShowToastMessage] = useState("");
     const [addShowToast, setAddShowToast] = useState(false);
-
     const [searchInput, setSearchInput] = useState("");
-
     const dispatch = useDispatch();
 
     const productsList = useSelector(
         (state) => state?.vendorStore?.vendorData
     );
-
-    console.log("productsList ", productsList)
 
     useEffect(() => {
 
@@ -292,9 +288,7 @@ const RegisterVendorPage = () => {
                                 <ViewRegisterVendorPage
                                     vendorData={modalData?.data}
                                     setOpenViewRegisterVendorPage={setOpenViewRegisterVendorPage}
-
                                     setIsLoading={setIsLoading}
-
                                 />
                             ) : (
                                 <RenderTable />

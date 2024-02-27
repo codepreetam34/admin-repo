@@ -38,14 +38,14 @@ const AddRegisterVendorForm = ({
   };
 
   const onSubmit = (data) => {
-    
+
     const formData = new FormData();
     formData.append("shopName", data.shopName);
     formData.append("vendorName", data.vendorName);
     formData.append("panNumber", data.panNumber);
     formData.append("gstNumber", data.gstNumber);
-    formData.append("aadharCard", aadharCardFile); 
-    formData.append("gstCertificate", gstCertificateFile); 
+    formData.append("aadharCard", aadharCardFile);
+    formData.append("gstCertificate", gstCertificateFile);
     formData.append("officeAddress1", data.officeAddress1);
     formData.append("officeAddress2", data.officeAddress2);
     formData.append("officeCity", data.officeCity);
@@ -67,15 +67,19 @@ const AddRegisterVendorForm = ({
         res?.paylaod?.error?.response?.status === 400 ||
         res?.paylaod?.error?.response?.status === 500
       ) {
+
         setIsLoading(false);
         setAddShowErrorToast(true);
         setAddShowErrorToastMessage(res.paylaod.error.message);
+
       } else {
+
         setIsLoading(false);
         setAddShowToast(true);
         setAddShowToastMessage(res.payload.message);
         setOpenAddRegisterVendorPage(false);
         dispatch(getAVendor());
+
       }
     });
   };
