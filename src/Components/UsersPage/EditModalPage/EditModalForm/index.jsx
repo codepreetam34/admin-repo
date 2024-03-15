@@ -18,12 +18,15 @@ const EditModalForm = ({
   setAddShowToastMessage,
   setIsLoading,
 }) => {
+
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
   const [viewProfileImage, setViewProfileImage] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [isRoleSectionDisabled, setIsRoleSectionDisabled] = useState(true);
-  const auth = localStorage.getItem("Sidebar_Module_Assigned_Admin");
+  const authString = localStorage.getItem("Sidebar_Module_Assigned_Admin");
+  const auth = JSON.parse(authString);
+
   const enableRoleSection = () => {
     setIsRoleSectionDisabled(!isRoleSectionDisabled);
   };
@@ -101,6 +104,7 @@ const EditModalForm = ({
       <Form onSubmit={handleSubmit(onSubmit)}>
         <div className="product-detail-design">
           <Row className="m-0 p-0">
+
             <Col md={6} className="">
               <Form.Group className="form-group-padding-bottom">
                 <Form.Label>First Name</Form.Label>
@@ -113,6 +117,7 @@ const EditModalForm = ({
                 />
               </Form.Group>
             </Col>
+
             <Col md={6} className="">
               <Form.Group className="form-group-padding-bottom">
                 <Form.Label>Last Name</Form.Label>
@@ -125,6 +130,7 @@ const EditModalForm = ({
                 />
               </Form.Group>
             </Col>
+
             <Col md={6} className="">
               <Form.Group className="form-group-padding-bottom">
                 <Form.Label>Email</Form.Label>
@@ -137,6 +143,7 @@ const EditModalForm = ({
                 />
               </Form.Group>
             </Col>
+
             <Col md={6} className="">
               <Form.Group className="form-group-padding-bottom">
                 <Form.Label>Contact Number</Form.Label>
@@ -149,6 +156,7 @@ const EditModalForm = ({
                 />
               </Form.Group>
             </Col>
+
             <Col md={6} className="">
               <Form.Group className="form-group-padding-bottom">
                 <Form.Label>Gender</Form.Label>
@@ -183,6 +191,7 @@ const EditModalForm = ({
                 </div>
               </Form.Group>
             </Col>
+
             <Col md={6} className="">
               <Form.Group className="form-group-padding-bottom">
                 <Form.Label>D.O.B</Form.Label>
@@ -196,6 +205,7 @@ const EditModalForm = ({
                 />
               </Form.Group>
             </Col>
+
             <Col md={6} className="">
               <Form.Group className="form-group-padding-bottom">
                 <Form.Label>Role</Form.Label>
@@ -220,6 +230,26 @@ const EditModalForm = ({
                     disabled={isRoleSectionDisabled}
                     {...register("role")}
                   />
+                  <Form.Check
+                    inline
+                    label="Vendor"
+                    type="radio"
+                    id="vendor"
+                    name="role"
+                    value="vendor"
+                    disabled={isRoleSectionDisabled}
+                    {...register("role")}
+                  />
+                  <Form.Check
+                    inline
+                    label="Super Admin"
+                    type="radio"
+                    id="super-admin"
+                    name="role"
+                    value="super-admin"
+                    disabled={isRoleSectionDisabled}
+                    {...register("role")}
+                  />
                 </div>
                 {auth.role === "super-admin" ? (
                   <Button
@@ -234,6 +264,7 @@ const EditModalForm = ({
                 )}
               </Form.Group>
             </Col>
+
             <Col md={3}>
               <Form.Group className="mb-4">
                 <Form.Label>Verified</Form.Label>
@@ -246,6 +277,7 @@ const EditModalForm = ({
                 />
               </Form.Group>
             </Col>
+
             <Col md={6}>
               <Form.Group className="mb-4">
                 <Form.Label>Profile Image</Form.Label>
@@ -258,6 +290,7 @@ const EditModalForm = ({
                 />
               </Form.Group>
             </Col>{" "}
+
             <Col md={12} className="mb-4">
               {imagePreview && imagePreview ? (
                 <div className="">
@@ -295,12 +328,16 @@ const EditModalForm = ({
                 <></>
               )}
             </Col>
+
           </Row>
         </div>
+
         <div className="pt-4">
           <Button type="submit">Update</Button>
         </div>
+
       </Form>
+      
     </div>
   );
 };

@@ -116,8 +116,10 @@ button.btn {
   top: 0;
   background-color: $white-clr;
   box-shadow: 0 4px 12px 0 rgb(0 0 0 / 7%), 0 2px 4px rgb(0 0 0 / 5%);
-  height: 100vh;
+  height: 100%;
+
   transition: 0.3s;
+  overflow: auto;
 
   .logo {
     padding: 15px;
@@ -580,7 +582,6 @@ button.btn {
   }
 }
 
-
 .detailstable {
   padding: 30px;
 
@@ -624,7 +625,6 @@ button.btn {
           }
 
           th {
-
             text-align: center;
           }
         }
@@ -668,11 +668,6 @@ button.btn {
     }
   }
 }
-
-
-
-
-
 
 .trandnfts {
   padding: 30px;
@@ -838,7 +833,7 @@ button.btn {
   .user_table {
     .nftstable {
       padding: 0;
-     /*margin-top: 30px; */
+      /*margin-top: 30px; */
 
       .table {
         tbody {

@@ -75,9 +75,15 @@ button.btn:focus {
   top: 0;
   background-color: #ffffff;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
-  height: 100vh;
+  height: 100%;
   transition: 0.3s;
+  overflow: auto;
 }
+/* .sidebar::-webkit-scrollbar {
+  width: 0;  
+  background: transparent;  
+} */
+
 .sidebar .logo {
   padding: 15px;
 }

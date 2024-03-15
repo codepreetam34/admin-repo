@@ -23,7 +23,8 @@ const UsersPage = () => {
   const [addShowToastMessage, setAddShowToastMessage] = useState("");
   const [openAddModalPage, setOpenAddModalPage] = useState(false);
   const [openEditModalPage, setOpenEditModalPage] = useState(false);
-  const auth = localStorage.getItem("Sidebar_Module_Assigned_Admin");
+  const authString = localStorage.getItem("Sidebar_Module_Assigned_Admin");
+  const auth = JSON.parse(authString);
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -115,9 +116,8 @@ const UsersPage = () => {
                   </td>
                   <td>
                     <span
-                      className={`badge ${
-                        user?.verified ? "verified" : "not-verified"
-                      }`}
+                      className={`badge ${user?.verified ? "verified" : "not-verified"
+                        }`}
                     >
                       {user?.verified ? "Verified" : "Not Verified"}
                     </span>

@@ -88,8 +88,6 @@ const EditRegisterVendorForm = ({
     });
   };
 
-
-
   useEffect(() => {
     // Pre-fill form with vendor data using reset function
     reset({
@@ -105,7 +103,6 @@ const EditRegisterVendorForm = ({
       officePhone: vendorData?.officePhone,
       officeEmail: vendorData?.officeEmail,
 
-
       homeAddress1: vendorData?.homeAddress1,
       homeAddress2: vendorData?.homeAddress2,
       homeCity: vendorData?.homeCity,
@@ -113,7 +110,6 @@ const EditRegisterVendorForm = ({
       homePincode: vendorData?.homePincode,
       homePhone: vendorData?.homePhone,
       homeEmail: vendorData?.homeEmail,
-
 
       aadharCard: vendorData?.aadharCard,
       gstCertificate: vendorData?.gstCertificate
@@ -133,10 +129,7 @@ const EditRegisterVendorForm = ({
           className="user_form"
           onSubmit={handleSubmit(onSubmit)}
           style={{ padding: "2rem" }}
-
         >
-
-
           <Row>
             <Col md={6}>
               <Form.Group className="form-group-padding-bottom">

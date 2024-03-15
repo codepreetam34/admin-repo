@@ -169,3 +169,9 @@ input#verified {
   border-radius: 10px;
 
 }
+
+
+.sidebar::-webkit-scrollbar {
+  width: 0;  
+  background: transparent;  
+}
