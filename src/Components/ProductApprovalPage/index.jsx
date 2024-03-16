@@ -108,9 +108,7 @@ const ProductApprovalPage = () => {
                 {productsList && productsList?.length > 0 ? (
                     productsList?.map((vendorProducts, index) => (
                         <React.Fragment key={index}>
-
                             <tbody>
-
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{vendorProducts?.name}</td>
@@ -149,7 +147,6 @@ const ProductApprovalPage = () => {
                                         </div>
                                     </td>
                                 </tr>
-
                             </tbody>
                         </React.Fragment>
                     ))
