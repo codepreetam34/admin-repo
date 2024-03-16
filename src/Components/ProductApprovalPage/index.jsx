@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "Components/Wrapper";
-import { Row, Col, Form, Table, InputGroup, Spinner } from "react-bootstrap";
+import { Row, Col, Form, Table, InputGroup, Spinner, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorToaster, SuccessToaster } from "Constants/utils";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import DynamicModal from "Constants/DynamicModal";
 import ViewModalPage from "./Components/ViewProductPage";
 import VendorApprovalModal from "./Components/VendorApprovalModal";
 import { getVendorProductsApproval } from "Redux/Slices/Products/ProductsSlice";
+import EditProductPage from "./Components/EditProductPage";
 
 const ProductApprovalPage = () => {
 
@@ -20,7 +21,6 @@ const ProductApprovalPage = () => {
     const [showModal, setShowModal] = useState(false);
     const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
     const [addShowToastMessage, setAddShowToastMessage] = useState("");
-
     const [openAddModalPage, setOpenAddModalPage] = useState(false);
     const [openEditModalPage, setOpenEditModalPage] = useState(false);
 
@@ -32,7 +32,6 @@ const ProductApprovalPage = () => {
         (state) => state?.ProductsByCatId?.getVendorProductsApprovalData?.products
     );
 
-    console.log("product list ", productsList)
 
     const InitialRender = () => {
         return (
@@ -78,7 +77,7 @@ const ProductApprovalPage = () => {
                     <div className="nftstable">
                         <div className="tablearea">
                             <Table responsive className="m-0">
-                                {/* <DataTableHeader /> */}
+                                <DataTableHeader />
                                 <DataTableBody />
                             </Table>
                         </div>
@@ -88,20 +87,20 @@ const ProductApprovalPage = () => {
         );
     };
 
-    // const DataTableHeader = () => {
-    //   return (
-    //     <thead>
-    //       <tr>
-    //         {tableHeaders &&
-    //           tableHeaders?.map((header, index) => (
-    //             <th className={header?.class} key={index}>
-    //               {header?.title}
-    //             </th>
-    //           ))}
-    //       </tr>
-    //     </thead>
-    //   );
-    // };
+    const DataTableHeader = () => {
+        return (
+            <thead>
+                <tr>
+                    {tableHeaders &&
+                        tableHeaders?.map((header, index) => (
+                            <th className={header?.class} key={index}>
+                                {header?.title}
+                            </th>
+                        ))}
+                </tr>
+            </thead>
+        );
+    };
 
     const DataTableBody = () => {
         return (
@@ -109,28 +108,7 @@ const ProductApprovalPage = () => {
                 {productsList && productsList?.length > 0 ? (
                     productsList?.map((vendorProducts, index) => (
                         <React.Fragment key={index}>
-                            <thead>
-                                {/* <tr>
-                                    <td
-                                        colSpan="7"
-                                        style={{ textAlign: "center", color: "#801317" }}
-                                    >
-                                        <strong>
-                                            <span style={{ fontSize: "1.5rem" }}>
-                                                 {index + 1}. {vendorProducts?.vendorName} 
-                                            </span>
-                                        </strong>
-                                    </td>
-                                </tr> */}
-                                <tr>
-                                    {tableHeaders &&
-                                        tableHeaders?.map((header, index) => (
-                                            <th className={header?.class} key={index}>
-                                                {header?.title}
-                                            </th>
-                                        ))}
-                                </tr>
-                            </thead>
+
                             <tbody>
 
                                 <tr key={index}>
@@ -146,6 +124,13 @@ const ProductApprovalPage = () => {
                                             height={70}
                                             loading="lazy"
                                         />
+                                    </td>
+                                    <td>
+                                        {vendorProducts?.approvedBySuperAdmin ? (
+                                            <Badge bg="success">Approved</Badge>
+                                        ) : (
+                                            <Badge bg="warning">Pending</Badge>
+                                        )}
                                     </td>
                                     <td>
                                         <div className="table_icons d-flex align-items-center justify-content-center">
@@ -186,23 +171,24 @@ const ProductApprovalPage = () => {
         { title: "Product Name", class: "" },
         { title: "Vendor Name", class: "" },
         { title: "Image", class: "" },
+        { title: "Status", class: "" },
         { title: "Action", class: "text-center" },
     ];
 
     const tableActions = [
-        {
-            name: "View",
-            class: "eye",
-            icon: "fa-solid fa-eye",
-            onClick: (data) => {
-                setOpenViewModalPage(true)
-                setModalData({ data: data });
-            },
-        },
+        // {
+        //     name: "View",
+        //     class: "eye",
+        //     icon: "fa-solid fa-eye",
+        //     onClick: (data) => {
+        //         setOpenViewModalPage(true)
+        //         setModalData({ data: data });
+        //     },
+        // },
         // {
         //   name: "Edit",
         //   class: "edit",
-        //   icon: "fa-solid fa-thumbs-up",
+        //   icon: "far fa-edit",
         //   onClick: (data) => {
         //     setOpenEditModalPage(true);
         //     setOpenViewModalPage(false);
@@ -221,7 +207,7 @@ const ProductApprovalPage = () => {
                     data: data,
                     modalContent: (
                         <VendorApprovalModal
-                            dataId={data._id}
+                            productId={data._id}
                             productName={data?.name}
                             setShowModal={setShowModal}
                             setIsLoading={setIsLoading}
@@ -286,35 +272,34 @@ const ProductApprovalPage = () => {
                   setAddShowToastMessage={(showMessage) => {
                     setAddShowToastMessage(showMessage);
                   }}
-                />
-              ) : openEditModalPage && openEditModalPage ? (
-                <EditModalPage
-                  modalData={modalData?.data}
-                  dataId={modalData?.data?._id}
-                  setOpenEditModalPage={setOpenEditModalPage}
-                  setIsLoading={setIsLoading}
-                  setAddShowErrorToast={(err) => {
-                    setAddShowErrorToast(err);
-                  }}
-                  setAddShowErrorToastMessage={(msg) => {
-                    setAddShowErrorToastMessage(msg);
-                  }}
-                  setAddShowToast={(show) => {
-                    setAddShowToast(show);
-                  }}
-                  setAddShowToastMessage={(showMessage) => {
-                    setAddShowToastMessage(showMessage);
-                  }}
-                />
-             ) :  */}{" "}
-                            {openViewModalPage && openViewModalPage ? (
-                                <ViewModalPage
+                />*/}{" "}
+                            {openEditModalPage && openEditModalPage ? (
+                                <EditProductPage
                                     productData={modalData?.data}
-                                    setOpenViewProductPage={setOpenViewModalPage}
+                                    setOpenEditProductPage={setOpenEditModalPage}
+                                    setIsLoading={setIsLoading}
+                                    setAddShowErrorToast={(err) => {
+                                        setAddShowErrorToast(err);
+                                    }}
+                                    setAddShowErrorToastMessage={(msg) => {
+                                        setAddShowErrorToastMessage(msg);
+                                    }}
+                                    setAddShowToast={(show) => {
+                                        setAddShowToast(show);
+                                    }}
+                                    setAddShowToastMessage={(showMessage) => {
+                                        setAddShowToastMessage(showMessage);
+                                    }}
                                 />
-                            ) : (
-                                <RenderTable />
-                            )}
+                            ) :
+                                openViewModalPage && openViewModalPage ? (
+                                    <ViewModalPage
+                                        productData={modalData?.data}
+                                        setOpenViewProductPage={setOpenViewModalPage}
+                                    />
+                                ) : (
+                                    <RenderTable />
+                                )}
                         </>
                     )}
                 </Row>

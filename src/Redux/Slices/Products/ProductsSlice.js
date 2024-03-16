@@ -44,10 +44,7 @@ export const updateProducts = createAsyncThunk(
   ADD_PRODUCTS,
   async (ProductData, thunkAPI) => {
     try {
-      const response = await axiosInstance.patch(
-        `product/update`,
-        ProductData
-      );
+      const response = await axiosInstance.patch(`product/update`, ProductData);
 
       return response.data;
     } catch (error) {
@@ -85,9 +82,7 @@ export const getVendorProducts = createAsyncThunk(
   VENDOR_PRODUCTS,
   async (productId, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(
-        `product/vendor/get`
-      );
+      const response = await axiosInstance.get(`product/vendor/get`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error });
@@ -112,7 +107,8 @@ export const approvedBySuperAdmin = createAsyncThunk(
   async (productId, thunkAPI) => {
     try {
       const response = await axiosInstance.patch(
-        `product/vendor/approvedBySuperAdmin`,productId
+        `product/vendor/approvedBySuperAdmin`,
+        { productId: productId }
       );
       return response.data;
     } catch (error) {
@@ -133,7 +129,6 @@ export const ProductsByCaregoryIdSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-
     builder
       .addCase(getProductsByCategoryId.pending, (state) => {
         state.loading = true;
@@ -191,9 +186,7 @@ export const ProductsByCaregoryIdSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     });
-
   },
-
 });
 
 export default ProductsByCaregoryIdSlice.reducer;

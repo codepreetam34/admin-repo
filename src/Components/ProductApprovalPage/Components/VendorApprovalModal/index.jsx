@@ -3,8 +3,7 @@ import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import {
   approvedBySuperAdmin,
-  deleteProductById,
-  getProducts,
+  getVendorProducts,
 } from "Redux/Slices/Products/ProductsSlice";
 
 const VendorApprovalModal = ({
@@ -17,9 +16,7 @@ const VendorApprovalModal = ({
   setAddShowToastMessage,
 }) => {
   const dispatch = useDispatch();
-  console.log(productName)
-  const onSubmit = (productId) => {
-
+  const onSubmit = () => {
     dispatch(approvedBySuperAdmin(productId)).then((res) => {
       if (res?.payload?.error?.response?.status === 400) {
         setAddShowErrorToast(true);
@@ -28,7 +25,7 @@ const VendorApprovalModal = ({
         setAddShowErrorToast(true);
         setAddShowErrorToastMessage(res?.payload?.error?.response?.data?.error);
       } else {
-        dispatch(getProducts());
+        dispatch(getVendorProducts());
         setAddShowToastMessage(res?.payload?.message);
         setAddShowToast(true);
         setShowModal(false);

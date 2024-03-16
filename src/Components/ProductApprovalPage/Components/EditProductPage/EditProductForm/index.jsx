@@ -6,7 +6,8 @@ import { updateProducts, getProducts } from "Redux/Slices/Products/ProductsSlice
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
 import { editProductSchema } from "ValidationSchema/editProductSchema";
-
+import Editor from "Components/ReactQuill/Editor";
+import GenericEditor from "Components/ReactQuillSpecification/GenericEditor";
 const EditProductForm = ({
   setOpenEditProductPage,
   productData,
@@ -102,6 +103,16 @@ const EditProductForm = ({
     }
   }, [dispatch]);
 
+
+  const [descriptionData, setDescriptionData] = useState("");
+  const [specificationData, setSpecificationData] = useState("");
+
+  const handleDescriptionData = (descriptionData) => {
+    setDescriptionData(descriptionData);
+  };
+  const handleSpecificationData = (specificationData) => {
+    setSpecificationData(specificationData);
+  };
   const onSubmit = (data) => {
     const formData = new FormData();
     if (data?.name) formData.append("name", data?.name?.toString());
@@ -136,8 +147,8 @@ const EditProductForm = ({
         names: additionalTag.names,
       };
     });
-    if (tagsArray && tagsArray.length > 0 && tagsArray != []){
-       formData.append("tags", JSON.stringify(tagsArray));
+    if (tagsArray && tagsArray.length > 0 && tagsArray != []) {
+      formData.append("tags", JSON.stringify(tagsArray));
     }
     if (bannerPicture && bannerPicture?.length > 1) {
       bannerPicture?.map((file, index) => {
@@ -580,31 +591,22 @@ const EditProductForm = ({
           <Col md={12} className="product-detail-design">
             <Form.Group className="form-group-padding-bottom">
               <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="description"
-                id="description"
-                {...register("description")}
-                isInvalid={!!errors.description}
+              <Editor
+                onData={handleDescriptionData}
+                dataText={descriptionData}
+                editorId="descriptionEditor"
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.description?.message}
-              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={12} className="product-detail-design">
             <Form.Group className="form-group-padding-bottom">
               <Form.Label>Specifications</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="specifications"
-                id="specifications"
-                {...register("specifications")}
-                isInvalid={!!errors.specifications}
+              <GenericEditor
+                onData={handleSpecificationData}
+                dataText={specificationData}
+                editorId="uniqueEditorId" // Provide a unique ID
+                placeholder="Write something amazing..."
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.specifications?.message}
-              </Form.Control.Feedback>
             </Form.Group>
           </Col>
 
