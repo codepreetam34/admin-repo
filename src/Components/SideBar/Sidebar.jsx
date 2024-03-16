@@ -10,6 +10,7 @@ import {
   DISPLAY_PAGES,
   LOGIN,
   ORDER_PAGE,
+  PRODUCT_APPROVAL,
   PRODUCTS,
   TAGS,
   USER_PAGE,
@@ -135,6 +136,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               <i class="fa-solid fa-store"></i>
               <div>Products</div>
             </Nav.Link>
+
             <Nav.Link
               onClick={() => onhidesidebar()}
               as={NavLink}
@@ -148,6 +150,25 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
               <i class="fa-solid fa-bag-shopping"></i>
               <div>All Orders</div>
             </Nav.Link>
+
+
+
+            <Nav.Link
+              onClick={() => onhidesidebar()}
+              as={NavLink}
+              exact=""
+              to={PRODUCT_APPROVAL}
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <i class="fa-solid fa-bag-shopping"></i>
+              <div>Product Approval</div>
+            </Nav.Link>
+
+
+
             <Nav.Link
               onClick={() => onhidesidebar()}
               as={NavLink}

@@ -31,3 +31,4 @@ export const TAGS = "/tags";
 export const ORDER_PAGE = "/orders";
 export const USER_PAGE = "/users";
 export const REGISTER_VENDOR = "/register-vendor";
+export const PRODUCT_APPROVAL = "/product-approval";

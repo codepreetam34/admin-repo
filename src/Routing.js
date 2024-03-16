@@ -27,7 +27,7 @@ import {
   HOMEPAGE_SHOP_BY_OCCASION,
   HOMEPAGE_PAMPER_ZONE,
   REGISTER_VENDOR,
-  ORDER_PAGE,USER_PAGE
+  ORDER_PAGE,USER_PAGE, PRODUCT_APPROVAL
 } from "Routes/Routes";
 import PrivateRoutes from "Routes/PrivateRoutes";
 import SetupNewPassword from "Components/LogIn/SetupNewPassword";
@@ -40,6 +40,7 @@ import HomePagePamperZone from "Components/DisplayPagesContainer/Containers/Home
 import RegisterVendor from "Components/RegisterVendorPage";
 import Orders from "Pages/Orders";
 import Users from "Pages/Users";
+import ProductApprovalPage from "Components/ProductApprovalPage";
 
 const Routing = () => {
   return (
@@ -109,6 +110,7 @@ const Routing = () => {
         />
 
         <Route path={TAGS} element={<PrivateRoutes Component={TagsPage} />} />
+        <Route path={PRODUCT_APPROVAL} element={<PrivateRoutes Component={ProductApprovalPage} />} />
 
         <Route
           path={PRODUCTS}

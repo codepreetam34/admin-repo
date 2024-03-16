@@ -5,6 +5,8 @@ import {
   DELETE_PRODUCT,
   GET_PRODUCTS,
   GET_PRODUCTS_BY_CATEGORYID,
+  VENDOR_PRODUCTS,
+  VENDOR_PRODUCTS_APPROVAL,
 } from "./type";
 
 export const getProductsByCategoryId = createAsyncThunk(
@@ -79,12 +81,52 @@ export const deleteProductById = createAsyncThunk(
     }
   }
 );
+export const getVendorProducts = createAsyncThunk(
+  VENDOR_PRODUCTS,
+  async (productId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(
+        `product/vendor/get`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error });
+    }
+  }
+);
+export const getVendorProductsApproval = createAsyncThunk(
+  VENDOR_PRODUCTS_APPROVAL,
+  async (productId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(
+        `product/vendor/getAdminApproval`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error });
+    }
+  }
+);
+export const approvedBySuperAdmin = createAsyncThunk(
+  VENDOR_PRODUCTS_APPROVAL,
+  async (productId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(
+        `product/vendor/getAdminApproval`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error });
+    }
+  }
+);
 
 export const ProductsByCaregoryIdSlice = createSlice({
   name: "ProductsByCaregoryIdSlice",
   initialState: {
     productsByCatId: [],
     addProductData: [],
+    getVendorProductsApprovalData: [],
     productsList: [],
     loading: false,
     error: null,
@@ -104,6 +146,27 @@ export const ProductsByCaregoryIdSlice = createSlice({
         state.loading = false;
         state.error = action.payload.error;
       });
+
+
+
+    builder
+      .addCase(getVendorProductsApproval.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getVendorProductsApproval.fulfilled, (state, action) => {
+        state.loading = false;
+        state.getVendorProductsApprovalData = action.payload;
+      })
+      .addCase(getVendorProductsApproval.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+      });
+
+
+
+
+
     builder.addCase(addProducts.pending, (state) => {
       state.isFetching = true;
       state.error = false;
