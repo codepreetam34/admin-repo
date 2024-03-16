@@ -53,14 +53,6 @@ const ViewProductForm = ({ productData }) => {
     }
   }, [dispatch, categoryList]);
 
-  const handleTag = async (tagName) => {
-    const payload = {
-      tagName,
-      categoryId: productData?.category,
-    };
-    const response = await axios.post(`http://165.22.222.7:5000/api/product/getProductsByTagName`, payload);
-    console.log("response ", response);
-  };
 
   return (
     <Form className="user_form" style={{ padding: "2rem" }}>

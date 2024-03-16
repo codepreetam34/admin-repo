@@ -239,7 +239,7 @@ const ProductApprovalPage = () => {
                             }}
                         />
                     ),
-                    modalTitle: "Delete Modal",
+                    modalTitle: "Product Approval Modal",
                 });
             },
         },
@@ -309,8 +309,8 @@ const ProductApprovalPage = () => {
              ) :  */}{" "}
                             {openViewModalPage && openViewModalPage ? (
                                 <ViewModalPage
-                                    modalData={modalData?.data}
-                                    setOpenViewModalPage={setOpenViewModalPage}
+                                    productData={modalData?.data}
+                                    setOpenViewProductPage={setOpenViewModalPage}
                                 />
                             ) : (
                                 <RenderTable />

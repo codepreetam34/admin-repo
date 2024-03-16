@@ -111,8 +111,8 @@ export const approvedBySuperAdmin = createAsyncThunk(
   VENDOR_PRODUCTS_APPROVAL,
   async (productId, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(
-        `product/vendor/getAdminApproval`
+      const response = await axiosInstance.patch(
+        `product/vendor/approvedBySuperAdmin`,productId
       );
       return response.data;
     } catch (error) {
@@ -133,6 +133,7 @@ export const ProductsByCaregoryIdSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+
     builder
       .addCase(getProductsByCategoryId.pending, (state) => {
         state.loading = true;
@@ -147,8 +148,6 @@ export const ProductsByCaregoryIdSlice = createSlice({
         state.error = action.payload.error;
       });
 
-
-
     builder
       .addCase(getVendorProductsApproval.pending, (state) => {
         state.loading = true;
@@ -162,10 +161,6 @@ export const ProductsByCaregoryIdSlice = createSlice({
         state.loading = false;
         state.error = action.payload.error;
       });
-
-
-
-
 
     builder.addCase(addProducts.pending, (state) => {
       state.isFetching = true;
@@ -191,11 +186,14 @@ export const ProductsByCaregoryIdSlice = createSlice({
       state.isFetching = false;
       state.error = false;
     });
+
     builder.addCase(getProducts.rejected, (state, action) => {
       state.isFetching = false;
       state.error = true;
     });
+
   },
+
 });
 
 export default ProductsByCaregoryIdSlice.reducer;
