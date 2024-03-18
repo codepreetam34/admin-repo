@@ -163,7 +163,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
                 alignItems: "center",
               }}
             >
-              <i class="fa-solid fa-bag-shopping"></i>
+              <i class="fa-solid fa-thumbs-up"></i>
               <div>Product Approval</div>
             </Nav.Link>
 
@@ -179,7 +179,7 @@ const Sidebar = ({ toggleicon, setToggleicon, ToggleBtn }) => {
                 alignItems: "center",
               }}
             >
-           <i class="fa-solid fa-user"></i>
+              <i class="fa-solid fa-user"></i>
               <div>All Users</div>
             </Nav.Link>
             <Nav.Link as={NavLink} exact="" to={LOGIN} onClick={handleLogOut}>
