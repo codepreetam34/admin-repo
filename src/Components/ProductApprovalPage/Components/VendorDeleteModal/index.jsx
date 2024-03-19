@@ -1,12 +1,9 @@
 import React from "react";
 import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import {
-  approvedBySuperAdmin,
-  getVendorProductsApproval,
-} from "Redux/Slices/Products/ProductsSlice";
+import { deleteVendorProductById, getVendorProductsApproval } from "Redux/Slices/Products/ProductsSlice";
 
-const VendorApprovalModal = ({
+const VendorDeleteModal = ({
   productId,
   productName,
   setShowModal,
@@ -17,7 +14,7 @@ const VendorApprovalModal = ({
 }) => {
   const dispatch = useDispatch();
   const onSubmit = (productId) => {
-    dispatch(approvedBySuperAdmin(productId)).then((res) => {
+    dispatch(deleteVendorProductById(productId)).then((res) => {
       if (res?.payload?.error?.response?.status === 400) {
         setAddShowErrorToast(true);
         setAddShowErrorToastMessage(res?.payload?.error?.response?.data?.error);
@@ -25,10 +22,10 @@ const VendorApprovalModal = ({
         setAddShowErrorToast(true);
         setAddShowErrorToastMessage(res?.payload?.error?.response?.data?.error);
       } else {
+        dispatch(getVendorProductsApproval());
         setAddShowToastMessage(res?.payload?.message);
         setAddShowToast(true);
         setShowModal(false);
-        dispatch(getVendorProductsApproval());
       }
     });
   };
@@ -37,7 +34,7 @@ const VendorApprovalModal = ({
       <Row>
         <Col md={12}>
           <div className="delete-para">
-            <p>Are you sure you want to Approve "{productName}" item?</p>
+            <p>Are you sure you want to delete "{productName}" tag item?</p>
           </div>
         </Col>
       </Row>
@@ -56,11 +53,11 @@ const VendorApprovalModal = ({
             onSubmit(productId);
           }}
         >
-          Approved
+          Delete
         </Button>
       </Modal.Footer>
     </Form>
   );
 };
 
-export default VendorApprovalModal;
+export default VendorDeleteModal;

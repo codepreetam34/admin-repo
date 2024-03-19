@@ -7,6 +7,7 @@ import {
   GET_PRODUCTS_BY_CATEGORYID,
   VENDOR_PRODUCTS,
   VENDOR_PRODUCTS_APPROVAL,
+  DELETE_VENODR_PRODUCT
 } from "./type";
 
 export const getProductsByCategoryId = createAsyncThunk(
@@ -78,6 +79,19 @@ export const deleteProductById = createAsyncThunk(
     }
   }
 );
+export const deleteVendorProductById = createAsyncThunk(
+  DELETE_VENODR_PRODUCT,
+  async (productId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.delete(
+        `product/deleteVendorProductById/${productId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error });
+    }
+  }
+);
 export const getVendorProducts = createAsyncThunk(
   VENDOR_PRODUCTS,
   async (productId, thunkAPI) => {
@@ -126,7 +140,9 @@ export const ProductsByCaregoryIdSlice = createSlice({
     productsList: [],
     loading: false,
     error: null,
+
   },
+  
   reducers: {},
   extraReducers: (builder) => {
     builder

@@ -3,7 +3,6 @@ import { Form, Col, Row } from "react-bootstrap";
 import DisplayTable from "../DisplayTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "Redux/Slices/Category/CategorySlice";
-import axios from "axios";
 
 const ViewProductForm = ({ productData }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +27,7 @@ const ViewProductForm = ({ productData }) => {
 
   useEffect(() => {
     if ((categoryList && categoryList) || categoryList?.length > 0) {
-      const categoryIdToFind = productData?.category; // Replace 'your_target_id' with the actual id you want to find
+      const categoryIdToFind = productData?.category; 
 
       const foundCategory = categoryList.find(
         (item) => item._id === categoryIdToFind
@@ -37,7 +36,6 @@ const ViewProductForm = ({ productData }) => {
       if (foundCategory) {
         setDefaultCategoryName(foundCategory?.name);
       } else {
-        // If not found in the main categoryList, check in children arrays
         const foundInChildren = categoryList
           .map((category) =>
             category?.children.find((child) => child?._id === categoryIdToFind)
@@ -84,7 +82,7 @@ const ViewProductForm = ({ productData }) => {
 
             <Col md={6}>
               <div className="view-details pb-2">
-                <strong>Product Category</strong> <br />{" "}
+                <strong>Product Category</strong> <br />
                 {productData?.categoryName}
               </div>
             </Col>
@@ -93,7 +91,7 @@ const ViewProductForm = ({ productData }) => {
                 <strong>Delivery Day</strong>
                 <br />
                 {productData?.deliveryDay}
-              </div>{" "}
+              </div>
             </Col>
           </Row>
         </Col>
@@ -149,8 +147,7 @@ const ViewProductForm = ({ productData }) => {
                     style={{ paddingBottom: "0.7rem", paddingTop: "0.2rem" }}
                   >
                     <div className="fw-bold" style={{ fontSize: "0.9rem" }}>
-                      {" "}
-                      {tag?.tagType}{" "}
+                      {tag?.tagType}
                     </div>
                     <div>
                       {tag?.names?.map((name) => {
@@ -203,14 +200,14 @@ const ViewProductForm = ({ productData }) => {
             <Row className="pt-2">
               <Col md={6}>
                 <div className="view-details pb-2">
-                  <strong>Discount Price</strong> <br />{" "}
+                  <strong>Discount Price</strong> <br />
                   {productData?.discountPrice}
                 </div>
                 <div className="view-details pb-2">
                   <strong>1/2kg Price</strong>
                   <br />
                   {productData?.halfkgprice}
-                </div>{" "}
+                </div>
               </Col>
               <Col md={6}>
                 <div className="view-details pb-2">
@@ -251,6 +248,7 @@ const ViewProductForm = ({ productData }) => {
                   >
                     <img
                       key={index}
+                      alt="pic"
                       src={picture?.img}
                       style={{
                         width: "100%",

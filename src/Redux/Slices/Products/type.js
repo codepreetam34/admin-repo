@@ -5,5 +5,6 @@ export const GET_PRODUCTS = "get-products";
 export const ADD_PRODUCTS = "add-products";
 
 export const DELETE_PRODUCT = "delete-product";
+export const DELETE_VENODR_PRODUCT = "delete-vendor-product";
 export const VENDOR_PRODUCTS = "vendor-products";
 export const VENDOR_PRODUCTS_APPROVAL = "vendor-products-approval";

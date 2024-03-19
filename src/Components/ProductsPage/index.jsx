@@ -54,7 +54,6 @@ const ProductsPage = () => {
     // setModalData({ type: "Add", data: null });
   };
   const handleInputChange = (e) => {
-    console.log("Input changed:", e.target.value);
     setSearchInput(e.target.value);
   };
 
@@ -138,7 +137,6 @@ const ProductsPage = () => {
       );
 
       if (defaultCategory && defaultCategory !== "All") {
-        // Filter by category if a specific category is selected
         return searchedProducts?.filter(
           (product) => product?.category === defaultCategory
         );
@@ -147,12 +145,11 @@ const ProductsPage = () => {
       return searchedProducts;
     }
 
-    // If no search query, return products filtered by category or all products
     if (defaultCategory && defaultCategory !== "All") {
       return productsList?.filter((product) => product?.category === defaultCategory);
     }
 
-    return productsList; // If defaultCategory is "All" or not specified, return all products
+    return productsList; 
   };
 
   const RenderTable = () => {

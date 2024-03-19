@@ -9,6 +9,7 @@ import ViewModalPage from "./Components/ViewProductPage";
 import VendorApprovalModal from "./Components/VendorApprovalModal";
 import { getVendorProductsApproval } from "Redux/Slices/Products/ProductsSlice";
 import EditProductPage from "./Components/EditProductPage";
+import VendorDeleteModal from "./Components/VendorDeleteModal";
 
 const ProductApprovalPage = () => {
 
@@ -21,7 +22,6 @@ const ProductApprovalPage = () => {
     const [showModal, setShowModal] = useState(false);
     const [addShowErrorToastMessage, setAddShowErrorToastMessage] = useState("");
     const [addShowToastMessage, setAddShowToastMessage] = useState("");
-    const [openAddModalPage, setOpenAddModalPage] = useState(false);
     const [openEditModalPage, setOpenEditModalPage] = useState(false);
 
     useEffect(() => {
@@ -31,7 +31,6 @@ const ProductApprovalPage = () => {
     const productsList = useSelector(
         (state) => state?.ProductsByCatId?.getVendorProductsApprovalData?.products
     );
-
 
     const InitialRender = () => {
         return (
@@ -69,7 +68,6 @@ const ProductApprovalPage = () => {
             </>
         );
     };
-
     const RenderTable = () => {
         return (
             <Col md={12}>
@@ -117,7 +115,7 @@ const ProductApprovalPage = () => {
                                         <img
                                             src={vendorProducts?.productPictures[0]?.img}
                                             style={{ borderRadius: "10px" }}
-                                            alt=""
+                                            alt="vendorProductPicture"
                                             width={70}
                                             height={70}
                                             loading="lazy"
@@ -173,29 +171,9 @@ const ProductApprovalPage = () => {
     ];
 
     const tableActions = [
-        // {
-        //     name: "View",
-        //     class: "eye",
-        //     icon: "fa-solid fa-eye",
-        //     onClick: (data) => {
-        //         setOpenViewModalPage(true)
-        //         setModalData({ data: data });
-        //     },
-        // },
-        // {
-        //   name: "Edit",
-        //   class: "edit",
-        //   icon: "far fa-edit",
-        //   onClick: (data) => {
-        //     setOpenEditModalPage(true);
-        //     setOpenViewModalPage(false);
-        //     setOpenAddModalPage(false);
-        //     setModalData({ data: data });
-        //   },
-        // },
         {
             name: "Delete",
-            class: "delete",
+            class: "edit",
             icon: "fa-solid fa-thumbs-up",
             onClick: (data) => {
                 setShowModal(true);
@@ -226,6 +204,59 @@ const ProductApprovalPage = () => {
                 });
             },
         },
+        {
+            name: "View",
+            class: "eye",
+            icon: "fa-solid fa-eye",
+            onClick: (data) => {
+                setOpenViewModalPage(true)
+                setModalData({ data: data });
+            },
+        },
+        // {
+        //   name: "Edit",
+        //   class: "edit",
+        //   icon: "far fa-edit",
+        //   onClick: (data) => {
+        //     setOpenEditModalPage(true);
+        //     setOpenViewModalPage(false);
+        //     setModalData({ data: data });
+        //   },
+        // },
+
+        // {
+        //     name: "Delete",
+        //     class: "delete",
+        //     icon: "far fa-trash-alt",
+        //     onClick: (data) => {
+        //         setShowModal(true);
+        //         setModalData({
+        //             type: "Delete",
+        //             data: data,
+        //             modalContent: (
+        //                 <VendorDeleteModal
+        //                     productId={data._id}
+        //                     productName={data?.name}
+        //                     setShowModal={setShowModal}
+        //                     setIsLoading={setIsLoading}
+        //                     setAddShowErrorToast={(err) => {
+        //                         setAddShowErrorToast(err);
+        //                     }}
+        //                     setAddShowErrorToastMessage={(msg) => {
+        //                         setAddShowErrorToastMessage(msg);
+        //                     }}
+        //                     setAddShowToast={(show) => {
+        //                         setAddShowToast(show);
+        //                     }}
+        //                     setAddShowToastMessage={(showMessage) => {
+        //                         setAddShowToastMessage(showMessage);
+        //                     }}
+        //                 />
+        //             ),
+        //             modalTitle: "Delete Modal",
+        //         });
+        //     },
+        // },
     ];
 
     // const handleAdd = () => {
@@ -252,7 +283,7 @@ const ProductApprovalPage = () => {
                         </div>
                     ) : (
                         <>
-                            <InitialRender />{" "}
+                            <InitialRender />
                             {/* {openAddModalPage && openAddModalPage ? (
                 <AddModalPage
                   setOpenAddModalPage={setOpenAddModalPage}
@@ -269,7 +300,7 @@ const ProductApprovalPage = () => {
                   setAddShowToastMessage={(showMessage) => {
                     setAddShowToastMessage(showMessage);
                   }}
-                />*/}{" "}
+                />*/}
                             {openEditModalPage && openEditModalPage ? (
                                 <EditProductPage
                                     productData={modalData?.data}
@@ -310,7 +341,7 @@ const ProductApprovalPage = () => {
                     modalTitle={modalData.modalTitle}
                     modalContent={modalData.modalContent}
                 />
-            )}{" "}
+            )}
             {addShowErrorToast && (
                 <ErrorToaster
                     showErrorToast={addShowErrorToast}
