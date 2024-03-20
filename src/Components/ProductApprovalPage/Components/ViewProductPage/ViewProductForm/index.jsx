@@ -27,7 +27,7 @@ const ViewProductForm = ({ productData }) => {
 
   useEffect(() => {
     if ((categoryList && categoryList) || categoryList?.length > 0) {
-      const categoryIdToFind = productData?.category; 
+      const categoryIdToFind = productData?.category;
 
       const foundCategory = categoryList.find(
         (item) => item._id === categoryIdToFind
@@ -164,34 +164,52 @@ const ViewProductForm = ({ productData }) => {
             </Row>
           </div>
         </Col>
-        <Col md={12} className="product-detail-design">
-          <div className="view-details pb-2">
-            <strong>
-              Pincode ({productData?.pincode && productData?.pincode?.length})
-            </strong>
 
-            <div className="d-flex flex-wrap gap-3 pt-2">
-              {productData?.pincode &&
-                productData?.pincode.length > 0 &&
-                productData?.pincode?.map((pin, index) => (
-                  <div
-                    style={{
-                      color: "rgba(0, 0, 0, 0.87)",
-                      backgroundColor: "rgba(0, 0, 0, 0.08)",
-                      borderRadius: "16px",
-                      transition:
-                        "background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-                      border: "1px solid #bdbdbd",
-                      padding: "10px",
-                    }}
-                    key={index}
-                  >
-                    {pin}
-                  </div>
-                ))}
-            </div>
-          </div>
+
+
+        <Col md={12} className="product-detail-design">
+
+
+
+          <Row>
+            <Col md={6}>
+              <div className="view-details pb-2">
+                <strong>
+                  Pincode ({productData?.pincode && productData?.pincode?.length})
+                </strong>
+
+                <div className="d-flex flex-wrap gap-3 pt-2">
+                  {productData?.pincode &&
+                    productData?.pincode.length > 0 &&
+                    productData?.pincode?.map((pin, index) => (
+                      <div
+                        style={{
+                          color: "rgba(0, 0, 0, 0.87)",
+                          backgroundColor: "rgba(0, 0, 0, 0.08)",
+                          borderRadius: "16px",
+                          transition:
+                            "background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+                          border: "1px solid #bdbdbd",
+                          padding: "10px",
+                        }}
+                        key={index}
+                      >
+                        {pin}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </Col>
+            <Col md={6}>
+              <div className="view-details pb-2">
+                <strong>Vendor Name</strong>
+                <br />
+                {productData?.vendorName}
+              </div>
+            </Col>
+          </Row>
         </Col>
+
         {defaultCategoryName &&
           (defaultCategoryName.toLowerCase() === "cake" ||
             defaultCategoryName.toLowerCase() === "cakes") ? (
