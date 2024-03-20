@@ -214,49 +214,49 @@ const ProductApprovalPage = () => {
                 setModalData({ data: data });
             },
         },
-        {
-            name: "Edit",
-            class: "edit",
-            icon: "far fa-edit",
-            onClick: (data) => {
-                setOpenEditModalPage(true);
-                setOpenViewModalPage(false);
-                setModalData({ data: data });
-            },
-        },
-        {
-            name: "Delete",
-            class: "delete",
-            icon: "far fa-trash-alt",
-            onClick: (data) => {
-                setShowModal(true);
-                setModalData({
-                    type: "Delete",
-                    data: data,
-                    modalContent: (
-                        <VendorDeleteModal
-                            productId={data._id}
-                            productName={data?.name}
-                            setShowModal={setShowModal}
-                            setIsLoading={setIsLoading}
-                            setAddShowErrorToast={(err) => {
-                                setAddShowErrorToast(err);
-                            }}
-                            setAddShowErrorToastMessage={(msg) => {
-                                setAddShowErrorToastMessage(msg);
-                            }}
-                            setAddShowToast={(show) => {
-                                setAddShowToast(show);
-                            }}
-                            setAddShowToastMessage={(showMessage) => {
-                                setAddShowToastMessage(showMessage);
-                            }}
-                        />
-                    ),
-                    modalTitle: "Delete Modal",
-                });
-            },
-        },
+        // {
+        //     name: "Edit",
+        //     class: "edit",
+        //     icon: "far fa-edit",
+        //     onClick: (data) => {
+        //         setOpenEditModalPage(true);
+        //         setOpenViewModalPage(false);
+        //         setModalData({ data: data });
+        //     },
+        // },
+        // {
+        //     name: "Delete",
+        //     class: "delete",
+        //     icon: "far fa-trash-alt",
+        //     onClick: (data) => {
+        //         setShowModal(true);
+        //         setModalData({
+        //             type: "Delete",
+        //             data: data,
+        //             modalContent: (
+        //                 <VendorDeleteModal
+        //                     productId={data._id}
+        //                     productName={data?.name}
+        //                     setShowModal={setShowModal}
+        //                     setIsLoading={setIsLoading}
+        //                     setAddShowErrorToast={(err) => {
+        //                         setAddShowErrorToast(err);
+        //                     }}
+        //                     setAddShowErrorToastMessage={(msg) => {
+        //                         setAddShowErrorToastMessage(msg);
+        //                     }}
+        //                     setAddShowToast={(show) => {
+        //                         setAddShowToast(show);
+        //                     }}
+        //                     setAddShowToastMessage={(showMessage) => {
+        //                         setAddShowToastMessage(showMessage);
+        //                     }}
+        //                 />
+        //             ),
+        //             modalTitle: "Delete Modal",
+        //         });
+        //     },
+        // },
     ];
 
     return (
@@ -310,7 +310,7 @@ const ProductApprovalPage = () => {
                                 )}
                         </>
                     )}
-                    
+
                 </Row>
             </div>
 
