@@ -168,9 +168,6 @@ const ViewProductForm = ({ productData }) => {
 
 
         <Col md={12} className="product-detail-design">
-
-
-
           <Row>
             <Col md={6}>
               <div className="view-details pb-2">

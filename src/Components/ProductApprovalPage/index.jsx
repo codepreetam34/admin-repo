@@ -68,6 +68,7 @@ const ProductApprovalPage = () => {
             </>
         );
     };
+
     const RenderTable = () => {
         return (
             <Col md={12}>
@@ -214,16 +215,15 @@ const ProductApprovalPage = () => {
             },
         },
         {
-          name: "Edit",
-          class: "edit",
-          icon: "far fa-edit",
-          onClick: (data) => {
-            setOpenEditModalPage(true);
-            setOpenViewModalPage(false);
-            setModalData({ data: data });
-          },
+            name: "Edit",
+            class: "edit",
+            icon: "far fa-edit",
+            onClick: (data) => {
+                setOpenEditModalPage(true);
+                setOpenViewModalPage(false);
+                setModalData({ data: data });
+            },
         },
-
         {
             name: "Delete",
             class: "delete",
@@ -259,17 +259,14 @@ const ProductApprovalPage = () => {
         },
     ];
 
-    // const handleAdd = () => {
-    //   setOpenAddModalPage(true);
-    //   setOpenEditModalPage(false);
-    //   setOpenViewModalPage(false);
-    //   // setModalData({ type: "Add", data: null });
-    // };
-
     return (
+
         <Wrapper>
+
             <div className="user_management_list">
+
                 <Row>
+
                     {isLoading && isLoading ? (
                         <div
                             style={{
@@ -284,23 +281,6 @@ const ProductApprovalPage = () => {
                     ) : (
                         <>
                             <InitialRender />
-                            {/* {openAddModalPage && openAddModalPage ? (
-                <AddModalPage
-                  setOpenAddModalPage={setOpenAddModalPage}
-                  setIsLoading={setIsLoading}
-                  setAddShowErrorToast={(err) => {
-                    setAddShowErrorToast(err);
-                  }}
-                  setAddShowErrorToastMessage={(msg) => {
-                    setAddShowErrorToastMessage(msg);
-                  }}
-                  setAddShowToast={(show) => {
-                    setAddShowToast(show);
-                  }}
-                  setAddShowToastMessage={(showMessage) => {
-                    setAddShowToastMessage(showMessage);
-                  }}
-                />*/}
                             {openEditModalPage && openEditModalPage ? (
                                 <EditProductPage
                                     productData={modalData?.data}
@@ -330,8 +310,10 @@ const ProductApprovalPage = () => {
                                 )}
                         </>
                     )}
+                    
                 </Row>
             </div>
+
             {modalData.type && (
                 <DynamicModal
                     show={showModal}
@@ -342,6 +324,7 @@ const ProductApprovalPage = () => {
                     modalContent={modalData.modalContent}
                 />
             )}
+
             {addShowErrorToast && (
                 <ErrorToaster
                     showErrorToast={addShowErrorToast}
@@ -350,6 +333,7 @@ const ProductApprovalPage = () => {
                     customErrorMessage={"Something went wrong! Please Try Again"}
                 />
             )}
+
             {addShowToast && (
                 <SuccessToaster
                     showToast={addShowToast}
@@ -358,8 +342,11 @@ const ProductApprovalPage = () => {
                     customMessage={`Please recheck your entry once`}
                 />
             )}
+
         </Wrapper>
+
     );
+
 };
 
 export default ProductApprovalPage;
