@@ -46,8 +46,7 @@ const PagesContainer = () => {
   return (
     <div className="fourboxarea">
       <Row>
-        {/* Use the Box component for each box */}
-        {pageInfo &&
+         {pageInfo &&
           pageInfo?.map((info, index) => {
             return (
               <>

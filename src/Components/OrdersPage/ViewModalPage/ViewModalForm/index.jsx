@@ -84,8 +84,21 @@ const ViewModalForm = ({ modalData, setOpenViewModalPage }) => {
                             textTransform: "capitalize",
                           }}
                         >
-                          {item?.productId?.name || "N/A"}
+                          Product Name : {item?.productId?.name || "N/A"}
                         </Card.Title>
+
+                        <Card.Title
+                          className="text-limit"
+                          style={{
+                            fontSize: "14px",
+                            color: "#222222",
+                            fontWeight: "500",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          Vendor Name : {item?.productId?.vendorName || "N/A"}
+                        </Card.Title>
+                        <hr style={{ margin: "4px 0px" }} />
                         <div className="d-flex justify-content-between">
                           <div>
                             <div

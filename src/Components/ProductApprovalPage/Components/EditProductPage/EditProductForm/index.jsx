@@ -22,6 +22,12 @@ const EditProductForm = ({
   const [defaultCategory, setDefaultCategory] = useState();
   const [viewProductImages, setViewProductImages] = useState([""]);
   const [defaultCategoryName, setDefaultCategoryName] = useState();
+  const [approvedBySuperAdmin, setApprovedBySuperAdmin] = useState();
+
+  const handleChange = () => {
+    setApprovedBySuperAdmin(!approvedBySuperAdmin);
+  };
+
   const [bannerPicture, setBannerPicture] = useState([
     {
       img: "",
@@ -78,9 +84,11 @@ const EditProductForm = ({
     list[index] = value;
     setPinCode(list);
   };
+
   const handleAddClick = () => {
     setPinCode([...pinCode, [""]]);
   };
+
   const onRemovePincode = (indexToRemove) => {
     const updatedPinCode = [...pinCode];
     updatedPinCode.splice(indexToRemove, 1);
@@ -110,9 +118,11 @@ const EditProductForm = ({
   const handleDescriptionData = (descriptionData) => {
     setDescriptionData(descriptionData);
   };
+
   const handleSpecificationData = (specificationData) => {
     setSpecificationData(specificationData);
   };
+  
   const onSubmit = (data) => {
     const formData = new FormData();
     if (data?.name) formData.append("name", data?.name?.toString());
@@ -124,6 +134,7 @@ const EditProductForm = ({
     if (data?.discountPrice)
       formData.append("discountPrice", data?.discountPrice);
     if (data?.quantity) formData.append("quantity", data?.quantity);
+    if (approvedBySuperAdmin) formData.append("approvedBySuperAdmin", approvedBySuperAdmin);
     if (data?.offer) formData.append("offer", data?.offer);
     if (data?.halfkgprice) formData.append("halfkgprice", data?.halfkgprice);
     if (data?.onekgprice) formData.append("onekgprice", data?.onekgprice);
@@ -195,8 +206,6 @@ const EditProductForm = ({
     }
     setTagType("");
   };
-
-
 
   const combinedOptions = [
     {
@@ -336,8 +345,6 @@ const EditProductForm = ({
     },
   ];
 
-
-
   const [tagType, setTagType] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [additionalTags, setAdditionalTags] = useState([]);
@@ -465,7 +472,6 @@ const EditProductForm = ({
     // setImageAltText(list2);
   };
 
-
   useEffect(() => {
     reset({
       name: productData?.name,
@@ -484,7 +490,7 @@ const EditProductForm = ({
     setPinCode(productData?.pincode);
     setViewProductImages(productData?.productPictures);
     setDefaultCategory(productData?.category);
-
+    setApprovedBySuperAdmin(productData?.approvedBySuperAdmin);
     const categoryIdToFind = productData?.category;
     const foundCategory = categoryList.find(
       (item) => item._id === categoryIdToFind
@@ -510,7 +516,6 @@ const EditProductForm = ({
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Name</Form.Label>
-
                   <Form.Control
                     id="name"
                     type="text"
@@ -526,7 +531,6 @@ const EditProductForm = ({
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Actual Price</Form.Label>
-
                   <Form.Control
                     id="actualPrice"
                     type="text"
@@ -569,7 +573,6 @@ const EditProductForm = ({
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
-
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Delivery Day</Form.Label>
@@ -587,7 +590,6 @@ const EditProductForm = ({
               </Col>
             </Row>
           </Col>
-
           <Col md={12} className="product-detail-design">
             <Form.Group className="form-group-padding-bottom">
               <Form.Label>Description</Form.Label>
@@ -604,12 +606,11 @@ const EditProductForm = ({
               <GenericEditor
                 onData={handleSpecificationData}
                 dataText={specificationData}
-                editorId="uniqueEditorId" // Provide a unique ID
+                editorId="uniqueEditorId"
                 placeholder="Write something amazing..."
               />
             </Form.Group>
           </Col>
-
           <Col md={12} className="product-detail-design">
             <Row style={{ padding: "30px" }}>
               <Col md={12} className="product-detail-design">
@@ -624,8 +625,7 @@ const EditProductForm = ({
                           style={{ paddingBottom: "0.7rem", paddingTop: "0.2rem" }}
                         >
                           <div className="fw-bold" style={{ fontSize: "0.9rem" }}>
-                            {" "}
-                            {tag?.tagType}{" "}
+                            {tag?.tagType}
                           </div>
                           <div>
                             {tag?.names?.map((name) => {
@@ -674,7 +674,6 @@ const EditProductForm = ({
                   </Button>
                 </div>
               </Col>
-
               {tagType ? (
                 <Col md={6}>
                   <Form.Group className="pb-3" controlId="selectedTags">
@@ -693,7 +692,6 @@ const EditProductForm = ({
                 <></>
               )}
             </Row>
-
             <Row className="p-4">
               <Col md={12} className="pb-3 product-detail-design">
                 <Form.Group className="pb-3" controlId="selectedTags">
@@ -705,7 +703,6 @@ const EditProductForm = ({
               </Col>
             </Row>
           </Col>
-
           <Col className="product-detail-design">
             <Row>
               <Col md={6}>
@@ -741,7 +738,6 @@ const EditProductForm = ({
                       </div>
                     </div>
                   ))}
-
                   <div className="d-grid justify-content-center">
                     <Button
                       variant="secondary"
@@ -755,7 +751,6 @@ const EditProductForm = ({
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Discount Price</Form.Label>
-
                   <Form.Control
                     type="text"
                     id="discountPrice"
@@ -768,19 +763,35 @@ const EditProductForm = ({
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
+              <Col>
+                <Form.Group className="form-group-padding-bottom">
+                  <div>
+                    <Form.Label>Product Approval</Form.Label>
+                  </div>
+
+                  <Form.Label>{approvedBySuperAdmin ? 'Approved' : 'Disapproved'}</Form.Label>
+                  <div>
+                    <label className="toggle-switch">
+                      <input
+                        type="checkbox"
+                        checked={approvedBySuperAdmin}
+                        onChange={handleChange}
+                      />
+                      <span className="toggle-slider round"></span>
+                    </label>
+                  </div>
+                </Form.Group>
+              </Col>
             </Row>
           </Col>
-
           {defaultCategoryName &&
             (defaultCategoryName.toLowerCase() === "cake" ||
               defaultCategoryName.toLowerCase() === "cakes") ? (
             <Col md={12} className="product-detail-design">
               <Row>
-
                 <Col md={6}>
                   <Form.Group className="form-group-padding-bottom">
                     <Form.Label>Half Kg Price</Form.Label>
-
                     <Form.Control
                       type="text"
                       id="halfkgprice"
@@ -796,7 +807,6 @@ const EditProductForm = ({
                 <Col md={6}>
                   <Form.Group className="form-group-padding-bottom">
                     <Form.Label>One Kg Price</Form.Label>
-
                     <Form.Control
                       type="text"
                       name="onekgprice"
@@ -812,7 +822,6 @@ const EditProductForm = ({
                 <Col md={6}>
                   <Form.Group className="form-group-padding-bottom">
                     <Form.Label>Two Kg Price</Form.Label>
-
                     <Form.Control
                       type="text"
                       name="twokgprice"
@@ -830,13 +839,11 @@ const EditProductForm = ({
           ) : (
             <></>
           )}
-
           <Col md={12} className="product-detail-design">
             <Row>
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Offer</Form.Label>
-
                   <Form.Control
                     type="text"
                     id="offer"
@@ -852,7 +859,6 @@ const EditProductForm = ({
               <Col md={6}>
                 <Form.Group className="form-group-padding-bottom">
                   <Form.Label>Quantity</Form.Label>
-
                   <Form.Control
                     type="text"
                     id="quantity"
@@ -867,7 +873,6 @@ const EditProductForm = ({
               </Col>
             </Row>
           </Col>
-
           <Col
             md={12}
             style={{
@@ -886,6 +891,7 @@ const EditProductForm = ({
                         <div>{`Image Preview ${index + 1}`} </div>
                         <img
                           src={picture?.picturePreview}
+                          alt="imageAltText"
                           style={{
                             width: "200px",
                             height: "200px",
@@ -898,10 +904,11 @@ const EditProductForm = ({
                           viewProductImages?.map((picture, index) => (
                             <div>
                               <div className="pb-2">
-                                {`Image ${index + 1}`}{" "}
+                                {`Image ${index + 1}`}
                               </div>
                               <img
                                 src={picture?.img}
+                                alt="imageAltText"
                                 style={{
                                   width: "70px",
                                   height: "50px",
@@ -917,7 +924,6 @@ const EditProductForm = ({
                         )}
                       </div>
                     )}
-
                     <Row>
                       <Col md={6}>
                         <Form.Group>
@@ -933,7 +939,6 @@ const EditProductForm = ({
                           />
                         </Form.Group>
                       </Col>
-
                       <Col md={6}>
                         <Form.Group>
                           <Form.Label>Image Alt Text</Form.Label>

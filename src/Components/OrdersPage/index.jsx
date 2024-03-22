@@ -88,7 +88,7 @@ const OrdersPage = () => {
       </Col>
     );
   };
-  
+
   // const DataTableHeader = () => {
   //   return (
   //     <thead>
@@ -103,6 +103,8 @@ const OrdersPage = () => {
   //     </thead>
   //   );
   // };
+
+  console.log("orderData ", orderData)
 
   const DataTableBody = () => {
     return (
@@ -143,6 +145,7 @@ const OrdersPage = () => {
                       {order?.orderStatus.find((ele) => ele.isCompleted)
                         ?.type || "N/A"}
                     </td>
+
                     <td>
                       <div className="table_icons d-flex align-items-center justify-content-center">
                         {tableActions &&

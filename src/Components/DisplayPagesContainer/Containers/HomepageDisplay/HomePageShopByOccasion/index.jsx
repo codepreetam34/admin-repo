@@ -52,16 +52,13 @@ const HomePageShopByOccasion = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-
     { title: "S.No.", class: "" },
     { title: "Title", class: "" },
     { title: "Image", class: "" },
     { title: "Action", class: "text-center" },
-
   ];
 
   const tableActions = [
-
     {
       name: "View",
       class: "eye",
@@ -99,10 +96,10 @@ const HomePageShopByOccasion = () => {
             <DeleteDataModal
               bannerId={data?._id}
               productName={data?.title}
-              setShowModal={setShowModal} // Make sure you pass setShowModal
+              setShowModal={setShowModal}
               setAddShowErrorToast={(err) => {
                 setAddShowErrorToast(err);
-              }} // Pass setShowErrorToast
+              }}
               setAddShowErrorToastMessage={(msg) => {
                 setAddShowErrorToastMessage(msg);
               }}
@@ -116,11 +113,8 @@ const HomePageShopByOccasion = () => {
           ),
           modalTitle: "Delete Category",
         });
-
       },
-
     },
-
   ];
 
   const handleAdd = () => {

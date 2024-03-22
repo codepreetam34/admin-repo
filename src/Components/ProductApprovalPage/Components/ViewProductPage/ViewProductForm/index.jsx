@@ -28,7 +28,6 @@ const ViewProductForm = ({ productData }) => {
   useEffect(() => {
     if ((categoryList && categoryList) || categoryList?.length > 0) {
       const categoryIdToFind = productData?.category;
-
       const foundCategory = categoryList.find(
         (item) => item._id === categoryIdToFind
       );
@@ -51,11 +50,9 @@ const ViewProductForm = ({ productData }) => {
     }
   }, [dispatch, categoryList]);
 
-
   return (
     <Form className="user_form" style={{ padding: "2rem" }}>
       <Row>
-        {" "}
         <div className="view-details-heading pb-2 text-center">
           <strong>Product Details</strong>
           <div className="d-flex justify-content-center gap-3">
@@ -79,7 +76,6 @@ const ViewProductForm = ({ productData }) => {
                 <strong>Price</strong> <br /> {productData?.actualPrice}
               </div>
             </Col>
-
             <Col md={6}>
               <div className="view-details pb-2">
                 <strong>Product Category</strong> <br />
@@ -112,7 +108,6 @@ const ViewProductForm = ({ productData }) => {
             <strong>
               Tags ({productData?.tags && productData?.tags?.length})
             </strong>
-
             <div className="d-flex flex-wrap gap-3 pt-2">
               {productData?.tags &&
                 productData?.tags.length > 0 &&
@@ -164,9 +159,6 @@ const ViewProductForm = ({ productData }) => {
             </Row>
           </div>
         </Col>
-
-
-
         <Col md={12} className="product-detail-design">
           <Row>
             <Col md={6}>
@@ -174,7 +166,6 @@ const ViewProductForm = ({ productData }) => {
                 <strong>
                   Pincode ({productData?.pincode && productData?.pincode?.length})
                 </strong>
-
                 <div className="d-flex flex-wrap gap-3 pt-2">
                   {productData?.pincode &&
                     productData?.pincode.length > 0 &&
@@ -206,7 +197,6 @@ const ViewProductForm = ({ productData }) => {
             </Col>
           </Row>
         </Col>
-
         {defaultCategoryName &&
           (defaultCategoryName.toLowerCase() === "cake" ||
             defaultCategoryName.toLowerCase() === "cakes") ? (
@@ -229,7 +219,6 @@ const ViewProductForm = ({ productData }) => {
                   <strong>1kg Price</strong> <br />
                   {productData?.onekgprice}
                 </div>
-
                 <div className="view-details pb-2">
                   <strong>2kg Price</strong>
                   <br />
@@ -249,7 +238,6 @@ const ViewProductForm = ({ productData }) => {
               productData?.productPictures?.length}
             )
           </h3>
-
           <Row style={{ paddingTop: "10px" }}>
             <Col md={12} className="image-detail-view">
               {productData?.productPictures &&

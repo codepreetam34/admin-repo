@@ -5,9 +5,7 @@ import PagesContainer from "./Components/PagesContainer";
 const DisplayPagesContainer = () => {
   return (
     <>
-      {" "}
       <Wrapper>
-        {" "}
         <div className="user_management_list">
           <Row>
             <Col md={6}>
