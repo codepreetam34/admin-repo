@@ -104,8 +104,6 @@ const OrdersPage = () => {
   //   );
   // };
 
-  console.log("orderData ", orderData)
-
   const DataTableBody = () => {
     return (
       <>
@@ -139,7 +137,6 @@ const OrdersPage = () => {
                   <tr key={orderIndex}>
                     <td>{orderIndex + 1}</td>
                     <td>{order?._id}</td>
-                    <td>{order?.address?.name}</td>
                     <td>{order?.paymentStatus}</td>
                     <td>
                       {order?.orderStatus.find((ele) => ele.isCompleted)
@@ -255,7 +252,9 @@ const OrdersPage = () => {
   return (
     <Wrapper>
       <div className="user_management_list">
+
         <Row>
+
           {isLoading && isLoading ? (
             <div
               style={{
@@ -269,7 +268,7 @@ const OrdersPage = () => {
             </div>
           ) : (
             <>
-              <InitialRender />{" "}
+              <InitialRender />
               {/* {openAddModalPage && openAddModalPage ? (
                 <AddModalPage
                   setOpenAddModalPage={setOpenAddModalPage}
@@ -306,7 +305,7 @@ const OrdersPage = () => {
                     setAddShowToastMessage(showMessage);
                   }}
                 />
-             ) :  */}{" "}
+                ) :  */}
               {openViewModalPage && openViewModalPage ? (
                 <ViewModalPage
                   modalData={modalData?.data}
@@ -317,8 +316,11 @@ const OrdersPage = () => {
               )}
             </>
           )}
+
         </Row>
+
       </div>
+
       {modalData.type && (
         <DynamicModal
           show={showModal}
@@ -328,7 +330,8 @@ const OrdersPage = () => {
           modalTitle={modalData.modalTitle}
           modalContent={modalData.modalContent}
         />
-      )}{" "}
+      )}
+
       {addShowErrorToast && (
         <ErrorToaster
           showErrorToast={addShowErrorToast}
@@ -337,6 +340,7 @@ const OrdersPage = () => {
           customErrorMessage={"Something went wrong! Please Try Again"}
         />
       )}
+
       {addShowToast && (
         <SuccessToaster
           showToast={addShowToast}
@@ -345,6 +349,7 @@ const OrdersPage = () => {
           customMessage={`Please recheck your entry once`}
         />
       )}
+
     </Wrapper>
   );
 };

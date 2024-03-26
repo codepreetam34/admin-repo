@@ -39,7 +39,9 @@ import users from "../fonts/users-alt-5.svg";
 import newspaper from "../fonts/newspaper.svg";
 
 const Dashboard = () => {
+
   const DashboardCard = ({ title, number, link, iconImage, bgColor }) => {
+
     return (
       <div className={`col-md-12 col-lg-6 col-xl-4`}>
         <div className={`mycard ${bgColor}`}>
@@ -63,11 +65,17 @@ const Dashboard = () => {
       </div>
     );
   };
+
   return (
+
     <Wrapper>
+
       <div className="dashbcontent">
+
         <Row>
+
           <div className="row row-cards-one">
+
             <DashboardCard
               title="Orders Pending!"
               number="88"
@@ -75,6 +83,7 @@ const Dashboard = () => {
               iconImage={dollar}
               bgColor="bg1"
             />
+
             <DashboardCard
               title="Orders Procsessing!"
               number="1"
@@ -82,6 +91,7 @@ const Dashboard = () => {
               iconImage={truck}
               bgColor="bg2"
             />
+
             <DashboardCard
               title="Orders Completed!"
               number="1"
@@ -89,6 +99,7 @@ const Dashboard = () => {
               iconImage={checkCircle}
               bgColor="bg3"
             />
+
             <DashboardCard
               title="Total Products!"
               number="509"
@@ -96,6 +107,7 @@ const Dashboard = () => {
               iconImage={cart}
               bgColor="bg4"
             />
+
             <DashboardCard
               title="Total Customers!"
               number="519"
@@ -103,6 +115,7 @@ const Dashboard = () => {
               iconImage={users}
               bgColor="bg5"
             />
+
             <DashboardCard
               title="Total Posts!"
               number="3"
@@ -110,11 +123,17 @@ const Dashboard = () => {
               iconImage={newspaper}
               bgColor="bg6"
             />
+
           </div>
+
         </Row>
+
       </div>
+
     </Wrapper>
+
   );
+
 };
 
 export default Dashboard;

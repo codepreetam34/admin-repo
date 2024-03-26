@@ -9,6 +9,7 @@ const Home = () => {
 
   const showErrorToastMessage = location?.state?.showErrorToastMessage;
   const showErrorToast = location?.state?.showErrorToast;
+
   useEffect(() => {
     if (showToastMessage) {
       setShowToast(true);
@@ -17,7 +18,6 @@ const Home = () => {
         setShowToast(false);
       }, 4000);
 
-      // Clean up the timeout when the component unmounts
       return () => {
         clearTimeout(timeoutId);
       };
@@ -27,6 +27,7 @@ const Home = () => {
   return (
     <>
       <Dashboard />
+
       {showToast && (
         <SuccessToaster
           showToast={showToast}
@@ -35,6 +36,7 @@ const Home = () => {
           customMessage={`Welcome to Vibezter Admin`}
         />
       )}
+
       {showErrorToast && (
         <ErrorToaster
           showErrorToast={showErrorToast}
@@ -43,6 +45,7 @@ const Home = () => {
           customErrorMessage={"Something went Wrong Please verify and retry."}
         />
       )}
+
     </>
   );
 };
